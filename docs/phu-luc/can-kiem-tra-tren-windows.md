@@ -25,6 +25,7 @@ Trang này tổng hợp các điểm có trạng thái `🟠 Chưa thống nhấ
 | [`GETMESSAGE`](/lenh/winapi#getmessage) | — | Ví dụ ở mục WinAPI gọi `POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng một lượt chạy và không có `HALT`. | **Cần thử**<br>`POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng lượt có nhận được không. |
 | [`FOR` lồng nhau và dùng lại biến đếm](/lenh/cau-truc#for-end-cyc) | — | Mục Cấu trúc lệnh nói biến giữ giá trị nếu không gán `=value`, nhưng ví dụ vòng lặp lồng nhau và ví dụ `SUB` viết `FOR($x, $x < 3)`, `FOR($y, $y < 3)`, `FOR($i, $i < 3)` không có `=0`. | **🟠 Chưa thống nhất**<br>Kiểm tra số dòng in ra khi không gán `=0`. |
 | [Mã phím `PrintScreen` (`154` và `44`)](/phu-luc/ma-phim#bang-ma-phim-chuot-va-phim-dieu-khien) | — | Bảng mã phím trong help và tệp `data/const.txt` đều ghi `#PRINTSCREEN` là `154` (`0x9A`), trong khi mã `VK_SNAPSHOT` chuẩn của Windows thường là `44` (`0x2C`). | **🟠 Cần thử**<br>Kiểm tra `ISKEYDOWN(154)` và `ISKEYDOWN(44)`. |
+| [Quy luật mã `KEYDOWN`](/phu-luc/ma-phim#khi-keydown-can-ma-khac) | — | Help dùng chung một bảng mã phím cho `KEYPRESS`, `KEYDOWN`, `KEYUP`; bảng tự dò của Mai Bảo Long ghi nhận `KEYDOWN`/`KEYUP` cần mã có mã quét bằng mã phím đích (ví dụ `KEYDOWN(75)` ra mũi tên trái `37`). | **🟠 Cần thử**<br>Kiểm tra `KEYDOWN(75)` trên Notepad ở cả chế độ thường và khóa cửa sổ. |
 | [Cách tắt khóa cửa sổ (`HSET` và `Alt + W`)](/khai-niem/khoa-cua-so#tat-khoa-cua-so) | — | Mục `HSET` ghi `HSET(hwnd, state)` với `state = 0` là tắt khóa cửa sổ; không nói rõ `HSET(0, 0)` hay nhấn `Alt + W` lần nữa có tắt được không. | **Cần thử**<br>Kiểm tra `HSET($_hwnd, 0)`, `HSET(0, 0)` và `Alt + W`. |
 | [Tên biến hoa / thường](/khai-niem/ngon-ngu#bien-va-kieu-du-lieu) | — | Help không nói rõ; Lịch sử phiên bản ghi `$_DATE_Y`, còn phần Giới thiệu ngôn ngữ ghi `$_date_y`. | **Help không nói rõ**<br>Cần thử `$Var` và `$var`. |
 | [Khung chế độ chạy](/bat-dau/man-hinh-chinh#bang-thong-tin-va-che-do-chay) | — | Bài Màn hình chính nói có khung trên cửa sổ chính; Lịch sử phiên bản (v4.7.000) nói đã bỏ khỏi cửa sổ chính và (v4.7.000 SE) nói trở lại dạng cửa sổ riêng. | **Help tự mâu thuẫn**<br>Cần mở giao diện v4.13.014 để kiểm tra. |
@@ -829,6 +830,43 @@ END_CYC
 PRINT("Ket thuc 10 giay kiem tra PrintScreen.")
 HALT
 ```
+
+---
+
+## Quy luật mã `KEYDOWN`
+
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang phụ lục:** [Bảng mã phím và hằng số](/phu-luc/ma-phim#khi-keydown-can-ma-khac) · **Trang lệnh:** [`KEYDOWN`](/lenh/ban-phim#keydown), [`KEYUP`](/lenh/ban-phim#keyup)
+
+### Hai cách hiểu hiện tại
+
+1. **Theo help chính thức (mục Bàn phím và phần Mã phím):** Các lệnh `KEYPRESS`, `KEYDOWN` và `KEYUP` dùng chung một bảng mã phím ảo (ví dụ `75` là phím `K`, `37` là phím mũi tên trái).
+2. **Theo bảng tự dò của Mai Bảo Long (kèm quy luật suy luận):** Có trường hợp `KEYDOWN` và `KEYUP` phải truyền mã của phím có **mã quét (Scan Code) bằng mã phím đích** thì ứng dụng mới nhận đúng phím. **Kiến thức Windows:** mã quét của phím `K` (`75`) là `37` (trùng với mã phím ảo của mũi tên trái), nên theo quy luật này `KEYDOWN(75)` sẽ tạo ra phím mũi tên trái thay vì chữ `k`.
+
+### Script kiểm tra trên Windows
+
+Chuẩn bị: mở một cửa sổ **Notepad trống**, tắt phím **Caps Lock**, đặt con trỏ soạn thảo vào vùng trắng của Notepad trong 3 giây chờ đầu tiên:
+
+```cms
+WAIT(3)
+KEYPRESS(65)
+WAITMS(300)
+KEYDOWN(75)
+WAITMS(100)
+KEYUP(75)
+WAITMS(300)
+KEYPRESS(88)
+HALT
+```
+
+- **Kết quả mong đợi:**
+  - Nếu trong Notepad hiện ra chuỗi **`akx`**: nghĩa là `KEYDOWN(75)` gõ ra chữ `k`, tức hoạt động theo **mã thường** trong help.
+  - Nếu trong Notepad hiện ra chuỗi **`xa`**: nghĩa là sau khi `KEYPRESS(65)` gõ chữ `a`, lệnh `KEYDOWN(75)` đã bấm phím **mũi tên trái** đưa con trỏ về đứng trước chữ `a` rồi `KEYPRESS(88)` mới gõ chữ `x` vào đầu dòng — tức **quy luật đúng trong điều kiện đó**.
+- **Yêu cầu khi kiểm tra:**
+  - Phải chạy thử ở **cả hai chế độ**:
+    1. **Chế độ thường** (không khóa cửa sổ, bấm chuột chọn vùng soạn thảo Notepad trong 3 giây chờ).
+    2. **Chế độ khóa cửa sổ** vào đúng vùng soạn thảo của Notepad (đưa trỏ chuột vào vùng soạn thảo trắng của Notepad rồi nhấn `Alt + W`).
+  - Ghi lại rõ kết quả của cả hai chế độ, và thử thêm trên một ứng dụng khác ngoài Notepad nếu được.
+  - Lưu ý: script này chỉ kiểm tra hành vi trong điều kiện thử nghiệm trên, không tự động kết luận cho mọi ứng dụng.
 
 ---
 

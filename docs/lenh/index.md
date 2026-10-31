@@ -54,7 +54,7 @@ Trong các trang tra cứu lệnh chi tiết, mỗi mục lệnh đều được
 | Dịch chuột tương đối | [`MOVER`](/lenh/chuot#mover) | Không chạy ở chế độ khóa cửa sổ |
 | Cuộn con lăn chuột xuống / lên | [`WHEELDOWN`](/lenh/chuot#wheeldown), [`WHEELUP`](/lenh/chuot#wheelup) | Có hệ số nhân tốc độ cuộn `mult` |
 | Bấm 1 phím bàn phím | [`KEYPRESS`](/lenh/ban-phim#keypress) | Truyền mã số hoặc hằng như `#SPACE` |
-| Nhấn giữ / nhả phím (tổ hợp phím) | [`KEYDOWN`](/lenh/ban-phim#keydown), [`KEYUP`](/lenh/ban-phim#keyup) | Dùng để bấm tổ hợp như `Ctrl + S` |
+| Nhấn giữ / nhả phím (tổ hợp phím) | [`KEYDOWN`](/lenh/ban-phim#keydown), [`KEYUP`](/lenh/ban-phim#keyup) | Dùng để bấm tổ hợp như `Ctrl + S` (🟠 có trường hợp cần [mã khác `KEYPRESS`](/phu-luc/ma-phim#khi-keydown-can-ma-khac)) |
 | Gõ một chuỗi ký tự | [`KEYSTRING`](/lenh/ban-phim#keystring) | Phụ thuộc bộ gõ; không bấm được phím không phải ký tự |
 | Kiểm tra 1 phím có đang được nhấn | [`ISKEYDOWN`](/lenh/ban-phim#iskeydown) | Kiểm tra được cả phím bàn phím và nút chuột |
 | Lấy danh sách mọi phím đang nhấn | [`GETKEYSDOWN`](/lenh/ban-phim#getkeysdown) | Đổ danh sách mã phím đang nhấn vào mảng |

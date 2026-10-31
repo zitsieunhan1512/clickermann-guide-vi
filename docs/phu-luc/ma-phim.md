@@ -53,8 +53,111 @@ Khi dùng các lệnh bàn phím như [`KEYPRESS`](/lenh/ban-phim#keypress), [`K
 - 🟠 **Lưu ý về mã phím `PrintScreen` (`154`):**
   - **Nên làm:** Nếu dùng `#PRINTSCREEN` (`154`) mà không bắt được phím PrintScreen trên máy bạn, hãy thử truyền mã số **`44`** (`0x2C`).
   ::: details Vì sao chưa chắc
-  Cả bảng phụ lục mã phím trong help lẫn tệp `data/const.txt` đều ghi `#PRINTSCREEN` là `154` (`0x9A`). Tuy nhiên, **Suy luận:** theo kiến thức Windows, mã phím ảo chuẩn (`VK_SNAPSHOT`) của phím PrintScreen trên Windows thường là `44` (`0x2C`). Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#ma-phim-printscreen-154-va-44).
+  Cả bảng phụ lục mã phím trong help lẫn tệp `data/const.txt` đều ghi `#PRINTSCREEN` là `154` (`0x9A`). Tuy nhiên, **Suy luận:** theo kiến thức Windows, mã phím ảo chuẩn (`VK_SNAPSHOT`) của phím PrintScreen trên Windows thường là `44` (`0x2C`). Bảng tự dò cũng ghi `44`, cột `KEYDOWN` ghi `90`, khớp quy luật (xem mục [Khi `KEYDOWN` cần mã khác](#khi-keydown-can-ma-khac)). Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#ma-phim-printscreen-154-va-44).
   :::
+
+---
+
+## Khi `KEYDOWN` cần mã khác
+
+**Trạng thái:** 🟠 Chưa thống nhất (xem kịch bản kiểm tra tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#quy-luat-ma-keydown))
+
+1. **Hiện tượng:** Theo bảng tự dò của Mai Bảo Long, có trường hợp [`KEYDOWN`](/lenh/ban-phim#keydown), [`KEYUP`](/lenh/ban-phim#keyup) phải dùng mã khác [`KEYPRESS`](/lenh/ban-phim#keypress) thì mới ra đúng phím. Ví dụ mũi tên trái: `KEYPRESS(37)` nhưng `KEYDOWN(75)`.
+2. **Quy luật:**
+   - **Suy luận:** Muốn ứng dụng nhận phím có mã `V`, gửi phím có **mã quét bằng `V`**.
+   - **Kiến thức Windows:** Mỗi phím trên bàn phím có mã phím ảo (Virtual-Key Code) và mã quét (Scan Code) riêng; mã quét của phím `K` là `37`, nên `KEYDOWN(75)` ra phím mũi tên trái có mã `37`.
+   - Ba ví dụ khác:
+     - Mũi tên lên dùng mã `76` (vì mã quét của phím `L` là `38`, bằng mã thường của mũi tên lên).
+     - Enter dùng mã `187` (vì mã quét của phím `=` là `13`, bằng mã thường của Enter).
+     - Space dùng mã `68` (vì mã quét của phím `D` là `32`, bằng mã thường của Space).
+3. **Mức bằng chứng:**
+   - Trong bảng đo, `67/67` giá trị đối chiếu được đều khớp quy luật, không lệch giá trị nào. `18` giá trị khác không đối chiếu được vì nằm ngoài bảng mã quét đã dùng.
+   - `35/38` phím bị bỏ trống đúng là các phím không có mã nào tạo ra theo quy luật. Ba phím trống còn lại là `Shift`, `Ctrl`, `Alt`.
+   - Chưa rõ quy luật do Clickermann hay do ứng dụng đã đo, và xảy ra ở chế độ nào. Bảng mã quét dùng để đối chiếu dựa trên bàn phím US, không phải đo trong Clickermann.
+4. **Nên làm:** Thử `KEYDOWN` với mã thường trước. Nếu ra sai phím, chạy [script dò mã phím](/cam-nang/thuc-chien#do-ma-phim) ở phần Cẩm nang, hoặc tra hai bảng dưới đây.
+
+::: details Bảng đo được (Tự dò bởi Mai Bảo Long)
+Nguồn: Tự dò bởi Mai Bảo Long tại [Tài liệu Clickermann by Mai Bảo Long](https://maibaolongne.blogspot.com/2024/09/tai-lieu-clickermann-by-mai-bao-long.html) (tác giả không ghi đo trên ứng dụng và chế độ nào).
+
+| Phím | Mã thường (`KEYPRESS`) | `KEYDOWN`/`KEYUP` đo được | Mã khác đo được |
+|---|---|---|---|
+| A | `65` | `118` |  |
+| B | `66` | `119` |  |
+| C | `67` | `120` |  |
+| D | `68` | `121` |  |
+| E | `69` | `144` |  |
+| F | `70` | `3` | `145` |
+| G | `71` | `36` | `103` |
+| H | `72` | `38` | `104` |
+| I | `73` | `33` | `105` |
+| J | `74` | `109` |  |
+| K | `75` | `37` | `100` |
+| L | `76` | `12` | `101` |
+| M | `77` | `39` | `102` |
+| N | `78` | `107` |  |
+| O | `79` | `35` | `97` |
+| P | `80` | `40` | `98` |
+| Q | `81` | `34` | `99` |
+| R | `82` | `45` | `96` |
+| S | `83` | `46` | `110` |
+| T | `84` | `44` |  |
+| V | `86` | `226` |  |
+| W | `87` | `122` |  |
+| X | `88` | `123` |  |
+| Z | `90` | `238` |  |
+| 1 | `49` | `78` |  |
+| 2 | `50` | `77` | `172` |
+| 3 | `51` | `188` |  |
+| 4 | `52` | `190` |  |
+| 5 | `53` | `111` | `191` |
+| 6 | `54` | `161` |  |
+| 7 | `55` | `106` |  |
+| 8 | `56` | `18` | `164` |
+| 9 | `57` | `32` |  |
+| 0 | `48` | `66` | `175` |
+| Tab | `9` | `56` |  |
+| Space | `32` | `68` | `173` |
+| Enter | `13` | `187` |  |
+| Backspace | `8` | `55` |  |
+| Caps Lock | `20` | `84` |  |
+| Escape | `27` | `221` |  |
+| F2 | `113` | `233` |  |
+| F4 | `115` | `193` |  |
+| F7 | `118` | `135` |  |
+| F12 | `123` | `235` |  |
+| Insert | `45` | `88` |  |
+| Delete | `46` | `67` | `174` |
+| Home | `36` | `74` | `178` |
+| End | `35` | `72` |  |
+| Page Up | `33` | `70` | `183` |
+| Page Down | `34` | `71` | `179` |
+| Arrow Up | `38` | `76` |  |
+| Arrow Down | `40` | `222` |  |
+| Arrow Left | `37` | `75` |  |
+| Arrow Right | `39` | `186` |  |
+| Pause break | `19` | `82` |  |
+| PrtScr | `44` | `90` |  |
+| ; : | `59` | `112` |  |
+| =+ | `61` | `114` |  |
+| menu | `93` | `93` | `249` |
+| Numpad . | `110` | `134` |  |
+
+**Ghi chú về bảng tự dò trên blog:**
+- Bảng trên không đưa vào 3 dòng click chuột của blog vì blog ghi nút chuột trái, giữa, phải lần lượt là `0`, `1`, `2`, trong khi help chính thức ghi là `1`, `4`, `2`.
+- Ở cột mã thường (`KEYPRESS`) trên blog, 3 phím `; :`, `=+` và `-_` được ghi thêm các mã `59`, `61`, `173` (khác với mã Windows trong help là `186`, `187`, `189`; chưa rõ nguyên nhân của sự khác biệt này).
+:::
+
+**Bảng tính theo quy luật, chưa đo (`Shift`, `Ctrl`, `Alt`):**
+
+| Phím | Mã thường | Mã tính theo quy luật |
+|---|---|---|
+| Shift | `16` | `81` |
+| Ctrl | `17` | `87` |
+| Alt | `18` | `69` |
+
+::: warning Cảnh báo khi thử mã của Shift, Ctrl, Alt
+Dùng `KEYDOWN` với các mã `81`, `87`, `69` trên có thể làm hệ thống giữ phím `Shift`, `Ctrl`, `Alt` nếu quy luật đúng, nên luôn phải gọi lệnh `KEYUP` tương ứng ngay sau đó.
+:::
 
 ---
 

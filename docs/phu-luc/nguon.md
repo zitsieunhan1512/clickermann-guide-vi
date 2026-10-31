@@ -17,6 +17,9 @@ Bộ tài liệu hướng dẫn Clickermann v4.13 bằng tiếng Việt này đ�
    - Được chia sẻ công khai trên diễn đàn chính thức của Clickermann ([http://crapware.aidf.org/forum/](http://crapware.aidf.org/forum/)), hiện chưa rõ tên tác giả cụ thể (bộ tài liệu sẵn sàng mở đường liên hệ để bổ sung thông tin ghi công ngay khi xác nhận được tác giả của thư viện). Xem chi tiết tại trang [Thư viện alt_winmode](/nang-cao/alt-winmode).
 4. **Kỹ thuật thực chiến từ script thực tế của người biên soạn:**
    - Các mẫu kỹ thuật tại trang [Thực chiến: kỹ thuật viết script](/cam-nang/thuc-chien) được rút ra từ script thực tế do chính người biên soạn bộ tài liệu này tự viết và sử dụng; bản script gốc không công bố nguyên bản mà được viết lại toàn bộ ví dụ minh họa trên Notepad và Paint.
+5. **Bảng mã phím và script dò mã phím của Mai Bảo Long:**
+   - Bảng mã phím đo được cho `KEYDOWN`/`KEYUP` (xem mục [Khi `KEYDOWN` cần mã khác](/phu-luc/ma-phim#khi-keydown-can-ma-khac)) và mẫu script [Dò mã phím](/cam-nang/thuc-chien#do-ma-phim) được tác giả **Mai Bảo Long** tự dò và chia sẻ công khai tại bài viết [Tài liệu Clickermann by Mai Bảo Long](https://maibaolongne.blogspot.com/2024/09/tai-lieu-clickermann-by-mai-bao-long.html).
+   - Lưu ý: bài viết gốc trên blog không ghi rõ điều kiện đo (đo trên ứng dụng nào và ở chế độ chạy nào của Clickermann), nên toàn bộ nội dung đối chiếu liên quan được gắn nhãn `🟠 Chưa thống nhất` để chờ kiểm chứng thực tế trên máy Windows.
 
 ## Bảng đối chiếu mục lục với tệp `help.chm` gốc
 

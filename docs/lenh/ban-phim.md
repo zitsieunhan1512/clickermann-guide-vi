@@ -33,7 +33,7 @@ HALT
 
 Nhấn và giữ một phím trên bàn phím ở trạng thái đang đè xuống.
 
-**Loại:** thủ tục · **Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Loại:** thủ tục · **Trạng thái:** 🟠 Chưa thống nhất
 
 ```cms
 KEYDOWN (keycode)
@@ -56,6 +56,7 @@ HALT
 **Lưu ý**
 
 - Không thể dùng `KEYDOWN` để tạo hiệu ứng đè phím tự lặp ký tự liên tục giống như khi đè phím trên bàn phím vật lý, vì việc tự lặp khi đè phím trên bàn phím thật do bộ điều khiển phần cứng (controller) của bàn phím đảm nhiệm.
+- 🟠 **Lưu ý về mã phím của `KEYDOWN`:** Theo bảng tự dò của Mai Bảo Long, có trường hợp `KEYDOWN` và `KEYUP` phải dùng mã khác với `KEYPRESS` thì mới ra đúng phím (ví dụ hãy thử mã thường trước; nếu ra sai phím, xem chi tiết quy luật và bảng tra tại mục [Khi `KEYDOWN` cần mã khác](/phu-luc/ma-phim#khi-keydown-can-ma-khac)).
 
 ---
 
@@ -63,7 +64,7 @@ HALT
 
 Nhả một phím đã được nhấn giữ trước đó.
 
-**Loại:** thủ tục · **Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Loại:** thủ tục · **Trạng thái:** 🟠 Chưa thống nhất
 
 ```cms
 KEYUP (keycode)
@@ -81,6 +82,10 @@ KEYPRESS(#S)
 KEYUP(#CTRL)
 HALT
 ```
+
+**Lưu ý**
+
+- 🟠 **Lưu ý về mã phím của `KEYUP`:** Khi nhả phím, hãy truyền đúng mã phím đã dùng ở lệnh `KEYDOWN` tương ứng. Nếu gặp trường hợp `KEYDOWN` và `KEYUP` cần mã khác với `KEYPRESS`, xem mục [Khi `KEYDOWN` cần mã khác](/phu-luc/ma-phim#khi-keydown-can-ma-khac).
 
 ---
 

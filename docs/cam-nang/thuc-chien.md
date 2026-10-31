@@ -1,6 +1,6 @@
 # Thực chiến: kỹ thuật viết script
 
-Trang này tổng hợp 8 kỹ thuật tổ chức và viết script thực tế trong Clickermann, giúp kịch bản chạy nhanh, tự xử lý khi màn hình thay đổi bất ngờ, dễ gỡ lỗi và quản lý được nhiều cửa sổ ứng dụng cùng lúc.
+Trang này tổng hợp 9 kỹ thuật tổ chức và viết script thực tế trong Clickermann, giúp kịch bản chạy nhanh, tự xử lý khi màn hình thay đổi bất ngờ, dễ gỡ lỗi và quản lý được nhiều cửa sổ ứng dụng cùng lúc.
 
 ::: info Nguồn gốc kỹ thuật và trạng thái kiểm chứng
 - Các kỹ thuật lấy từ script thực tế do người biên soạn tự viết và báo là chạy tốt. Ví dụ ở đây được viết lại cho Notepad và Paint, chưa chạy thử.
@@ -422,4 +422,58 @@ HALT
 
 ---
 
-*Nguồn: Kỹ thuật tổng hợp từ script thực tế của người biên soạn (đã viết lại ví dụ cho Notepad và Paint) và tài liệu trợ giúp `help.chm` (phần Giới thiệu ngôn ngữ, bài Khóa cửa sổ, mục Cấu trúc lệnh, mục Màn hình và mục WinAPI); tham khảo đối chiếu sách của Chô tô (tr. 81).*
+## Dò mã phím
+
+### Khi nào dùng
+
+Khi cần kiểm tra thực tế xem ứng dụng đang mở nhận mã số nào cho [`KEYPRESS`](/lenh/ban-phim#keypress) hoặc khi gặp trường hợp [`KEYDOWN`](/lenh/ban-phim#keydown), [`KEYUP`](/lenh/ban-phim#keyup) cần mã số khác với mã thường (xem mục [Khi `KEYDOWN` cần mã khác](/phu-luc/ma-phim#khi-keydown-can-ma-khac)), bạn có thể dùng hai đoạn script dò mã phím tự động dưới đây (dựa theo cách dò trên blog [Tài liệu Clickermann by Mai Bảo Long](https://maibaolongne.blogspot.com/2024/09/tai-lieu-clickermann-by-mai-bao-long.html)).
+
+Bản gốc trên blog cho vòng lặp chạy tới `500` và không có lệnh `HALT` ở cuối; ở đây tài liệu giới hạn vòng lặp đến `255` và kết thúc bằng `HALT` vì **Kiến thức Windows:** mã phím ảo (Virtual-Key Code) không vượt quá `255`, đồng thời script chủ động bỏ qua các mã phím hệ thống dễ làm gián đoạn quá trình đo gồm `18` (`Alt`), `91` (`Win` trái), `92` (`Win` phải), `93` (`Menu`) và `95` (`Sleep`).
+
+### Ví dụ
+
+**Trạng thái:** 🟠 Chưa thống nhất (liên quan quy luật mã `KEYDOWN` — xem [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#quy-luat-ma-keydown))
+
+Script 1 — Dò mã phím cho `KEYPRESS`:
+
+```cms
+// Dò mã cho KEYPRESS. Mở Notepad trống và bấm vào đó trong 3 giây chờ
+WAIT(3)
+FOR($i=1, $i < 256)
+   IF(($i != 18) & ($i != 91) & ($i != 92) & ($i != 93) & ($i != 95))
+      PRINT("Ma ", $i)
+      KEYPRESS($i)
+      WAITMS(1000)
+   END_IF
+END_CYC
+HALT
+```
+
+Script 2 — Dò mã phím cho `KEYDOWN`, `KEYUP`:
+
+```cms
+// Dò mã cho KEYDOWN, KEYUP
+WAIT(3)
+FOR($i=1, $i < 256)
+   IF(($i != 18) & ($i != 91) & ($i != 92) & ($i != 93) & ($i != 95))
+      PRINT("Ma ", $i)
+      KEYDOWN($i)
+      WAITMS(1000)
+      KEYUP($i)
+      WAITMS(1000)
+   END_IF
+END_CYC
+HALT
+```
+
+### Lỗi dễ gặp
+
+- **Chỉ chạy khi Notepad trống đang được chọn:** Không để tài liệu quan trọng mở phía trước khi chạy script dò mã phím.
+- **Script bấm mọi mã còn lại (kể cả `Enter`, `Delete`, `F5`, `Esc`) và có thể làm chuyển cửa sổ:** Luôn quan sát màn hình trong lúc script chạy và sẵn sàng nhấn `Alt + S` để dừng ngay khi cần.
+- **Phím `Shift` hoặc `Ctrl` bị kích hoạt trong lúc dò:** Nếu quy luật mã `KEYDOWN` đúng, một số mã ở script 2 có thể tạo ra phím `Shift` hoặc `Ctrl`. Script đã gọi `KEYUP($i)` nhả phím ngay nên thường không bị kẹt; nếu sau khi dừng mà thấy bàn phím gõ lạ, hãy bấm phím `Shift` và `Ctrl` trên bàn phím thật một lần để nhả hoàn toàn.
+- **Chạy script khi đang ở cửa sổ đang lưu dữ liệu hay ứng dụng khác:** Tuyệt đối không chạy hai script này khi con trỏ đang đặt ở cửa sổ có dữ liệu cần giữ hoặc ứng dụng khác ngoài cửa sổ thử nghiệm trống.
+- **Mỗi lượt dò toàn bộ mất tới vài phút:** Bạn có thể sửa thu hẹp khoảng giá trị của `$i` trong lệnh `FOR` (ví dụ `FOR($i=65, $i < 91)`) để dò nhanh hơn cho nhóm mã đang cần tìm.
+
+---
+
+*Nguồn: Kỹ thuật tổng hợp từ script thực tế của người biên soạn (đã viết lại ví dụ cho Notepad và Paint), tài liệu trợ giúp `help.chm` (phần Giới thiệu ngôn ngữ, bài Khóa cửa sổ, mục Cấu trúc lệnh, mục Màn hình và mục WinAPI), tham khảo đối chiếu sách của Chô tô (tr. 81) và bài chia sẻ của Mai Bảo Long ([Tài liệu Clickermann by Mai Bảo Long](https://maibaolongne.blogspot.com/2024/09/tai-lieu-clickermann-by-mai-bao-long.html)).*
