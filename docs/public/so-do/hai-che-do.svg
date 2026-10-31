@@ -24,7 +24,7 @@
   <rect x="45" y="193" width="300" height="48" rx="6" fill="#ffffff" stroke="#b45309" stroke-width="1.5"/>
   <text x="195" y="222" text-anchor="middle" font-size="13.5" font-weight="600" fill="#78350f">Chiếm thiết bị đầu vào trong lúc chạy</text>
 
-  <text x="195" y="268" text-anchor="middle" font-size="13.5" fill="#9a3412">Người dùng không thể làm việc khác cùng lúc</text>
+  <text x="195" y="268" text-anchor="middle" font-size="13.5" fill="#9a3412">Suy luận: không thể làm việc khác cùng lúc</text>
 
   <!-- Right panel: Window mode -->
   <rect x="395" y="55" width="340" height="240" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>

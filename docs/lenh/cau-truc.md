@@ -2,6 +2,8 @@
 
 Trang này hướng dẫn các cấu trúc điều khiển giúp script kiểm tra điều kiện, lặp lại thao tác, tách chương trình con và chạy nhiều luồng song song. Các cấu trúc này giúp script ngắn gọn, dễ đọc và xử lý linh hoạt theo tình huống.
 
+*(Các đoạn code ví dụ dưới đây có thêm lệnh `HALT` ở cuối để chỉ chạy một lần khi thử nghiệm — bản gốc trong help không có `HALT`; riêng ví dụ của `THREAD` để nguyên không có `HALT` để các luồng lặp liên tục, và ở `SETTHREAD`, `SWITCH` bản gốc trong help cũng tự lặp lại liên tục).*
+
 ## IF ... END_IF
 
 Kiểm tra một biểu thức điều kiện và chỉ chạy khối lệnh bên trong nếu điều kiện đúng.
@@ -41,7 +43,7 @@ HALT
 **Lưu ý**
 
 - Các câu lệnh nằm giữa `IF` và `END_IF` chỉ chạy dựa trên giá trị của `expression` sau khi tính toán: nếu bằng `0` thì bỏ qua, mọi giá trị khác `0` đều được coi là đúng và khối lệnh sẽ chạy.
-- `expression` có thể là phép tính số học, phép so sánh logic hoặc kết quả trả về của một hàm.
+- `expression` có thể là phép tính số học, phép so sánh logic hoặc kết quả trả về của một hàm. Xem thêm chi tiết ở phần [Ngôn ngữ script](/khai-niem/ngon-ngu#phep-so-sanh-va-phep-toan-logic).
 
 ---
 
@@ -134,8 +136,8 @@ HALT
 
 **Lưu ý**
 
-- Nên dùng `SWITCH` khi cần kiểm tra nhiều trường hợp của cùng một giá trị, giúp tránh phải lồng quá nhiều lệnh `IF` gây rối mắt.
-- Các tham số trong `SWITCH` và `CASE` đều có thể truyền bằng số trực tiếp hoặc biến.
+- Nên dùng `SWITCH` khi cần kiểm tra nhiều trường hợp của cùng một giá trị, giúp tránh việc dùng **quá nhiều lệnh `IF`** gây khó đọc.
+- Các tham số của các lệnh nêu trên có thể là **số hoặc biến**.
 - Nhánh `DEFAULT` là tùy chọn; khối lệnh sau `DEFAULT` chỉ chạy khi không có nhánh `CASE` nào khớp với giá trị hiện tại của `var`.
 
 ---
@@ -144,7 +146,7 @@ HALT
 
 Lặp lại khối lệnh khi điều kiện còn đúng và tự động tăng biến đếm sau mỗi vòng lặp.
 
-**Loại:** cấu trúc lệnh · **Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Loại:** cấu trúc lệnh · **Trạng thái:** 🟠 Chưa thống nhất
 
 ```cms
 FOR ($var [=value], expression, [step])
@@ -177,16 +179,16 @@ FOR($var=10, $var < 100, 10)
    LOGWRITE("var: ", $var)
 END_CYC
 
-// Vòng lặp lồng nhau
-FOR($x, $x < 3)
-   FOR($y, $y < 3)
+// Vòng lặp lồng nhau (gán rõ =0 cho biến đếm)
+FOR($x=0, $x < 3)
+   FOR($y=0, $y < 3)
       PRINT($x, ":", $y)
    END_CYC
 END_CYC
 
-// Vòng lặp với điều kiện kết hợp
+// Vòng lặp với điều kiện kết hợp (gán rõ =0 cho $x vì $x đã dùng ở trên)
 $y = 0
-FOR($x, ($y < 10) & ($x < 10))
+FOR($x=0, ($y < 10) & ($x < 10))
    PRINT("x:", $x, " y:", $y)
    INC($y, 5)
 END_CYC
@@ -197,8 +199,12 @@ HALT
 **Lưu ý**
 
 - Ở mỗi vòng, nếu `expression` đúng thì thân vòng lặp (các lệnh giữa `FOR` và `END_CYC`) sẽ chạy, sau đó `$var` tăng thêm `step` rồi kiểm tra lại `expression`. Vòng lặp kết thúc khi `expression` nhận giá trị sai.
-- Nếu không viết `=value`: trường hợp `$var` là biến mới chưa từng dùng thì nó tự nhận giá trị `0`; nhưng nếu `$var` đã có giá trị từ trước (kể cả từ chính vòng lặp đó ở lượt chạy script trước), vòng lặp sẽ dùng tiếp giá trị hiện tại của `$var`.
-- Suy luận: theo mô tả của help, biến giữ giá trị sau vòng ngoài đầu tiên nên ở ví dụ vòng lặp lồng nhau (`FOR($x, $x < 3)` chứa `FOR($y, $y < 3)`), biến `$y` có thể không chạy lại từ `0` khi `$x` sang `1` và `2` (xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#vong-lap-for-long-nhau-khong-gan-gia-tri-dau)).
+- Nếu không viết `=value`: trường hợp `$var` là biến mới chưa từng dùng thì nó tự nhận giá trị `0`; nhưng nếu `$var` đã có giá trị từ trước (kể cả từ chính vòng lặp đó ở lượt chạy trước), vòng lặp sẽ dùng tiếp giá trị hiện tại của `$var`.
+- 🟠 **Lưu ý khi lồng vòng lặp `FOR` hoặc dùng lại biến đếm:**
+  - **Nên làm:** Hãy luôn gán rõ giá trị khởi đầu (như `FOR($x=0, $x < 3)` và `FOR($y=0, $y < 3)`) cho biến đếm ở mọi vòng lặp `FOR`.
+  ::: details Vì sao chưa chắc
+   ở hai ví dụ cuối (vòng lặp lồng nhau và điều kiện kết hợp), bản trong help viết `for($x, $x < 3)`, `for($y, $y < 3)` và `for($x, ($y < 10) & ($x < 10))` không có `=0`. Theo mô tả ngay phía trên của help, biến giữ giá trị cũ nên vòng trong `$y` (khi `$x` sang `1`, `2`) hoặc vòng sau dùng lại `$x` có thể không chạy, vì vậy ở đây gán rõ `=0`. Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#vong-lap-for-long-nhau-khong-gan-gia-tri-dau).
+  :::
 
 ---
 
@@ -254,7 +260,7 @@ HALT
 
 Định nghĩa một chương trình con để gom nhóm các câu lệnh và gọi lại nhiều lần theo tên.
 
-**Loại:** cấu trúc lệnh · **Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Loại:** cấu trúc lệnh · **Trạng thái:** 🟠 Chưa thống nhất
 
 ```cms
 SUB (sub_name, [$par1, $par2, ...])
@@ -272,7 +278,7 @@ END_SUB
 ```cms
 // Ví dụ 1: Định nghĩa và gọi chương trình con không có tham số
 SUB(thong_bao)
-   FOR($i, $i < 3)
+   FOR($i=0, $i < 3)
       PRINT("Lan thu ", $i)
    END_CYC
 END_SUB
@@ -288,7 +294,7 @@ SUB(nhan_hai_so, $par1, $par2)
 END_SUB
 
 // Gọi chương trình con 3 lần
-FOR($i, $i < 3)
+FOR($i=0, $i < 3)
    nhan_hai_so(RND(1, 5), RND(1, 5))
 END_CYC
 
@@ -301,13 +307,21 @@ xin_chao("An")
 HALT
 ```
 
+*(Lưu ý về vòng lặp trong Ví dụ 1 và 2: bản trong help viết `for($i, $i < 3)` không có `=0`. Theo mô tả của help, biến giữ giá trị cũ nên vòng sau có thể không chạy, vì vậy ở đây gán rõ `=0`).*
+
 **Lưu ý**
 
 - Khối lệnh trong `SUB ... END_SUB` không tự chạy khi script đi ngang qua, mà chỉ chạy khi bạn gọi tên `sub_name(...)` trong script.
-- Phần định nghĩa `SUB` bắt buộc phải nằm **phía trên (trước)** mọi lời gọi tới nó. Vì vậy nên đặt các khối `SUB` ở ngay đầu script.
-- Help gợi ý có thể tách các `SUB` ra file riêng rồi nạp vào bằng chỉ thị `#include`. Tuy nhiên, sách của Chô tô khuyến cáo hạn chế để `SUB` ở file ngoài qua `#include` vì đôi lúc gặp lỗi (Tham khảo: sách của Chô tô, tr. 81).
-- Các tham số `$par1, $par2, ...` hoạt động như biến cục bộ trong thân chương trình con và sẽ bị hủy sau khi chương trình con chạy xong, trước khi script quay lại dòng ngay sau lời gọi.
+- Có thể khai báo chương trình con ở **bất kỳ đâu trong script**, miễn là phần định nghĩa `SUB` nằm **trước (phía trên)** mọi lời gọi tới nó. Vì vậy nên đặt các khối `SUB` ở ngay đầu script.
+- Sau khi thực thi xong chương trình con, script tiếp tục chạy từ chỗ gọi; các biến cục bộ (các tham số `$par1, $par2, ...`) của chương trình con **khi đó** sẽ bị hủy.
 - Số lượng tham số lúc gọi phải khớp chính xác với số lượng tham số lúc khai báo `SUB`. Nếu chương trình con không có tham số, khi gọi vẫn phải viết cặp ngoặc tròn rỗng `sub_name()`.
+- 🟠 **Điểm chưa thống nhất về việc đặt `SUB` trong tệp `#include`:**
+  - **Nên làm:** Khi mới viết script hoặc khi gặp lỗi không rõ nguyên nhân với `#include`, hãy đặt các khối `SUB ... END_SUB` ngay ở đầu tệp script `.cms` chính.
+  ::: details Vì sao chưa chắc
+  - **Theo help (mục Cấu trúc lệnh):** Ghi rằng *"Việc tách phần thân các chương trình con ra một tệp riêng bên ngoài rồi nạp qua chỉ thị `#include` được coi là thói quen tốt"*.
+  - **Theo sách của Chô tô (tr. 81):** Lại khuyên hạn chế để `SUB` ở tệp ngoài rồi nạp qua `#include` vì đôi lúc bị lỗi.
+  - Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#dat-sub-trong-tep-include).
+  :::
 
 ---
 
@@ -360,10 +374,13 @@ WAIT(10)
 - Chương trình con (`SUB`) dùng trong luồng nào phải được khai báo và gọi ngay bên trong thân của chính luồng đó. Không được khai báo `SUB` ở ngoài rồi gọi từ trong luồng (hoặc ngược lại) vì sẽ gây lỗi.
 - Mọi luồng và script chính dùng chung một phạm vi dữ liệu: tất cả đều đọc/ghi chung các biến và dùng chung **bộ đệm ảnh**.
 - Khi bấm chạy script chính từ giao diện, các luồng sẽ mang trạng thái ban đầu lúc khai báo; khi tạm dừng hoặc dừng hẳn script chính, tất cả các luồng cũng tạm dừng hoặc dừng theo.
-- 🟠 **Điểm chưa thống nhất về giá trị mặc định của `init_state` (so sánh giữa help và sách của Chô tô):**
-  - **Theo help:** Phần mô tả cú pháp không ghi thẳng số mặc định khi bỏ qua `init_state`, nhưng ví dụ của help viết `thread(t1)` và `thread(t2)` không truyền `init_state` và giải thích rằng cả hai luồng con này cùng chạy song song ngay với script chính; còn khi muốn tạo luồng ở trạng thái tạm dừng thì ví dụ ở mục `SETTHREAD` viết rõ `thread(t1, 0)`. Như vậy theo ví dụ của help, bỏ trống `init_state` thì luồng tự chạy (`1`).
+- 🟠 **Điểm chưa thống nhất về giá trị mặc định của `init_state`:**
+  - **Nên làm:** Hãy luôn truyền rõ `THREAD(ten, 1)` (nếu muốn luồng chạy ngay) hoặc `THREAD(ten, 0)` (nếu muốn luồng tạm dừng lúc đầu) để không phụ thuộc vào giá trị mặc định.
+  ::: details Vì sao chưa chắc
+  - **Theo help:** Phần mô tả cú pháp không ghi thẳng số mặc định khi bỏ qua `init_state`, nhưng ví dụ của help viết `thread(t1)` và `thread(t2)` không truyền `init_state` và giải thích rằng cả hai luồng con này cùng chạy song song ngay với script chính; còn khi muốn tạo luồng ở trạng thái tạm dừng thì ví dụ ở mục `SETTHREAD` viết rõ `thread(t1, 0)`. **Suy luận:** Như vậy theo ví dụ của help, bỏ trống `init_state` thì luồng tự chạy (`1`).
   - **Theo sách của Chô tô (tr. 82):** Sách lại ghi rằng nếu không ghi `init_state` thì luồng đang ở trạng thái tắt (`0`), chưa chạy và bắt buộc phải bật bằng lệnh `SETTHREAD`.
-  - Bạn nên truyền rõ `THREAD(ten, 1)` hoặc `THREAD(ten, 0)` để tránh phụ thuộc mặc định. Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#trang-thai-mac-dinh-cua-thread-khi-bo-qua-init-state).
+  - Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#trang-thai-mac-dinh-cua-thread-khi-bo-qua-init-state).
+  :::
 
 ---
 
@@ -401,11 +418,14 @@ HALT
 
 **Lưu ý**
 
-- Ý nghĩa các giá trị của tham số `state` theo help:
+- Ý nghĩa các giá trị của tham số `state`:
   - `0` — Đưa luồng vào trạng thái tạm dừng (giữ nguyên vị trí dòng lệnh đang chạy dở).
   - `1` — Gỡ tạm dừng để luồng chạy tiếp từ đúng vị trí đã dừng trước đó.
   - `2` — Đưa luồng vào trạng thái tạm dừng, đồng thời đặt lại vị trí về đầu luồng; ở lần gọi `SETTHREAD(thread_name, 1)` tiếp theo, luồng sẽ chạy lại từ dòng đầu tiên bất kể trước đó dừng ở đâu.
 - 🟠 **Điểm chưa thống nhất khi so sánh giữa help và sách của Chô tô:**
+  - **Nên làm:** Dùng `state = 0` khi muốn tạm dừng giữ vị trí, `state = 1` để chạy tiếp, và `state = 2` khi muốn tạm dừng đồng thời đặt lại luồng về dòng đầu tiên.
+  ::: details Vì sao chưa chắc
   - **Theo help:** `SETTHREAD` hỗ trợ 3 giá trị `state` là `0` (tạm dừng, giữ vị trí), `1` (chạy tiếp từ chỗ dừng) và `2` (tạm dừng và đặt lại về đầu luồng cho lần chạy sau).
   - **Theo sách của Chô tô (tr. 83):** Sách chỉ liệt kê hai giá trị là `0` (tắt luồng) và `1` (bật luồng), thiếu hẳn giá trị `2`, và cách gọi "tắt luồng" dễ gây nhầm lẫn với việc dừng hẳn từ đầu trong khi thực chất `0` trong help là tạm dừng tại chỗ.
   - Xem chi tiết và script kiểm chứng hành vi `state = 0` so với `state = 2` tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#cac-gia-tri-state-cua-setthread).
+  :::

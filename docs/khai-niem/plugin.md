@@ -2,17 +2,15 @@
 
 Trang này giải thích cơ chế hoạt động của plugin trong Clickermann, giao diện hàm C++ để tự viết một plugin DLL, cách gọi plugin bằng lệnh `CALL` và cảnh báo an toàn.
 
-**Trạng thái:** 🟠 Chưa thống nhất
-
 ## Plugin trong Clickermann là gì?
 
-Theo help, bài Plugin, **plugin** là các mô-đun phần mềm độc lập bên ngoài nhưng có thể giao tiếp với Clickermann để mở rộng khả năng của chương trình.
+**Plugin** là các mô-đun phần mềm độc lập bên ngoài nhưng có thể giao tiếp với Clickermann để mở rộng khả năng của chương trình.
 
-Mỗi plugin là một tệp thư viện liên kết động chuẩn của Windows (**DLL**) xuất ra (export) một hàm duy nhất. Bên trong tệp DLL này, ngôn ngữ lập trình và môi trường phát triển dùng để viết DLL đều không quan trọng (theo help, bài Plugin).
+Mỗi plugin là một tệp thư viện liên kết động chuẩn của Windows (**DLL**) xuất ra (export) một hàm duy nhất. Bên trong tệp DLL này, ngôn ngữ lập trình và môi trường phát triển dùng để viết DLL đều không quan trọng.
 
 ## Khuôn mẫu hàm xuất (Export Function) khi viết DLL
 
-Bất kể bạn dùng trình biên dịch hay môi trường phát triển nào, tệp DLL của plugin chỉ cần xuất đúng một hàm theo chuẩn C++ như sau (theo help, bài Plugin):
+Bất kể bạn dùng trình biên dịch hay môi trường phát triển nào, tệp DLL của plugin chỉ cần xuất đúng một hàm theo chuẩn C++ như sau:
 
 ```cpp
 int execute(int* _arr, int _size)
@@ -44,14 +42,21 @@ Cơ chế thực thi khi gọi `CALL`:
 
 ## Điểm chưa thống nhất về thư mục đặt tệp DLL
 
-- 🟠 **Vị trí đặt tệp DLL của plugin (so sánh giữa help và sách của Chô tô):**
+- 🟠 **Vị trí đặt tệp DLL của plugin:**
+  - **Nên làm:** Khi dùng lệnh `CALL("plugin.dll", ...)`, hãy đặt bản sao tệp `.dll` ở cả thư mục dự án (cùng chỗ với tệp `.cms`) và thư mục `%Clickermann%/plugins/`, hoặc kiểm tra xem vị trí nào trả về `$_return1` đúng trên máy bạn.
+  ::: details Vì sao chưa chắc
   - **Theo help, bài Plugin:** Tệp DLL của plugin phải nằm trong **thư mục dự án**, đặt cạnh tệp script đang chạy hoặc trong thư mục con. Nếu không tìm thấy tệp DLL theo tên đã truyền ở đó, lệnh `CALL` sẽ âm thầm kết thúc.
-  - **Theo sách của Chô tô (tr. 104):** Chỉ ghi rằng tệp DLL đặt cùng thư mục với file script.
+  - **Theo sách của Chô tô (tr. 104):** Chỉ ghi rằng tệp DLL đặt cùng thư mục với tệp script.
   - **Theo help, mục Script và plugin (lệnh `CALL`):** Lại ghi rằng `filename` là đường dẫn tương đối tính từ thư mục **`%Clickermann%/plugins`**.
   - Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#thu-muc-nap-plugin-dll-cua-call).
+  :::
 
 ## Cảnh báo an toàn khi dùng plugin
 
-::: warning Cảnh báo từ tác giả Clickermann (help, bài Plugin)
+::: warning Cảnh báo từ tác giả Clickermann
 Các tệp plugin `.dll` là những "hộp đen" chứa mã thực thi máy tính mà người dùng thông thường rất khó kiểm tra bên trong làm gì. Nếu bạn không phải là chuyên gia, **tuyệt đối không sử dụng các tệp plugin `.dll` tải từ những nguồn không đáng tin cậy**, vì chúng hoàn toàn có thể chứa mã độc gây hại cho máy tính của bạn.
 :::
+
+---
+
+*Nguồn: Tài liệu trợ giúp `help.chm` (bài Plugin và mục Script và plugin); tham khảo đối chiếu sách của Chô tô (tr. 104).*

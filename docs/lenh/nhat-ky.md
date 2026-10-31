@@ -29,11 +29,14 @@ HALT
 
 - Lệnh này có bí danh là `PRINT`, cú pháp giống nhau.
 - Số lượng tham số của lệnh này không giới hạn.
-- Khi có khai báo chỉ thị `#logfile`, ngoài cửa sổ nhật ký, thông báo còn được ghi thêm vào file `log.txt` trong thư mục dự án (theo help, mục Xuất thông tin).
-- 🟠 **Điểm chưa thống nhất trong help giữa mục `LOGWRITE` và bảng chỉ thị `#logfile`:**
-  - Trong help, mục Xuất thông tin (lệnh `LOGWRITE`), help ghi khi có chỉ thị `#logfile` thì thông báo được ghi thêm vào file `%thu_muc_du_an%/log.txt` (không nhắc tham số tên file).
-  - Trong help, phần Giới thiệu ngôn ngữ (bảng chỉ thị tiền xử lý) và Lịch sử phiên bản (v4.13.014: nâng cấp `#logfile`, nay có thể đặt tên tệp nhật ký tùy ý), help lại viết ví dụ `#logfile "debug.txt"` (có truyền tên file riêng). Câu hỏi cần kiểm tra là khi viết `#logfile` không kèm tên file thì chương trình có ghi ra `log.txt` như mục `LOGWRITE` nêu hay không.
-  - Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#ten-file-nhat-ky-cua-logwrite-va-chi-thi-logfile).
+- Khi có khai báo chỉ thị `#logfile`, ngoài cửa sổ nhật ký, thông báo còn được ghi thêm vào tệp nhật ký trong thư mục dự án.
+- 🟠 **Điểm chưa thống nhất về tên tệp của chỉ thị `#logfile`:**
+  - **Nên làm:** Khi dùng `#logfile`, hãy viết rõ tên tệp như `#logfile "debug.txt"` ở đầu script để biết chắc tên tệp nhật ký được tạo ra trong thư mục dự án.
+  ::: details Vì sao chưa chắc
+  - Ở mục Xuất thông tin (lệnh `LOGWRITE`), help ghi khi có chỉ thị `#logfile` thì thông báo được ghi thêm vào tệp `%thu_muc_du_an%/log.txt` (không nhắc tham số tên tệp).
+  - Còn ở phần Giới thiệu ngôn ngữ (bảng chỉ thị tiền xử lý) và Lịch sử phiên bản (v4.13.014: nâng cấp `#logfile`, nay có thể đặt tên tệp nhật ký tùy ý), help viết ví dụ `#logfile "debug.txt"` (có truyền tên tệp riêng). Câu hỏi cần kiểm tra là khi viết `#logfile` không kèm tên tệp thì chương trình có ghi ra `log.txt` như mục `LOGWRITE` nêu hay không.
+  - Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#ten-tep-nhat-ky-cua-logwrite-va-chi-thi-logfile).
+  :::
 
 ---
 

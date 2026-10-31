@@ -101,6 +101,11 @@ SETTHREAD (thread_name, state)
 | цветокоррекция | giảm màu |
 | лупа | kính lúp |
 | горячая клавиша | phím tắt |
+| file | tệp |
+| лог | nhật ký |
+| кликер | Clickermann (không viết "tool") |
+| панель задач | thanh tác vụ |
+| đỏ, xanh lá, xanh dương | không viết "lục", "lam" |
 
 ## Code ví dụ
 

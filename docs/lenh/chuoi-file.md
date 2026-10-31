@@ -232,7 +232,7 @@ STRCONCAT (str1, str2, ...)
 
 | Tham số | Kiểu | Bắt buộc | Mặc định | Ý nghĩa |
 |---|---|---|---|---|
-| `str1, str2, ...` | chuỗi | có | | Các chuỗi đầu vào |
+| `str1, str2, ...` | chuỗi | có | | Các chuỗi đầu vào (số lượng tham số không giới hạn) |
 
 **Trả về:** Chuỗi tổng hợp sau khi nối tất cả các đối số.
 
@@ -327,7 +327,7 @@ HALT
 
 - Nếu tệp có tên `file` chưa tồn tại, chương trình sẽ tự tạo tệp mới.
 - Nếu truyền `rewrite = 1`, toàn bộ nội dung cũ trong tệp sẽ bị xóa sạch trước khi ghi dòng mới.
-- Help nói có thể đạt hành vi tương tự bằng các lệnh mới hơn [`TFREAD`](#tfread) và [`TFCLEAR`](#tfclear). Suy luận: để ghi file có lẽ cần [`TFWRITE`](#tfwrite), help không nhắc lệnh này.
+- Help nói có thể đạt hành vi tương tự bằng các lệnh mới hơn [`TFREAD`](#tfread) và [`TFCLEAR`](#tfclear). Suy luận: để ghi tệp có lẽ cần [`TFWRITE`](#tfwrite), help không nhắc lệnh này.
 
 ---
 
@@ -684,4 +684,4 @@ HALT
 
 **Lưu ý**
 
-- Hàm sử dụng mã từ bảng mã Unicode. Không nhầm với ASCII. Bảng mã có thể tra cứu tại <https://unicode-table.com/ru/>.
+- Hàm sử dụng mã từ bảng mã Unicode. Không nhầm với ASCII. Bảng mã có thể tra cứu tại <http://unicode-table.com/ru/>.

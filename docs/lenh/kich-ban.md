@@ -121,11 +121,14 @@ HALT
 
 - Nên đọc thêm bài viết [Plugin mở rộng](/khai-niem/plugin) trong tài liệu. Clickermann sẽ đứng chờ cho đến khi plugin thực thi xong rồi mới chạy tiếp dòng lệnh kế tiếp trong script.
 - Kết quả trả về của plugin được lưu vào biến hệ thống `$_return1`.
-- 🟠 **Điểm chưa thống nhất trong help và khi so sánh giữa help với sách của Chô tô:**
+- 🟠 **Điểm chưa thống nhất về thư mục chứa tệp plugin `.dll`:**
+  - **Nên làm:** Hãy đặt bản sao tệp `.dll` ở cả thư mục dự án (cạnh tệp `.cms`) và thư mục `%Clickermann%/plugins/` để bảo đảm chương trình tìm thấy.
+  ::: details Vì sao chưa chắc
   - **Trong trang lệnh `CALL` (help, mục Script và plugin):** Ghi rằng `filename` là tên tệp plugin tính tương đối từ thư mục `%Clickermann%/plugins`.
   - **Trong bài viết "Plugin" (help, bài Plugin):** Ghi rằng tệp DLL của plugin phải đặt trong thư mục dự án, nằm cạnh script đang chạy hoặc trong thư mục con; nếu không tìm thấy tệp theo tên đã cho ở đó thì lệnh `CALL` sẽ âm thầm kết thúc.
-  - **Trong sách của Chô tô (tr. 104):** Chỉ ghi rằng tệp DLL đặt cùng thư mục với file script.
+  - **Trong sách của Chô tô (tr. 104):** Chỉ ghi rằng tệp DLL đặt cùng thư mục với tệp script.
   - Xem script kiểm chứng đường dẫn nạp DLL tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#thu-muc-nap-plugin-dll-cua-call).
+  :::
 
 ---
 
@@ -344,7 +347,11 @@ READMEM (pid, addr, [size])
 
 - Mã tiến trình `pid` có thể xem trong Task Manager của Windows, trong phần thông tin chế độ khóa cửa sổ của Clickermann, hoặc lấy bằng hàm [`HGETPID`](/lenh/winapi#hgetpid).
 - Tham số `size` chỉ định kích thước kiểu số nguyên: `1`, `2`, `4` hoặc `8` byte (nếu bỏ qua thì nhận là `4`).
-- 🟠 **Điểm tự mâu thuẫn trong help (mục Script và plugin):** Tại mục `READMEM`, phần liệt kê tham số ghi `addr` là "chuỗi, địa chỉ bộ nhớ", nhưng phần ghi chú ngay bên dưới và ví dụ lại nói địa chỉ là "số nguyên thông thường ở dạng thập phân hoặc thập lục phân" (`0x0006F2B7`). Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#kieu-tham-so-addr-cua-readmem-va-writemem).
+- 🟠 **Điểm tự mâu thuẫn trong help về kiểu của `addr`:**
+  - **Nên làm:** Khi truyền địa chỉ `addr`, hãy viết dưới dạng số nguyên thập lục phân không có dấu ngoặc kép (ví dụ `0x0006F2B7`) như trong ví dụ của help.
+  ::: details Vì sao chưa chắc
+  Tại mục `READMEM` (help, mục Script và plugin), phần liệt kê tham số ghi `addr` là "chuỗi, địa chỉ bộ nhớ", nhưng phần ghi chú ngay bên dưới và ví dụ lại nói địa chỉ là "số nguyên thông thường ở dạng thập phân hoặc thập lục phân" (`0x0006F2B7`). Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#kieu-tham-so-addr-cua-readmem-va-writemem).
+  :::
 
 ---
 
@@ -361,7 +368,7 @@ WRITEMEM (pid, addr, value, [size])
 | Tham số | Kiểu | Bắt buộc | Mặc định | Ý nghĩa |
 |---|---|---|---|---|
 | `pid` | số | có | | Mã định danh tiến trình (Process ID) |
-| `addr` | 🟠 số nguyên | có | | Địa chỉ vùng nhớ cần ghi (viết ở hệ thập phân hoặc hệ thập lục phân `0x...`; xem lưu ý 🟠 về mâu thuẫn kiểu dữ liệu với `READMEM` trong help) |
+| `addr` | 🟠 số nguyên | có | | Địa chỉ vùng nhớ cần ghi (viết ở hệ thập phân hoặc hệ thập lục phân `0x...`; xem lưu ý 🟠 bên dưới) |
 | `value` | số | có | | Giá trị số cần ghi vào bộ nhớ |
 | `size` | số | không | `4` | Kích thước số nguyên tính theo byte (`1`, `2`, `4` hoặc `8`) |
 
@@ -369,7 +376,11 @@ WRITEMEM (pid, addr, value, [size])
 
 - Mã tiến trình `pid` có thể xem trong Task Manager của Windows, trong phần thông tin chế độ khóa cửa sổ của Clickermann, hoặc lấy bằng hàm [`HGETPID`](/lenh/winapi#hgetpid).
 - Tham số `size` chỉ định kích thước kiểu số nguyên: `1`, `2`, `4` hoặc `8` byte (nếu bỏ qua thì nhận là `4`).
-- 🟠 **Điểm tự mâu thuẫn trong help (mục Script và plugin):** Ở `READMEM`, phần tham số trong help ghi `addr` là "chuỗi, địa chỉ bộ nhớ", nhưng ở phần ghi chú của cả `READMEM` và `WRITEMEM` lại ghi `addr` là số nguyên thông thường ở dạng thập phân hoặc thập lục phân. Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#kieu-tham-so-addr-cua-readmem-va-writemem).
+- 🟠 **Điểm tự mâu thuẫn trong help về kiểu của `addr`:**
+  - **Nên làm:** Truyền `addr` dưới dạng số nguyên ở hệ thập phân hoặc hệ thập lục phân (`0x...`) không có dấu ngoặc kép.
+  ::: details Vì sao chưa chắc
+  Ở `READMEM`, phần tham số trong help ghi `addr` là "chuỗi, địa chỉ bộ nhớ", nhưng ở phần ghi chú của cả `READMEM` và `WRITEMEM` lại ghi `addr` là số nguyên thông thường ở dạng thập phân hoặc thập lục phân. Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#kieu-tham-so-addr-cua-readmem-va-writemem).
+  :::
 
 ---
 

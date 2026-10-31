@@ -316,7 +316,7 @@ HALT
 
 - Các tham số và lưu ý khi hoạt động tương tự [`IF_PICTURE_IN ... END_IF`](#if-picture-in-end-if).
 - Kết quả làm việc là mảng `$var`, trong đó tọa độ của các ảnh tìm thấy được thêm vào mảng: ảnh tìm thấy đầu tiên nằm ở `$var[0]` (X) và `$var[1]` (Y); ảnh thứ hai nằm ở `$var[2]` và `$var[3]`, v.v.
-- `SCANPICTURE` và `SCANPXL` sử dụng mảng khi làm việc; help khuyên đọc thêm bài về mảng trên diễn đàn chính thức nếu chưa quen cách dùng mảng.
+- `SCANPICTURE` và `SCANPXL` lưu kết quả vào mảng; nếu chưa quen cách truy xuất phần tử mảng hoặc rút tọa độ bằng `ARRPOP`, bạn hãy đọc phần [Mảng trong Ngôn ngữ script](/khai-niem/ngon-ngu#mang-arrays) (trong help cũng có nhắc tới bài hướng dẫn về mảng trên diễn đàn chính thức).
 
 ---
 
@@ -394,9 +394,13 @@ HALT
 
 **Lưu ý**
 
-- Tệp ảnh được lưu vào thư mục con `screens` bên trong thư mục của script hiện tại, với tên dạng `pref0000.bmp` (số thứ tự `0000` tự động tăng dần khi lưu thêm ảnh mới) (theo help, mục Màn hình).
+- Tệp ảnh được lưu vào thư mục con `screens` bên trong thư mục của script hiện tại, với tên dạng `pref0000.bmp` (số thứ tự `0000` tự động tăng dần khi lưu thêm ảnh mới).
 - Nếu đang bật chế độ khóa cửa sổ, ảnh chụp chỉ chứa phần tử đang khóa.
-- 🟠 **Điểm chưa thống nhất khi so sánh giữa help và sách của Chô tô (tr. 94):** Help (mục Màn hình) ghi ảnh lưu định dạng `.bmp` trong thư mục con `screens`; sách của Chô tô (tr. 94) ghi ảnh lưu dưới định dạng `jpeg` trong thư mục `screen`. Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#thu-muc-luu-anh-cua-screenshotex).
+- 🟠 **Điểm chưa thống nhất khi so sánh giữa help và sách của Chô tô:**
+  - **Nên làm:** Sau khi chạy `SCREENSHOT`, hãy kiểm tra thư mục con `screens\` bên trong thư mục dự án (hoặc dùng [`SCREENSHOTFIX`](#screenshotfix) nếu muốn chỉ định chính xác tên tệp và đường dẫn).
+  ::: details Vì sao chưa chắc
+  Help (mục Màn hình) ghi ảnh lưu định dạng `.bmp` trong thư mục con `screens`; sách của Chô tô (tr. 94) ghi ảnh lưu dưới định dạng `jpeg` trong thư mục `screen`. Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#thu-muc-luu-anh-cua-screenshotex).
+  :::
 
 ---
 
@@ -427,11 +431,14 @@ HALT
 
 **Lưu ý**
 
-- Ảnh chụp được đặt trong thư mục con `screens` của thư mục script hiện tại với tên dạng `pref0000.bmp` (số thứ tự `0000` tăng dần khi cần). Help chỉ ghi tên dạng `pref0000.bmp`, không nói rõ đuôi file khi `format = 1`. Nếu đang ở chế độ khóa cửa sổ, vùng ảnh được cắt ra từ phần tử đang khóa.
-- 🟠 **Điểm chưa thống nhất khi so sánh giữa help và sách của Chô tô và điểm help không nói rõ:**
-  - **Theo help:** Ảnh chụp được lưu vào thư mục con `screens` (có chữ `s` ở cuối) trong thư mục của script hiện tại; tham số `format` bằng `0` là BMP, bằng `1` là JPEG, nhưng ở phần ghi chú help chỉ ghi tên file dạng `pref0000.bmp` mà không nói rõ đuôi file khi `format = 1`.
+- Ảnh chụp được đặt trong thư mục con `screens` của thư mục script hiện tại với tên dạng `pref0000.bmp` (số thứ tự `0000` tăng dần khi cần). Nếu đang ở chế độ khóa cửa sổ, vùng ảnh được cắt ra từ phần tử đang khóa.
+- 🟠 **Điểm chưa thống nhất về tên thư mục và đuôi tệp khi `format = 1`:**
+  - **Nên làm:** Tìm ảnh chụp trong thư mục con `screens\` của thư mục dự án; nếu dùng ảnh làm mẫu cho `IF_PICTURE_IN`, hãy để mặc định `format = 0` (định dạng `.bmp`).
+  ::: details Vì sao chưa chắc
+  - **Theo help:** Ảnh chụp được lưu vào thư mục con `screens` (có chữ `s` ở cuối) trong thư mục của script hiện tại; tham số `format` bằng `0` là BMP, bằng `1` là JPEG, nhưng ở phần ghi chú help chỉ ghi tên tệp dạng `pref0000.bmp` mà không nói rõ đuôi tệp khi `format = 1`.
   - **Theo sách của Chô tô (tr. 94):** Sách ghi thư mục lưu ảnh tên là `screen` (không có chữ `s`), và trong phần lời giải thích nói ảnh lưu dưới dạng `.bmp` mặc dù ở phần tham số sách vẫn liệt kê `format = 1` là JPEG.
-  - Xem script kiểm chứng tên thư mục và đuôi file khi `format = 1` tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#thu-muc-luu-anh-cua-screenshotex).
+  - Xem script kiểm chứng tên thư mục và đuôi tệp khi `format = 1` tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#thu-muc-luu-anh-cua-screenshotex).
+  :::
 
 ---
 
@@ -494,7 +501,7 @@ HALT
 
 - Thủ tục thay đổi ảnh chụp màn hình hiện tại bằng cách áp dụng bộ lọc làm giảm số lượng màu trong bảng màu, đưa các sắc thái màu gần nhau về chung một mã màu để tránh trường hợp điểm ảnh hơi đổi độ sáng/tối làm Clickermann không tìm thấy ảnh (xem chi tiết tại [Màu sắc và giảm màu](/khai-niem/mau-sac)).
 - Vì việc áp dụng bộ lọc cũng tốn thời gian, nếu không cần đổi toàn bộ ảnh chụp thì bạn nên chỉ định vùng tọa độ cụ thể `x1, y1, x2, y2` để tiết kiệm thời gian thực thi; nếu không truyền vùng thì bộ lọc áp dụng cho toàn bộ màn hình.
-- Gọi `COLORMODE(0)` không có ý nghĩa. Có thể tăng dần mức `mode` một chiều (`1`, `2`, `3`...) mà không cần gọi lại `GETSCREEN`, nhưng không thể tăng ngược lại số lượng màu; muốn có ảnh chụp gốc "sạch" mới thì phải gọi lại `GETSCREEN`.
+- Gọi `COLORMODE(0)` không có ý nghĩa (mức `0` ứng với ảnh gốc `16 777 216` màu, các mức lọc giảm màu thực tế là từ `1` đến `8`; riêng nút xem thử dưới kính lúp trong Trình soạn thảo chỉ chuyển từ `0` đến `7`). Có thể tăng dần mức `mode` một chiều (`1`, `2`, `3`...) mà không cần gọi lại `GETSCREEN`, nhưng không thể tăng ngược lại số lượng màu; muốn có ảnh chụp gốc "sạch" mới thì phải gọi lại `GETSCREEN`.
 - Bảng số lượng màu tối đa ứng với từng mức `mode`:
 
 | `mode` | Số màu tối đa |

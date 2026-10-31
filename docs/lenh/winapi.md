@@ -305,10 +305,13 @@ HALT
 
 **Lưu ý**
 
-- 🟠 **Điểm cần kiểm chứng khi so sánh giữa help và sách của Chô tô:**
+- 🟠 **Điểm cần kiểm chứng khi truyền tham số cho `WNDSETINFO`:**
+  - **Nên làm:** Hãy gán tọa độ và kích thước vào 4 biến (`$var1`, `$var2`, `$var3`, `$var4`) rồi truyền biến vào `WNDSETINFO($hwnd, $var1, $var2, $var3, $var4)` giống như ví dụ trong help (hoặc dùng [`WNDPOS`](#wndpos) và [`WNDSIZE`](#wndsize) nếu muốn truyền số trực tiếp).
+  ::: details Vì sao chưa chắc
   - **Theo help:** Cú pháp ghi các tham số là `$var1, $var2, $var3, $var4` và ví dụ trong help chỉ truyền biến (sau khi lấy từ `WNDGETINFO`).
   - **Theo sách của Chô tô (tr. 117):** Sách truyền số trực tiếp vào `WNDSETINFO`.
   - Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#truyen-so-truc-tiep-vao-wndsetinfo).
+  :::
 
 ---
 

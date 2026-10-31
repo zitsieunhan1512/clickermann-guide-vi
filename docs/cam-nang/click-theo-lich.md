@@ -2,9 +2,7 @@
 
 Trang này hướng dẫn từng bước cách viết script bấm chuột tự động lặp theo chu kỳ giây/mili-giây, bấm đủ số lần rồi dừng hoặc chờ tới đúng mốc giờ/phút trong ngày mới thực hiện thao tác.
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
-
-## Kịch bản 1: Bấm chuột lặp lại theo chu kỳ cố định
+## Tình huống 1: Bấm chuột lặp lại theo chu kỳ cố định
 
 Khi cần bấm vào một nút trên phần mềm văn phòng cách đều mỗi 5 giây một lần, bạn kết hợp [`LCLICK`](/lenh/chuot#lclick) và [`WAIT`](/lenh/kich-ban#wait).
 
@@ -13,15 +11,15 @@ Khi cần bấm vào một nút trên phần mềm văn phòng cách đều mỗ
 1. Xác định tọa độ điểm cần bấm bằng cách mở [Trình soạn thảo](/bat-dau/trinh-soan-thao), đưa trỏ chuột vào nút và xem tọa độ `X, Y` (hoặc nhấn `Alt + Q`).
 2. Gọi `LCLICK(x, y)` để bấm chuột trái.
 3. Gọi `WAIT(5)` để nghỉ 5 giây (hoặc thêm độ trễ ngẫu nhiên bằng [`RND`](/lenh/so#rnd)).
-4. Không đặt `HALT` ở cuối để script tự quay lại dòng đầu tiên sau mỗi lượt (khi muốn dừng hẳn, bạn nhấn tổ hợp phím tắt `Alt + S` theo help, bài Màn hình chính).
+4. Không đặt `HALT` ở cuối để script tự quay lại dòng đầu tiên sau mỗi lượt (khi muốn dừng hẳn, bạn nhấn tổ hợp phím tắt **`Alt + S`**).
 
 ```cms
 // Bấm chuột trái vào nút ở tọa độ (250, 180)
 LCLICK(250, 180)
 
-// Tăng bộ đếm và ghi nhật ký để tiện theo dõi
+// Tăng bộ đếm và in ra nhật ký để tiện theo dõi
 INC($dem)
-LOGWRITE("Da bam lan thu: ", $dem, " luc ", $_time_str)
+PRINT("Da bam lan thu: ", $dem, " luc ", $_time_str)
 
 // Chờ 5 giây trước khi tự động lặp lại lượt tiếp theo
 WAIT(5)
@@ -29,7 +27,7 @@ WAIT(5)
 
 ---
 
-## Kịch bản 2: Bấm đúng N lần theo chu kỳ rồi tự dừng
+## Tình huống 2: Bấm đúng N lần theo chu kỳ rồi tự dừng
 
 Nếu bạn chỉ muốn bấm làm mới dữ liệu đúng 20 lần (mỗi lần cách nhau 2 giây) rồi dừng hẳn, hãy dùng vòng lặp [`FOR ... END_CYC`](/lenh/cau-truc#for-end-cyc) và kết thúc bằng [`HALT`](/lenh/kich-ban#halt).
 
@@ -45,20 +43,24 @@ LOGSHOW(1)
 
 FOR($i=1, $i <= 20)
    LCLICK(250, 180)
-   LOGWRITE("Hoan thanh luot bam: ", $i, "/20")
+   PRINT("Hoan thanh luot bam: ", $i, "/20")
    WAIT(2)
 END_CYC
 
 BEEP(800, 300)
-LOGWRITE("Da bam du 20 lan. Dung script.")
+PRINT("Da bam du 20 lan. Dung script.")
 HALT
 ```
 
 ---
 
-## Kịch bản 3: Chờ tới đúng giờ và phút trong ngày mới bấm
+## Tình huống 3: Chờ tới đúng giờ và phút trong ngày mới bấm
 
-Clickermann cung cấp sẵn các biến hệ thống thời gian thực là `$_time_h` (giờ hiện tại, dải `0..23`), `$_time_m` (phút hiện tại, dải `0..59`) và `$_time_s` (giây hiện tại, dải `0..59`) *(Tham khảo dải giá trị: sách của Chô tô, tr. 26)*. Bạn có thể dùng vòng lặp [`WHILE ... END_CYC`](/lenh/cau-truc#while-end-cyc) để chờ tới đúng mốc giờ mong muốn (nhấn `Alt + S` nếu muốn hủy chờ giữa chừng).
+Clickermann cung cấp sẵn các biến hệ thống thời gian thực là `$_time_h` (giờ hiện tại, dải `0..23`), `$_time_m` (phút hiện tại, dải `0..59`) và `$_time_s` (giây hiện tại, dải `0..59`) *(Tham khảo dải giá trị: sách của Chô tô, tr. 26)*. Bạn có thể dùng vòng lặp [`WHILE ... END_CYC`](/lenh/cau-truc#while-end-cyc) để chờ tới đúng mốc giờ mong muốn (nhấn **`Alt + S`** nếu muốn hủy chờ giữa chừng).
+
+::: warning Lưu ý khi bấm chạy sau giờ hẹn
+Vòng lặp `WHILE` bên dưới kiểm tra giờ và phút hiện tại cho tới khi bằng đúng `$gio_hen` và `$phut_hen`. Nếu bạn bấm chạy script khi mốc giờ hẹn trong ngày **đã trôi qua** (ví dụ hẹn `17:30` nhưng `17:35` mới bấm chạy), vòng lặp sẽ tiếp tục đứng chờ cho tới `17:30` **ngày hôm sau**.
+:::
 
 ### Giải thích từng bước
 
@@ -71,7 +73,7 @@ Clickermann cung cấp sẵn các biến hệ thống thời gian thực là `$_
 $gio_hen = 17
 $phut_hen = 30
 
-LOGWRITE("Dang cho toi ", $gio_hen, ":", $phut_hen, "...")
+PRINT("Dang cho toi ", $gio_hen, ":", $phut_hen, "...")
 
 // Lặp chờ chừng nào chưa tới đúng giờ và phút đã hẹn
 WHILE(($_time_h != $gio_hen) | ($_time_m != $phut_hen))
@@ -79,9 +81,13 @@ WHILE(($_time_h != $gio_hen) | ($_time_m != $phut_hen))
 END_CYC
 
 // Đã tới đúng giờ hẹn -> thực hiện thao tác
-LOGWRITE("Da toi gio hen! Thuc hien thao tac luc: ", $_time_str)
+PRINT("Da toi gio hen! Thuc hien thao tac luc: ", $_time_str)
 LCLICK(300, 220)
 HINTPOPUP("Da bam theo lich hen!", "Clickermann")
 
 HALT
 ```
+
+---
+
+*Nguồn: Tài liệu trợ giúp `help.chm` (phần Giới thiệu ngôn ngữ, Chuột, Cấu trúc lệnh, Xuất thông tin và Kịch bản); tham khảo đối chiếu sách của Chô tô (tr. 26).*

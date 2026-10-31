@@ -2,6 +2,19 @@
 
 Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu thực tế ("muốn làm việc X thì dùng lệnh nào"), kèm liên kết trực tiếp tới mục tra cứu chi tiết của từng lệnh.
 
+## Cách đọc một mục lệnh
+
+Trong các trang tra cứu lệnh chi tiết, mỗi mục lệnh đều được trình bày theo cùng một cấu trúc thống nhất:
+
+- **Cặp ngoặc vuông `[ ]` trong cú pháp:** Cho biết tham số đó là **tùy chọn (không bắt buộc)**. Nếu bạn bỏ qua không truyền, Clickermann sẽ tự dùng giá trị mặc định ghi trong bảng tham số (ví dụ với `WAITMS(500)` thì `500` là bắt buộc, còn với `INC($var, [value])` thì có thể viết gọn là `INC($var)`). *(Lưu ý: khi gõ lệnh thật vào script, bạn **không** gõ dấu ngoặc vuông `[ ]`).*
+- **Dấu ba chấm `...` trong cú pháp:** Cho biết bạn có thể truyền tiếp **nhiều tham số không giới hạn số lượng** ở phía sau, cách nhau bằng dấu phẩy (ví dụ `PRINT("A", $x, "B")` hoặc `IF_PIXEL_IN(0, 0, 100, 100, 255, 65280)`).
+- **Loại lệnh:**
+  - **Thủ tục:** Câu lệnh thực hiện một hành động và đứng riêng trên một dòng (ví dụ `LCLICK(100, 200)`).
+  - **Hàm:** Câu lệnh tính toán và **trả về một giá trị** ngay tại vị trí gọi nó để gán vào biến hoặc đặt bên trong biểu thức khác (ví dụ `$so = RND(1, 10)`).
+  - **Cấu trúc lệnh:** Khối lệnh gồm nhiều dòng, có dòng mở đầu và dòng từ khóa đóng khối (như `IF ... END_IF`, `FOR ... END_CYC`).
+- **Trạng thái kiểm chứng:** `🟡 Theo help, chưa chạy thử` (sát theo `help.chm` v4.13.014) hoặc `🟠 Chưa thống nhất` (có điểm khác biệt giữa các nguồn tài liệu, kèm hướng dẫn **"Nên làm"**).
+- **Trả về:** Giá trị kết quả mà hàm trả về, hoặc các biến hệ thống (`$_return1`, `$_return2`) được lệnh cập nhật sau khi chạy.
+
 ## Nhóm trang tra cứu lệnh
 
 - [Số, biến và mảng](/lenh/so) — Biến, toán học, lượng giác, làm tròn, số ngẫu nhiên và mảng.
@@ -10,9 +23,21 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 - [Bàn phím](/lenh/ban-phim) — Bấm phím, giữ phím, gõ chuỗi, kiểm tra phím đang nhấn và đổi kiểu bàn phím.
 - [Điều kiện, vòng lặp, chương trình con](/lenh/cau-truc) — Cấu trúc rẽ nhánh `IF`, `SWITCH`, vòng lặp `FOR`, `WHILE`, `SUB` và đa luồng `THREAD`.
 - [Màn hình và màu sắc](/lenh/man-hinh) — Chụp bộ đệm ảnh, đọc/tìm màu, tìm ảnh `.bmp`, giảm màu và lưu ảnh chụp.
-- [Nhật ký và âm báo](/lenh/nhat-ky) — Ghi log, hiện/ẩn cửa sổ log, phát âm thanh `.wav`, tiếng bíp và thông báo ở khay hệ thống.
+- [Nhật ký và âm báo](/lenh/nhat-ky) — Ghi nhật ký, hiện/ẩn cửa sổ nhật ký, phát âm thanh `.wav`, tiếng bíp và thông báo ở khay hệ thống.
 - [Điều khiển script và hệ thống](/lenh/kich-ban) — Tạm dừng chờ, nhảy nhãn, hộp thoại, gọi lệnh ngoài, nạp plugin DLL và quét thư mục.
 - [Cửa sổ và WinAPI](/lenh/winapi) — Tìm cửa sổ, khóa cửa sổ, đổi vị trí/kích thước và gửi/nhận thông điệp Windows.
+
+---
+
+## Lấy thông tin thường dùng (giờ giấc, tọa độ chuột, chờ màu)
+
+| Việc cần làm | Cách thực hiện trong Clickermann | Xem hướng dẫn |
+|---|---|---|
+| Xem giờ, phút, giây hiện tại | Đọc các biến hệ thống `$_time_h` (giờ), `$_time_m` (phút), `$_time_s` (giây), `$_time_str` (chuỗi giờ) | [Ngôn ngữ script](/khai-niem/ngon-ngu#cac-bien-he-thong-hay-dung-nhat), [Bấm chuột theo lịch](/cam-nang/click-theo-lich) |
+| Xem ngày, tháng, năm hiện tại | Đọc các biến hệ thống `$_date_d`, `$_date_m`, `$_date_y`, `$_date_str` | [Bảng biến hệ thống](/khai-niem/ngon-ngu#bang-bien-he-thong-day-du) |
+| Xem vị trí con trỏ chuột hiện tại | Đọc hai biến hệ thống `$_xmouse` (X) và `$_ymouse` (Y) | [Ngôn ngữ script](/khai-niem/ngon-ngu#cac-bien-he-thong-hay-dung-nhat) |
+| Đọc mã màu của 1 điểm trên màn hình | Gọi [`GETSCREEN`](/lenh/man-hinh#getscreen) rồi gọi hàm [`PXL(x, y)`](/lenh/man-hinh#pxl) | [Màn hình và màu sắc](/lenh/man-hinh#pxl) |
+| Chờ tới khi một màu xuất hiện trên màn hình | Đặt [`GETSCREEN`](/lenh/man-hinh#getscreen) + [`IF_PIXEL_IN`](/lenh/man-hinh#if-pixel-in-end-if) bên trong vòng lặp [`WHILE ... END_CYC`](/lenh/cau-truc#while-end-cyc) | [Cẩm nang tìm màu](/cam-nang/tim-mau#tinh-huong-2-cho-cho-toi-khi-mau-xuat-hien-roi-moi-di-tiep) |
 
 ---
 
@@ -49,9 +74,9 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 | Tìm 1 ảnh mẫu `.bmp` trên màn hình | [`IF_PICTURE_IN ... END_IF`](/lenh/man-hinh#if-picture-in-end-if) | Hỗ trợ màu nền trong suốt và độ chính xác `%` |
 | Tìm tất cả vị trí của ảnh mẫu `.bmp` | [`SCANPICTURE`](/lenh/man-hinh#scanpicture) | Đổ toàn bộ các cặp tọa độ X, Y vào mảng |
 | Kiểm tra vùng ảnh có thay đổi không | [`PXLCRC`](/lenh/man-hinh#pxlcrc), [`PXLXOR`](/lenh/man-hinh#pxlxor) | Tính mã kiểm tra (hash) của vùng điểm ảnh |
-| Giảm số màu để dễ nhận diện | [`COLORMODE`](/lenh/man-hinh#colormode) | Áp dụng lọc giảm màu (`1..8`) lên bộ đệm ảnh |
+| Giảm số màu để dễ nhận diện | [`COLORMODE`](/lenh/man-hinh#colormode) | Dải `0..8` (`0` là ảnh gốc, mức lọc `1..8`, nút xem thử dưới kính lúp tới `7`) |
 | Đổi màu điểm ảnh trong bộ đệm ảnh | [`PXLREPLACE`](/lenh/man-hinh#pxlreplace) | Thay màu `color` thành `newcolor` |
-| Ghép hoặc tách kênh màu Đỏ, Lục, Lam | [`COLORGEN`](/lenh/man-hinh#colorgen), [`COLORR, COLORG, COLORB`](/lenh/man-hinh#colorr-colorg-colorb) | Chuyển đổi giữa mã màu và 3 kênh RGB (`0..255`) |
+| Ghép hoặc tách kênh màu Đỏ, Xanh lá, Xanh dương | [`COLORGEN`](/lenh/man-hinh#colorgen), [`COLORR, COLORG, COLORB`](/lenh/man-hinh#colorr-colorg-colorb) | Chuyển đổi giữa mã màu và 3 kênh RGB (`0..255`) |
 | Lưu ảnh chụp màn hình ra tệp | [`SCREENSHOT`](/lenh/man-hinh#screenshot), [`SCREENSHOTEX`](/lenh/man-hinh#screenshotex), [`SCREENSHOTFIX`](/lenh/man-hinh#screenshotfix) | Lưu toàn bộ hoặc cắt vùng, tự đánh số hoặc ghi đè |
 
 ---
@@ -61,10 +86,10 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 | Việc cần làm | Lệnh nên dùng | Ghi chú nhanh |
 |---|---|---|
 | Kiểm tra điều kiện đúng / sai | [`IF ... END_IF`](/lenh/cau-truc#if-end-if), [`ELSE`](/lenh/cau-truc#else) | `ELSE` dùng được cho cả `IF`, `IF_PIXEL_IN`, `IF_PICTURE_IN` |
-| Rẽ nhánh theo nhiều giá trị | [`SWITCH ... END_SWITCH`](/lenh/cau-truc#switch-end-switch) | Thay cho nhiều lệnh `IF` nối tiếp |
-| Lặp với biến đếm tăng tự động | [`FOR ... END_CYC`](/lenh/cau-truc#for-end-cyc) | Tự tăng `$var` theo bước nhảy `step` |
+| Rẽ nhánh theo nhiều giá trị | [`SWITCH ... END_SWITCH`](/lenh/cau-truc#switch-end-switch) | Thay cho việc dùng quá nhiều lệnh `IF` |
+| Lặp với biến đếm tăng tự động | [`FOR ... END_CYC`](/lenh/cau-truc#for-end-cyc) | 🟠 Nên gán rõ giá trị đầu `=0` (hoặc `=1`) cho biến đếm |
 | Lặp chừng nào điều kiện còn đúng | [`WHILE ... END_CYC`](/lenh/cau-truc#while-end-cyc) | Cần cập nhật biến trong thân vòng lặp để tránh treo |
-| Gom nhóm lệnh thành chương trình con | [`SUB ... END_SUB`](/lenh/cau-truc#sub-end-sub) | Phải khai báo ở phía trên nơi gọi |
+| Gom nhóm lệnh thành chương trình con | [`SUB ... END_SUB`](/lenh/cau-truc#sub-end-sub) | 🟠 Phải khai báo ở phía trên nơi gọi |
 | Chạy tác vụ song song ở luồng riêng | [`THREAD ... END_THREAD`](/lenh/cau-truc#thread-end-thread) | 🟠 Nên truyền rõ `init_state` là `0` hoặc `1` |
 | Tạm dừng / bật lại / đặt lại luồng | [`SETTHREAD`](/lenh/cau-truc#setthread) | 🟠 Hỗ trợ trạng thái `0`, `1` và `2` |
 
@@ -77,7 +102,7 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 | Khai báo biến (nếu chưa có) / xóa biến | [`DEFINE`](/lenh/so#define), [`UNDEFINE`](/lenh/so#undefine) | `UNDEFINE` xóa được cả mảng |
 | Tăng / giảm giá trị biến | [`INC`](/lenh/so#inc) | Mặc định cộng thêm `1` |
 | Lấy số ngẫu nhiên hoặc chọn ngẫu nhiên | [`RND`](/lenh/so#rnd), [`RNDFROM`](/lenh/so#rndfrom) | `RND` lấy trong đoạn `[from, to]`; `RNDFROM` chọn từ danh sách |
-| Lấy phần nguyên / làm tròn số | [`INT`](/lenh/so#int), [`ROUND`](/lenh/so#round) | `INT` cũng dùng để ép chuỗi thành số |
+| Lấy phần nguyên / làm tròn số | [`INT`](/lenh/so#int), [`ROUND`](/lenh/so#round) | `INT` cũng dùng để ép chuỗi thành số; `ROUND` 🟠 lưu ý khi làm tròn số âm |
 | Tính khoảng cách giữa 2 tọa độ | [`DIST`](/lenh/so#dist) | Trả về số thực khoảng cách giữa `(x1, y1)` và `(x2, y2)` |
 | Tính căn bậc hai, lũy thừa, trị tuyệt đối | [`SQRT`](/lenh/so#sqrt), [`POW`](/lenh/so#pow), [`ABS`](/lenh/so#abs) | Các hàm toán học cơ bản |
 | Tính lượng giác (theo độ) | [`SIN`](/lenh/so#sin), [`COS`](/lenh/so#cos), [`ARCSIN`](/lenh/so#arcsin), [`ARCCOS`](/lenh/so#arccos) | Góc tính bằng đơn vị độ |
@@ -91,7 +116,7 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 
 | Việc cần làm | Lệnh nên dùng | Ghi chú nhanh |
 |---|---|---|
-| Nối chuỗi / đo độ dài chuỗi | [`STRCONCAT`](/lenh/chuoi-file#strconcat), [`STRLEN`](/lenh/chuoi-file#strlen) | Ghép nhiều chuỗi hoặc đếm số ký tự |
+| Nối chuỗi / đo độ dài chuỗi | [`STRCONCAT`](/lenh/chuoi-file#strconcat), [`STRLEN`](/lenh/chuoi-file#strlen) | Ghép nhiều chuỗi (không giới hạn số lượng) hoặc đếm số ký tự |
 | Cắt chuỗi con | [`STRCUT`](/lenh/chuoi-file#strcut), [`STRCUT2`](/lenh/chuoi-file#strcut2) | Cắt theo độ dài (`STRCUT`) hoặc vị trí cuối (`STRCUT2`) |
 | Tìm vị trí chuỗi con / thay thế chuỗi | [`STRPOS`](/lenh/chuoi-file#strpos), [`STRREPLACE`](/lenh/chuoi-file#strreplace) | Tìm hoặc đổi chuỗi con trong chuỗi gốc |
 | Lọc ký tự / tách chuỗi vào mảng | [`STRFILTER`](/lenh/chuoi-file#strfilter), [`STRSEPARATE`](/lenh/chuoi-file#strseparate) | Xóa/giữ ký tự theo mặt nạ hoặc tách theo dấu phân cách |
@@ -109,7 +134,7 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 | Việc cần làm | Lệnh nên dùng | Ghi chú nhanh |
 |---|---|---|
 | Ghi thông báo ra cửa sổ nhật ký | [`LOGWRITE (PRINT)`](/lenh/nhat-ky#logwrite-print) | `PRINT` là bí danh của `LOGWRITE` |
-| Xóa / hiện hoặc ẩn cửa sổ nhật ký | [`LOGCLEAR`](/lenh/nhat-ky#logclear), [`LOGSHOW`](/lenh/nhat-ky#logshow) | Quản lý cửa sổ log khi chạy script |
+| Xóa / hiện hoặc ẩn cửa sổ nhật ký | [`LOGCLEAR`](/lenh/nhat-ky#logclear), [`LOGSHOW`](/lenh/nhat-ky#logshow) | Quản lý cửa sổ nhật ký khi chạy script |
 | Phát âm thanh `.wav` hoặc tiếng bíp | [`SOUND`](/lenh/nhat-ky#sound), [`BEEP`](/lenh/nhat-ky#beep) | Phát âm thanh cảnh báo cho người dùng |
 | Hiện thông báo ở khay hệ thống | [`HINTPOPUP`](/lenh/nhat-ky#hintpopup) | Hiện thông báo nổi ở khay hệ thống |
 | Tạm dừng chờ theo giây / mili-giây | [`WAIT`](/lenh/kich-ban#wait), [`WAITMS`](/lenh/kich-ban#waitms) | `1` giây = `1000` mili-giây |
@@ -125,10 +150,11 @@ Trang này giúp bạn tìm nhanh câu lệnh Clickermann v4.13 theo nhu cầu t
 
 | Việc cần làm | Lệnh nên dùng | Ghi chú nhanh |
 |---|---|---|
-| Tìm cửa sổ theo tiêu đề / lấy `hwnd` tại tọa độ | [`WNDFIND`](/lenh/winapi#wndfind), [`HGET`](/lenh/winapi#hget) | Tìm `hwnd` của cửa sổ chính hoặc phần tử tại `(x, y)` |
-| Bật / tắt chế độ khóa cửa sổ bằng lệnh | [`HSET`](/lenh/winapi#hset) | Đổi phần tử đang khóa ngay trong script |
+| Tìm cửa sổ theo tiêu đề | [`WNDFIND`](/lenh/winapi#wndfind) | Trả về `hwnd` của cửa sổ theo tiêu đề (không tìm phần tử con) |
+| Lấy `hwnd` của phần tử tại tọa độ `(x, y)` | [`HGET`](/lenh/winapi#hget) | Trả về `hwnd` của phần tử nằm tại tọa độ màn hình `(x, y)` |
+| Bật / tắt chế độ khóa cửa sổ bằng lệnh | [`HSET`](/lenh/winapi#hset) | Đặt phần tử đang khóa (`state = 1` bật, `state = 0` tắt) |
 | Đưa cửa sổ lên trước / thu nhỏ hoặc mở lại | [`WNDBUMP`](/lenh/winapi#wndbump), [`WNDSTATE`](/lenh/winapi#wndstate) | Điều khiển trạng thái hiển thị của cửa sổ |
 | Đổi vị trí / kích thước cửa sổ | [`WNDPOS`](/lenh/winapi#wndpos), [`WNDSIZE`](/lenh/winapi#wndsize), [`WNDGETINFO`](/lenh/winapi#wndgetinfo), [`WNDSETINFO`](/lenh/winapi#wndsetinfo) | Đọc hoặc đặt tọa độ và chiều rộng/cao của cửa sổ |
-| Đọc / đổi văn bản hoặc tiêu đề phần tử | [`HGETTEXT`](/lenh/winapi#hgettext), [`HSETTEXT`](/lenh/winapi#hsettext) | Làm việc với văn bản trên phần tử theo `hwnd` |
+| Đọc / đặt văn bản trên phần tử điều khiển | [`HGETTEXT`](/lenh/winapi#hgettext), [`HSETTEXT`](/lenh/winapi#hsettext) | `HGETTEXT` trả về văn bản trên phần tử theo `hwnd`; `HSETTEXT` đặt văn bản mới |
 | Lấy mã tiến trình (`pid`) từ `hwnd` | [`HGETPID`](/lenh/winapi#hgetpid) | Tìm `pid` của tiến trình sở hữu cửa sổ |
 | Gửi / nhận thông điệp hệ thống Windows | [`SENDMESSAGE, POSTMESSAGE`](/lenh/winapi#sendmessage-postmessage), [`GETMESSAGE`](/lenh/winapi#getmessage) | Giao tiếp qua thông điệp WinAPI (như `1024` / `WM_USER`) |

@@ -26,7 +26,7 @@
   <text x="565" y="150" text-anchor="middle" font-size="14" font-weight="600" fill="#f8fafc">Kính lúp chỉ thấy màu đen</text>
 
   <rect x="440" y="198" width="250" height="32" rx="4" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
-  <text x="565" y="219" text-anchor="middle" font-size="14" font-weight="600" fill="#991b1b">Đang thu nhỏ dưới thanh Taskbar</text>
+  <text x="565" y="219" text-anchor="middle" font-size="14" font-weight="600" fill="#991b1b">Đang thu nhỏ dưới thanh tác vụ</text>
 
   <text x="565" y="262" text-anchor="middle" font-size="15" font-weight="700" fill="#b91c1c">KHÔNG ĐỌC ĐƯỢC MÀU</text>
   <text x="565" y="286" text-anchor="middle" font-size="14" fill="#7f1d1d">Windows ngừng vẽ để tiết kiệm tài nguyên</text>

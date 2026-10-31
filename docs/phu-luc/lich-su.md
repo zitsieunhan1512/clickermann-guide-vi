@@ -66,7 +66,7 @@ Trang này dịch các ý chính trong lịch sử các phiên bản của Click
 - **Trình thông dịch:**
   - Thêm các lệnh: [`TFREADARR`](/lenh/chuoi-file#tfreadarr), [`TFWRITEARR`](/lenh/chuoi-file#tfwritearr), [`STRSEPARATE`](/lenh/chuoi-file#strseparate), [`THREAD ... END_THREAD`](/lenh/cau-truc#thread-end-thread), [`SETTHREAD`](/lenh/cau-truc#setthread), [`ARCSIN`](/lenh/so#arcsin), [`ARCCOS`](/lenh/so#arccos), [`WNDGETINFO`](/lenh/winapi#wndgetinfo), [`WNDSETINFO`](/lenh/winapi#wndsetinfo), [`WNDBUMP`](/lenh/winapi#wndbump).
   - Thêm các tham số tọa độ vùng cho [`GETSCREEN`](/lenh/man-hinh#getscreen).
-  - Thêm macro cho bộ tiền xử lý (`#define`).
+  - Thêm macro cho bộ tiền xử lý (Suy luận: `#define`).
   - Sửa lỗi: lồng nhiều `SWITCH` không còn làm treo chương trình; "Thay thế tất cả" trong trình soạn thảo không làm treo chương trình; vòng lặp `FOR` không tự đưa biến đếm về `0` nếu biến đó đã được khởi tạo từ trước.
 - **Khác:** Gộp hai tệp hướng dẫn thành một tệp `help.chm` duy nhất.
 
@@ -132,7 +132,7 @@ Trang này dịch các ý chính trong lịch sử các phiên bản của Click
 - **v4.3.000 (26.11.2010):** Hỗ trợ đa ngôn ngữ giao diện; thêm `$_time_h`, `$_time_m`, `$_time_s`, `HSET`, `HSETTEXT`, `HGET`, `HGETTEXT`.
 - **v4.2.000 (05.10.2010):** Hỗ trợ điều kiện phức hợp cho `IF`, `FOR`, `WHILE`; tham số vòng lặp `FOR` được đưa về `0` sau khi kết thúc vòng lặp; thêm `COLORMODE`, `MOVER`, `$_xmax`, `$_ymax`, `$_time_t`.
 - **v4.1.000 (02.09.2010):** Thêm giảm màu; thêm `DIST`, `READMEM`, `WRITEMEM`, `SUB ... END_SUB`, `GOSUB`; tự lưu `backup.cms` khi bấm Áp dụng.
-- **v4.0.002 (11.06.2010):** Hỗ trợ plugin DLL, biến chuỗi, nhánh `ELSE`, nhãn chữ cho `GOTO`, file hằng trong thư mục `data` của tool; thêm `PXL`, `PXLXOR`, `PXLCOUNT`, `RND`, `RNDFROM`, `FROMCLIP`, `BREAK`, `CALL`.
+- **v4.0.002 (11.06.2010):** Hỗ trợ plugin DLL, biến chuỗi, nhánh `ELSE`, nhãn chữ cho `GOTO`, tệp hằng `/data/const.txt`; thêm `PXL`, `PXLXOR`, `PXLCOUNT`, `RND`, `RNDFROM`, `FROMCLIP`, `BREAK`, `CALL`.
 - **v3.2 RC1 & v3.2 beta (02–03.2010):** Thêm `IF ... END_IF`, `DEFINE`, `UNDEFINE`, vòng lặp `FOR`, `WHILE`, phân tích màn hình ở chế độ khóa cửa sổ, biến `$_line`, `$_cursor`, lệnh `IF_KEYDOWN`, `TOCLIP`.
 - **v3.1 (12.2009 – 01.2010):** Thêm chế độ khóa cửa sổ, cửa sổ nhật ký (`LOGSHOW`, `LOGCLEAR`, `LOGWRITE`), `GETSCREEN`, `SCREENSHOT`, `INC`, `HALT`, `$_return1`, `$_return2`, `IF_PIXEL_IN`, `SOUND`, `KEYSTRING`, `$_xmouse`, `$_ymouse`, `IF_TIME`.
 - **v1.0 – v3.0 (2006 – 09.2009):** Các phiên bản đầu tiên: đổi tên thành Clickermann (v1.1), thêm các lệnh chuột `LCLICK`, `RCLICK`, `LDOWN`, `LUP`, chức năng ghi thao tác (v1.3), tô màu cú pháp và chú thích `//` (v2.1), hỗ trợ biến và `GOTO` (v3.0).

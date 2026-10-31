@@ -1,6 +1,6 @@
 # Bảng mã phím và hằng số
 
-Trang này liệt kê bảng mã phím ảo (Virtual-Key Codes) của bàn phím tiêu chuẩn và các hằng số dựng sẵn trong file hằng trong thư mục `data` của tool (theo help, phần Mã phím và file hằng trong thư mục `data` của tool; cột **Mã hệ 16** được tài liệu tự quy đổi thêm từ mã thập phân trong help, phần Mã phím để tiện tra cứu).
+Trang này liệt kê bảng mã phím ảo (Virtual-Key Codes) của bàn phím tiêu chuẩn và các hằng số dựng sẵn trong tệp `data/const.txt` (theo help, phần Mã phím và tệp `data/const.txt`; cột **Mã hệ 16** được tài liệu tự quy đổi thêm từ mã thập phân trong help để tiện tra cứu).
 
 Khi dùng các lệnh bàn phím như [`KEYPRESS`](/lenh/ban-phim#keypress), [`KEYDOWN`](/lenh/ban-phim#keydown), [`KEYUP`](/lenh/ban-phim#keyup) hoặc [`ISKEYDOWN`](/lenh/ban-phim#iskeydown), bạn có thể truyền **mã số thập phân**, **mã thập lục phân (`0x...`)** hoặc **tên hằng số (`#...`)**.
 
@@ -10,14 +10,14 @@ Khi dùng các lệnh bàn phím như [`KEYPRESS`](/lenh/ban-phim#keypress), [`K
 |---|---|---|
 | `#TRUE` | `1` | Giá trị logic Đúng |
 | `#FALSE` | `0` | Giá trị logic Sai |
-| `#NULL` | `-1` | Suy luận: giá trị rỗng / bỏ qua (file hằng trong thư mục `data` của tool định nghĩa `#NULL -1`, help, Lịch sử phiên bản ghi nhận thêm hằng số `#null`) |
-| `#NIL` | `-1` | Suy luận: tương đương `#NULL` (file hằng trong thư mục `data` của tool định nghĩa `#NIL -1`) |
+| `#NULL` | `-1` | Suy luận: giá trị rỗng / bỏ qua (tệp `data/const.txt` định nghĩa `#NULL -1`, Lịch sử phiên bản ghi nhận thêm hằng số `#null`) |
+| `#NIL` | `-1` | Suy luận: tương đương `#NULL` (tệp `data/const.txt` định nghĩa `#NIL -1`) |
 
 ---
 
 ## Bảng mã phím chuột và phím điều khiển
 
-| Phím / Nút bấm | Hằng số (file hằng trong `data`) | Mã hệ 10 | Mã hệ 16 |
+| Phím / Nút bấm | Hằng số (`data/const.txt`) | Mã hệ 10 | Mã hệ 16 |
 |---|---|---|---|
 | Nút chuột trái | | `1` | `0x01` |
 | Nút chuột phải | | `2` | `0x02` |
@@ -47,14 +47,20 @@ Khi dùng các lệnh bàn phím như [`KEYPRESS`](/lenh/ban-phim#keypress), [`K
 | Phím Applications (Menu) | | `93` | `0x5D` |
 | NumLock | `#NUMLOCK` | `144` | `0x90` |
 | ScrollLock | `#SCROLLLOCK` | `145` | `0x91` |
-| PrintScreen | `#PRINTSCREEN` | `154` | `0x9A` |
+| PrintScreen | `#PRINTSCREEN` | 🟠 `154` | `0x9A` |
 | Meta | | `157` | `0x9D` |
+
+- 🟠 **Lưu ý về mã phím `PrintScreen` (`154`):**
+  - **Nên làm:** Nếu dùng `#PRINTSCREEN` (`154`) mà không bắt được phím PrintScreen trên máy bạn, hãy thử truyền mã số **`44`** (`0x2C`).
+  ::: details Vì sao chưa chắc
+  Cả bảng phụ lục mã phím trong help lẫn tệp `data/const.txt` đều ghi `#PRINTSCREEN` là `154` (`0x9A`). Tuy nhiên, **Suy luận:** theo kiến thức Windows, mã phím ảo chuẩn (`VK_SNAPSHOT`) của phím PrintScreen trên Windows thường là `44` (`0x2C`). Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#ma-phim-printscreen-154-va-44).
+  :::
 
 ---
 
 ## Bảng mã phím chữ số (`0..9`) và chữ cái (`A..Z`)
 
-| Phím | Hằng số (file hằng trong `data`) | Mã hệ 10 | Mã hệ 16 |
+| Phím | Hằng số (`data/const.txt`) | Mã hệ 10 | Mã hệ 16 |
 |---|---|---|---|
 | `0` | `#0` | `48` | `0x30` |
 | `1` | `#1` | `49` | `0x31` |
@@ -97,7 +103,7 @@ Khi dùng các lệnh bàn phím như [`KEYPRESS`](/lenh/ban-phim#keypress), [`K
 
 ## Bảng mã cụm phím số (NumPad), phím chức năng (`F1..F12`) và dấu câu
 
-| Phím | Hằng số (file hằng trong `data`) | Mã hệ 10 | Mã hệ 16 |
+| Phím | Hằng số (`data/const.txt`) | Mã hệ 10 | Mã hệ 16 |
 |---|---|---|---|
 | NumPad `0` | | `96` | `0x60` |
 | NumPad `1` | | `97` | `0x61` |

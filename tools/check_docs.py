@@ -92,8 +92,9 @@ for path in glob.glob(f'{DOCS}/**/*.md', recursive=True):
     for bad in ('gunny', 'gameguard', 'frost', 'zhyk', 'allcheats', '🟢'):
         if bad in text.lower():
             err(rel, f'chứa nội dung cấm: {bad}')
-    internal = re.findall(r'(?:all_\w+|wnd[123]|faq|history|plugin|colors|winmode|what|about|appendix|const)\.(?:txt|htm|bmp|png)'
-                          r'|sources/|big_test|doi-chieu|keywords\.txt|help-text|help-html', text)
+    # data/const.txt và data/keywords.txt là file có thật của tool nên được phép nêu tên
+    internal = re.findall(r'(?<!data/)(?:all_\w+|wnd[123]|faq|history|plugin|colors|winmode|what|about|appendix|const|keywords)\.(?:txt|htm|bmp|png)'
+                          r'|sources/|big_test|doi-chieu|help-text|help-html', text)
     if internal:
         err(rel, f'lộ tên file nội bộ {len(internal)} chỗ, ví dụ {internal[0]}')
     if re.search(r'^#+ \d', text, re.M):

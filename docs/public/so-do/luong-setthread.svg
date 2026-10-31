@@ -20,13 +20,13 @@
   <line x1="220" y1="129" x2="265" y2="129" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
 
   <rect x="270" y="102" width="195" height="54" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
-  <text x="367" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#78350f">SETTHREAD(t1, 0)</text>
+  <text x="367" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#78350f">SETTHREAD(luong_2, 0)</text>
   <text x="367" y="145" text-anchor="middle" font-size="14" fill="#92400e">Tạm dừng, nhớ vị trí</text>
 
   <line x1="465" y1="129" x2="510" y2="129" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
 
   <rect x="515" y="102" width="200" height="54" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
-  <text x="615" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">SETTHREAD(t1, 1)</text>
+  <text x="615" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">SETTHREAD(luong_2, 1)</text>
   <text x="615" y="145" text-anchor="middle" font-size="14" fill="#166534">Chạy tiếp từ Bước 3</text>
 
   <!-- Case B: state 2 then 1 -->
@@ -40,12 +40,12 @@
   <line x1="220" y1="274" x2="265" y2="274" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
 
   <rect x="270" y="247" width="195" height="54" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
-  <text x="367" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">SETTHREAD(t1, 2)</text>
+  <text x="367" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">SETTHREAD(luong_2, 2)</text>
   <text x="367" y="290" text-anchor="middle" font-size="14" fill="#7f1d1d">Tạm dừng &amp; đưa về đầu</text>
 
   <line x1="465" y1="274" x2="510" y2="274" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
 
   <rect x="515" y="247" width="200" height="54" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
-  <text x="615" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">SETTHREAD(t1, 1)</text>
+  <text x="615" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">SETTHREAD(luong_2, 1)</text>
   <text x="615" y="290" text-anchor="middle" font-size="14" fill="#166534">Chạy lại từ Bước 1 (đầu)</text>
 </svg>

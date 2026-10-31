@@ -403,7 +403,7 @@ HALT
 
 Làm tròn một số đến hàng thập phân hoặc hàng đơn vị/chục/trăm chỉ định.
 
-**Loại:** hàm · **Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Loại:** hàm · **Trạng thái:** 🟠 Chưa thống nhất
 
 ```cms
 ROUND (arg, prec)
@@ -430,8 +430,11 @@ HALT
 
 **Lưu ý**
 
-- Help ghi: "Việc làm tròn diễn ra theo hướng ra xa số 0. Tức là `prec = 2` sẽ làm tròn số đến hàng trăm, còn `prec = -2` đến hàng phần trăm (hai chữ số sau dấu chấm). Việc làm tròn diễn ra theo quy tắc chuẩn `0.5`."
-- Cách hiểu câu trên của help: vế giải thích ngay sau cụm "theo hướng ra xa số 0" (`prec = 2` là hàng trăm, `prec = -2` là hàng phần trăm) cho thấy tác giả có thể đang mô tả chiều của tham số `prec` tính từ vị trí hàng đơn vị (`prec = 0`) đi ra hai phía, nhưng cũng có thể hiểu là cách làm tròn số âm khi gặp `.5` (ví dụ `ROUND(-1.5, 0)` ra `-2` hay `-1`). Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#cach-lam-tron-so-am-cua-round).
+- 🟠 **Lưu ý về quy tắc làm tròn trong help:**
+  - **Nên làm:** Với số dương, truyền `prec = 0` để làm tròn tới hàng đơn vị, `prec < 0` cho các chữ số sau dấu chấm thập phân (ví dụ `-2` là 2 chữ số thập phân) và `prec > 0` cho hàng chục (`1`), hàng trăm (`2`). Nếu làm tròn số âm có phần lẻ `.5`, hãy thử nghiệm trước trên máy bạn.
+  ::: details Vì sao chưa chắc
+  Help ghi: "Việc làm tròn diễn ra theo hướng ra xa số 0. Tức là `prec = 2` sẽ làm tròn số đến hàng trăm, còn `prec = -2` đến hàng phần trăm (hai chữ số sau dấu chấm). Việc làm tròn diễn ra theo quy tắc chuẩn `0.5`." Vế giải thích ngay sau cụm "theo hướng ra xa số 0" (`prec = 2` là hàng trăm, `prec = -2` là hàng phần trăm) cho thấy tác giả có thể đang mô tả chiều của tham số `prec` tính từ vị trí hàng đơn vị (`prec = 0`) đi ra hai phía, nhưng cũng có thể hiểu là cách làm tròn số âm khi gặp `.5` (ví dụ `ROUND(-1.5, 0)` ra `-2` hay `-1`). Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#cach-lam-tron-so-am-cua-round).
+  :::
 
 ---
 
@@ -610,10 +613,13 @@ HALT
 
 **Lưu ý**
 
-- Theo help, tại thời điểm gọi `SETVAR`, biến có tên nêu trong chuỗi `$var` **phải tồn tại từ trước**.
+- Tại thời điểm gọi `SETVAR`, biến có tên nêu trong chuỗi `$var` **phải tồn tại từ trước**.
 - 🟠 **Điểm chưa thống nhất khi so sánh giữa help và sách của Chô tô:**
+  - **Nên làm:** Luôn khởi tạo biến trước (ví dụ `$var = 0` hoặc `DEFINE($var, 0)`), và truyền tên biến dưới dạng chuỗi có dấu ngoặc kép (như `SETVAR("$var", 5)`).
+  ::: details Vì sao chưa chắc
   - **Theo help:** Biến được gán phải được khởi tạo hoặc khai báo trước khi gọi `SETVAR`.
-  - **Theo sách của Chô tô (tr. 42):** Ví dụ trong sách viết `define($var)` nhưng dòng sau lại gọi `setvar("$x", 5)` (khai báo biến `$var` nhưng lại gán cho biến `$x` chưa từng tồn tại). Bạn không nên làm theo ví dụ lệch này của sách; hãy luôn khởi tạo đúng biến trước khi gọi `SETVAR`. Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#setvar-khi-bien-chua-ton-tai-truoc-khi-goi).
+  - **Theo sách của Chô tô (tr. 42):** Ví dụ trong sách viết `define($var)` nhưng dòng sau lại gọi `setvar("$x", 5)` (khai báo biến `$var` nhưng lại gán cho biến `$x` chưa từng tồn tại). Bạn không nên làm theo ví dụ lệch này của sách. Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#setvar-khi-bien-chua-ton-tai-truoc-khi-goi).
+  :::
 
 ---
 
@@ -647,5 +653,8 @@ HALT
 
 - Tại thời điểm gọi `GETVAR`, biến có tên nêu trong tham số phải tồn tại từ trước (xem thêm ví dụ kết hợp tại [`SETVAR`](#setvar)).
 - 🟠 **Điểm chưa thống nhất khi so sánh giữa help và sách của Chô tô:**
+  - **Nên làm:** Gọi `GETVAR` như một **hàm** nhận tham số là **chuỗi tên biến** và gán kết quả trả về cho biến (ví dụ `$kq = GETVAR("$var")`).
+  ::: details Vì sao chưa chắc
   - **Theo help:** `GETVAR` là một **hàm** nhận tham số là **chuỗi tên biến** (như `"$var"`) và trả về giá trị của biến đó: `$tmp = getvar($triple_var)`.
   - **Theo sách của Chô tô (tr. 42):** Sách mô tả tên biến không cần ngoặc kép và đưa ra ví dụ `define($var, 5)`, `getvar($x)`, `print($x)`. Ví dụ trong sách bị sai ở cả 3 điểm: khai báo `$var` nhưng đọc `$x`, truyền biến trực tiếp thay vì chuỗi tên biến, và gọi như thủ tục (bỏ qua giá trị trả về của hàm). Không viết theo sách ở mục này. Xem script kiểm chứng tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#cach-truyen-tham-so-va-gia-tri-tra-ve-cua-getvar).
+  :::

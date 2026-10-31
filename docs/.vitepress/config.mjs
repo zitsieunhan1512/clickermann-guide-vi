@@ -63,10 +63,11 @@ export default defineConfig({
     },
     nav: [
       { text: 'Bắt đầu', link: '/bat-dau/cai-dat' },
-      { text: 'Khái niệm', link: '/khai-niem/ngon-ngu' },
-      { text: 'Tra cứu lệnh', link: '/lenh/' },
+      { text: 'Khái niệm cơ bản', link: '/khai-niem/ngon-ngu' },
       { text: 'Cẩm nang', link: '/cam-nang/click-theo-lich' },
       { text: 'Xử lý lỗi', link: '/xu-ly-loi' },
+      { text: 'Tra cứu lệnh', link: '/lenh/' },
+      { text: 'Nâng cao', link: '/bat-dau/quan-ly-cua-so' },
       { text: 'Phụ lục', link: '/phu-luc/ma-phim' }
     ],
     sidebar: [
@@ -80,22 +81,35 @@ export default defineConfig({
         text: 'Bắt đầu',
         items: [
           { text: 'Cài đặt và chạy lần đầu', link: '/bat-dau/cai-dat' },
-          { text: 'Viết script đầu tiên', link: '/bat-dau/script-dau-tien' },
           { text: 'Màn hình chính', link: '/bat-dau/man-hinh-chinh' },
           { text: 'Trình soạn thảo và kính lúp', link: '/bat-dau/trinh-soan-thao' },
-          { text: 'Quản lý cửa sổ', link: '/bat-dau/quan-ly-cua-so' }
+          { text: 'Viết script đầu tiên', link: '/bat-dau/script-dau-tien' }
         ]
       },
       {
-        text: 'Khái niệm cốt lõi',
+        text: 'Khái niệm cơ bản',
         items: [
           { text: 'Ngôn ngữ script', link: '/khai-niem/ngon-ngu' },
           { text: 'Bộ đệm ảnh', link: '/khai-niem/bo-dem-anh' },
           { text: 'Hệ tọa độ', link: '/khai-niem/toa-do' },
           { text: 'Màu sắc và giảm màu', link: '/khai-niem/mau-sac' },
-          { text: 'Chế độ khóa cửa sổ', link: '/khai-niem/khoa-cua-so' },
-          { text: 'Luồng (THREAD)', link: '/khai-niem/luong' },
-          { text: 'Plugin mở rộng (DLL)', link: '/khai-niem/plugin' }
+          { text: 'Chế độ khóa cửa sổ', link: '/khai-niem/khoa-cua-so' }
+        ]
+      },
+      {
+        text: 'Cẩm nang',
+        items: [
+          { text: 'Bấm chuột theo lịch', link: '/cam-nang/click-theo-lich' },
+          { text: 'Tìm màu trên màn hình', link: '/cam-nang/tim-mau' },
+          { text: 'Tìm hình ảnh mẫu', link: '/cam-nang/tim-anh' },
+          { text: 'Đọc và ghi tệp tin', link: '/cam-nang/doc-ghi-file' },
+          { text: 'Tự động vẽ trong Paint', link: '/cam-nang/tu-ve' }
+        ]
+      },
+      {
+        text: 'Xử lý lỗi',
+        items: [
+          { text: 'Xử lý lỗi thường gặp (FAQ)', link: '/xu-ly-loi' }
         ]
       },
       {
@@ -114,19 +128,11 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Cẩm nang thực hành',
+        text: 'Nâng cao',
         items: [
-          { text: 'Bấm chuột theo lịch', link: '/cam-nang/click-theo-lich' },
-          { text: 'Tìm màu trên màn hình', link: '/cam-nang/tim-mau' },
-          { text: 'Tìm hình ảnh mẫu', link: '/cam-nang/tim-anh' },
-          { text: 'Đọc và ghi tệp tin', link: '/cam-nang/doc-ghi-file' },
-          { text: 'Tự động vẽ trong Paint', link: '/cam-nang/tu-ve' }
-        ]
-      },
-      {
-        text: 'Khắc phục sự cố',
-        items: [
-          { text: 'Xử lý lỗi thường gặp (FAQ)', link: '/xu-ly-loi' }
+          { text: 'Quản lý cửa sổ', link: '/bat-dau/quan-ly-cua-so' },
+          { text: 'Luồng (THREAD)', link: '/khai-niem/luong' },
+          { text: 'Plugin mở rộng (DLL)', link: '/khai-niem/plugin' }
         ]
       },
       {

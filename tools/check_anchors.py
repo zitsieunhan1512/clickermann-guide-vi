@@ -12,7 +12,8 @@ for f in pages:
     t = open(f, encoding='utf-8').read()
     body = t.split('<main', 1)[-1]
     for href in sorted(set(re.findall(r'href="(/[^"#]*)#([^"]+)"', body))):
-        target = href[0]
+        # tools/deploy.sh build với base của GitHub Pages
+        target = href[0].removeprefix('/clickermann-guide-vi')
         if target.endswith('/'):
             target += 'index.html'
         if not target.endswith('.html'):

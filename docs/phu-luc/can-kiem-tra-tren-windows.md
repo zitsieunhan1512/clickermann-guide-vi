@@ -1,6 +1,8 @@
 # Cần kiểm tra trên Windows
 
-Trang này tổng hợp các điểm có trạng thái `🟠 Chưa thống nhất` và các điểm cần chạy kiểm chứng trong tài liệu (đối chiếu giữa `help.chm` chính thức v4.13.014 và sách của Chô tô, các điểm help tự mâu thuẫn hoặc help không nói rõ, cùng các kịch bản cẩm nang), kèm theo hướng dẫn hoặc đoạn script để kiểm chứng trực tiếp trên máy Windows.
+::: info Trang dành cho người có Windows muốn giúp kiểm chứng; người mới không cần đọc
+Trang này tổng hợp các điểm có trạng thái `🟠 Chưa thống nhất`, các chi tiết `help.chm` không nói rõ và các kịch bản cần chạy thử thực tế trên máy Windows. Nếu bạn mới học Clickermann, bạn có thể bỏ qua trang này và chỉ cần làm theo dòng gợi ý **"Nên làm"** trên từng trang bài học.
+:::
 
 ## Tóm tắt các mục cần kiểm chứng
 
@@ -8,25 +10,29 @@ Trang này tổng hợp các điểm có trạng thái `🟠 Chưa thống nhấ
 |---|---|---|---|
 | [`THREAD`](/lenh/cau-truc#thread-end-thread)<br>*(tr. 82)* | Không ghi `init_state` thì luồng đang tắt (`0`), phải bật bằng `SETTHREAD`. | Ví dụ dùng `thread(t1)` không tham số `init_state` và mô tả các luồng cùng chạy ngay. Muốn luồng dừng sẵn lúc đầu thì ví dụ khác viết `thread(t1, 0)`. | **Mâu thuẫn**<br>Suy từ ví dụ của help (help không ghi thẳng giá trị mặc định trong dòng mô tả tham số). |
 | [`SETTHREAD`](/lenh/cau-truc#setthread)<br>*(tr. 83)* | Chỉ nêu hai giá trị: `0` tắt luồng, `1` bật luồng. | Có 3 giá trị: `0` tạm dừng; `1` chạy tiếp từ chỗ đã dừng; **`2`** tạm dừng và lần sau chạy lại từ đầu. | **Sách thiếu**<br>"Tắt" trong sách thực chất là tạm dừng. |
-| [`$_ms`](/khai-niem/ngon-ngu#bang-bien-he-thong)<br>*(tr. 26)* | Đếm từ khi Clickermann chạy. | Bộ đếm của Windows, tính từ lúc hệ điều hành khởi động. | **Mâu thuẫn**<br>[Lịch sử phiên bản](/phu-luc/lich-su) có sửa lỗi "máy chạy quá 49 ngày", khớp với cách nói của help (suy luận). |
+| [`$_ms`](/khai-niem/ngon-ngu#bang-bien-he-thong-day-du)<br>*(tr. 26)* | Đếm từ khi Clickermann chạy. | Bộ đếm của Windows, tính từ lúc hệ điều hành khởi động. | **Mâu thuẫn**<br>[Lịch sử phiên bản](/phu-luc/lich-su) có sửa lỗi "máy chạy quá 49 ngày", khớp với cách nói của help (suy luận). |
 | [`GETVAR`](/lenh/so#getvar)<br>*(tr. 42)* | Tên biến không cần ngoặc kép. Ví dụ: `define($var, 5)`, `getvar($x)`, `print($x)`. | Tham số là **chuỗi** chứa tên biến, hàm trả về giá trị: `$tmp = getvar($triple_var)` với `$triple_var` mang chuỗi `"$var"`. | **Ví dụ sách sai**<br>Khai báo `$var` nhưng đọc `$x`, và bỏ qua giá trị trả về của hàm. |
 | [`SETVAR`](/lenh/so#setvar)<br>*(tr. 42)* | Ví dụ: `define($var)` rồi `setvar("$x", 5)`. | Biến có tên đã cho phải tồn tại trước khi gọi. | **Ví dụ lệch**<br>Dấu ngoặc kép thì đúng, nhưng khai báo nhầm biến. |
-| [`SCREENSHOT`, `SCREENSHOTEX`](/lenh/man-hinh#screenshotex)<br>*(tr. 94)* | Lưu vào thư mục `screen`; ở `SCREENSHOT` nói lưu dạng jpeg; ở `SCREENSHOTEX` nói lưu dạng bmp dù cũng liệt kê `format` 1 là jpeg. | Lưu vào thư mục `screens`; `SCREENSHOT` lưu `.bmp`; ở `SCREENSHOTEX` thì `format` `0` là bmp, `1` là jpeg nhưng phần ghi chú chỉ ghi tên dạng `pref0000.bmp`, không nói rõ đuôi file khi `format = 1`. | **Khác tên thư mục & cần thử đuôi file** |
-| [`$_xmax`, `$_ymax`, `$_xmin`, `$_ymin`](/khai-niem/toa-do#hai-bien-he-thong-xmax-va-ymax)<br>*(tr. 26)* | Tọa độ lớn nhất của cửa sổ. | Tính từ cấu hình màn hình desktop. | **Cần thử**<br>Có thể khác nhau khi đang khóa vào cửa sổ. |
-| [`CALL`](/lenh/kich-ban#call)<br>*(tr. 104)* | DLL để cùng thư mục file script. | Trang `CALL` (help, mục Script và plugin) ghi `%Clickermann%/plugins`; trang [Plugin](/khai-niem/plugin) (help, bài Plugin) ghi cạnh script hoặc thư mục con, không tìm thấy thì âm thầm kết thúc. | **Help tự mâu thuẫn**<br>Sách khớp bài Plugin. |
+| [`SCREENSHOT`, `SCREENSHOTEX`](/lenh/man-hinh#screenshotex)<br>*(tr. 94)* | Lưu vào thư mục `screen`; ở `SCREENSHOT` nói lưu dạng jpeg; ở `SCREENSHOTEX` nói lưu dạng bmp dù cũng liệt kê `format` 1 là jpeg. | Lưu vào thư mục `screens`; `SCREENSHOT` lưu `.bmp`; ở `SCREENSHOTEX` thì `format` `0` là bmp, `1` là jpeg nhưng phần ghi chú chỉ ghi tên dạng `pref0000.bmp`, không nói rõ đuôi tệp khi `format = 1`. | **Khác tên thư mục & cần thử đuôi tệp** |
+| [`$_xmax`, `$_ymax`, `$_xmin`, `$_ymin`](/khai-niem/toa-do#cac-bien-he-thong-gioi-han-toa-do-xmax-ymax-xmin-ymin)<br>*(tr. 26)* | `$_xmax`, `$_ymax`: tọa độ lớn nhất của cửa sổ; `$_xmin`, `$_ymin`: tọa độ nhỏ nhất (góc trái trên) của cửa sổ. | Tính từ cấu hình màn hình desktop. | **Cần thử**<br>Có thể khác nhau khi đang khóa vào cửa sổ. |
+| [`CALL`](/lenh/kich-ban#call)<br>*(tr. 104)* | DLL để cùng thư mục tệp script. | Trang `CALL` (mục Script và plugin) ghi `%Clickermann%/plugins`; bài [Plugin](/khai-niem/plugin) ghi cạnh script hoặc thư mục con trong thư mục dự án, không tìm thấy thì âm thầm kết thúc. | **Help tự mâu thuẫn**<br>Sách khớp bài Plugin. |
 | [`WNDSETINFO`](/lenh/winapi#wndsetinfo)<br>*(tr. 117)* | Truyền số trực tiếp. | Ví dụ chỉ truyền biến. | **Cần thử**<br>Không hẳn mâu thuẫn. |
-| [Trình duyệt, máy ảo](/khai-niem/khoa-cua-so#gioi-han-va-giai-phap-dung-may-ao)<br>*(tr. 19)* | Thuộc loại cửa sổ không nhận tool. | Khung Flash trong trình duyệt là một "cửa sổ" riêng, khóa được hay không tùy cách ứng dụng được viết. Với máy ảo, help gợi ý cài tool bên trong máy ảo. | **Sách nói quá chung** |
-| [`LOGWRITE` và `#logfile`](/lenh/nhat-ky#logwrite-print) | — | Help, mục Xuất thông tin ghi khi có `#logfile` thì ghi thêm vào `%thu_muc_du_an%/log.txt`; phần Giới thiệu ngôn ngữ và Lịch sử phiên bản cho phép đặt tên tùy ý như `#logfile "debug.txt"`. | **Help chưa thống nhất**<br>Cần thử `#logfile` không kèm tên file có ghi ra `log.txt` không. |
-| [`ROUND`](/lenh/so#round) | — | Help, mục Làm việc với số ghi "làm tròn theo hướng ra xa số 0" rồi giải thích `prec = 2` là hàng trăm, `prec = -2` là hàng phần trăm, theo quy tắc chuẩn `0.5`. | **Cần thử**<br>Kiểm tra `ROUND(-1.5, 0)` ra `-2` hay `-1`. |
-| [`READMEM`, `WRITEMEM` (`addr`)](/lenh/kich-ban#readmem) | — | Help, mục Script và plugin: dòng tham số của `READMEM` ghi `addr` là chuỗi; phần ghi chú của cả hai lệnh lại ghi `addr` là số nguyên thông thường ở dạng thập phân hoặc thập lục phân. | **Help tự mâu thuẫn**<br>Chỉ ghi nhận mâu thuẫn tài liệu, không viết script kiểm tra. |
-| [`GETMESSAGE`](/lenh/winapi#getmessage) | — | Ví dụ trong help, mục WinAPI gọi `POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng một lượt chạy và không có `HALT`. | **Cần thử**<br>`POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng lượt có nhận được không. |
-| [`FOR` lồng nhau](/lenh/cau-truc#for-end-cyc) | — | Help, mục Cấu trúc lệnh nói biến giữ giá trị nếu không gán `=value`, nhưng ví dụ vòng lặp lồng nhau viết `FOR($x, $x < 3)` và `FOR($y, $y < 3)`. | **Cần thử**<br>In ra 9 dòng hay chỉ 3 dòng. |
+| [Trình duyệt, máy ảo](/khai-niem/khoa-cua-so#gioi-han-va-giai-phap-dung-may-ao)<br>*(tr. 19)* | Thuộc loại cửa sổ không nhận Clickermann. | Khung Flash trong trình duyệt là một phần tử con riêng, khóa được hay không tùy cách ứng dụng được viết. Với máy ảo, help gợi ý cài Clickermann bên trong máy ảo. | **Sách nói quá chung** |
+| [`SUB` trong `#include`](/lenh/cau-truc#sub-end-sub)<br>*(tr. 81)* | Khuyên hạn chế để `SUB` ở tệp ngoài rồi `#include` vì đôi lúc bị lỗi. | Mục Cấu trúc lệnh ghi việc tách phần thân các chương trình con ra tệp riêng bên ngoài rồi nạp qua `#include` được coi là thói quen tốt. | **Mâu thuẫn**<br>Cần thử gọi `SUB` đặt trong tệp `#include`. |
+| [`LOGWRITE` và `#logfile`](/lenh/nhat-ky#logwrite-print) | — | Mục Xuất thông tin ghi khi có `#logfile` thì ghi thêm vào `%thu_muc_du_an%/log.txt`; phần Giới thiệu ngôn ngữ và Lịch sử phiên bản cho phép đặt tên tùy ý như `#logfile "debug.txt"`. | **Help chưa thống nhất**<br>Cần thử `#logfile` không kèm tên tệp có ghi ra `log.txt` không. |
+| [`ROUND`](/lenh/so#round) | — | Mục Làm việc với số ghi "làm tròn theo hướng ra xa số 0" rồi giải thích `prec = 2` là hàng trăm, `prec = -2` là hàng phần trăm, theo quy tắc chuẩn `0.5`. | **🟠 Chưa thống nhất**<br>Kiểm tra `ROUND(-1.5, 0)` ra `-2` hay `-1`. |
+| [`READMEM`, `WRITEMEM` (`addr`)](/lenh/kich-ban#readmem) | — | Mục Script và plugin: dòng tham số của `READMEM` ghi `addr` là chuỗi; phần ghi chú của cả hai lệnh lại ghi `addr` là số nguyên thông thường ở dạng thập phân hoặc thập lục phân. | **Help tự mâu thuẫn**<br>Chỉ ghi nhận mâu thuẫn tài liệu, không viết script kiểm tra. |
+| [`GETMESSAGE`](/lenh/winapi#getmessage) | — | Ví dụ ở mục WinAPI gọi `POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng một lượt chạy và không có `HALT`. | **Cần thử**<br>`POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng lượt có nhận được không. |
+| [`FOR` lồng nhau và dùng lại biến đếm](/lenh/cau-truc#for-end-cyc) | — | Mục Cấu trúc lệnh nói biến giữ giá trị nếu không gán `=value`, nhưng ví dụ vòng lặp lồng nhau và ví dụ `SUB` viết `FOR($x, $x < 3)`, `FOR($y, $y < 3)`, `FOR($i, $i < 3)` không có `=0`. | **🟠 Chưa thống nhất**<br>Kiểm tra số dòng in ra khi không gán `=0`. |
+| [Mã phím `PrintScreen` (`154` và `44`)](/phu-luc/ma-phim#bang-ma-phim-chuot-va-phim-dieu-khien) | — | Bảng mã phím trong help và tệp `data/const.txt` đều ghi `#PRINTSCREEN` là `154` (`0x9A`), trong khi mã `VK_SNAPSHOT` chuẩn của Windows thường là `44` (`0x2C`). | **🟠 Cần thử**<br>Kiểm tra `ISKEYDOWN(154)` và `ISKEYDOWN(44)`. |
+| [Cách tắt khóa cửa sổ (`HSET` và `Alt + W`)](/khai-niem/khoa-cua-so#tat-khoa-cua-so) | — | Mục `HSET` ghi `HSET(hwnd, state)` với `state = 0` là tắt khóa cửa sổ; không nói rõ `HSET(0, 0)` hay nhấn `Alt + W` lần nữa có tắt được không. | **Cần thử**<br>Kiểm tra `HSET($_hwnd, 0)`, `HSET(0, 0)` và `Alt + W`. |
 | [Tên biến hoa / thường](/khai-niem/ngon-ngu#bien-va-kieu-du-lieu) | — | Help không nói rõ; Lịch sử phiên bản ghi `$_DATE_Y`, còn phần Giới thiệu ngôn ngữ ghi `$_date_y`. | **Help không nói rõ**<br>Cần thử `$Var` và `$var`. |
-| [Khung chế độ chạy](/bat-dau/man-hinh-chinh#bang-thong-tin-va-che-do-chay) | — | Help, bài Màn hình chính nói có khung trên cửa sổ chính; Lịch sử phiên bản (v4.7.000) nói đã bỏ khỏi form và (v4.7.000 SE) nói trở lại dạng cửa sổ riêng. | **Help tự mâu thuẫn**<br>Cần mở giao diện v4.13.014 để kiểm tra. |
-| [Chỉ thị `#define`](/khai-niem/ngon-ngu#chi-thi-tien-xu-ly-preprocessor-directives) | — | Help, phần Giới thiệu ngôn ngữ chỉ ghi mẫu `#define <tìm>:<thay>`, không có ví dụ cụ thể. | **Cần thử**<br>Kiểm tra ví dụ `#define @pause:WAITMS(100)`. |
-| [Nơi lưu ảnh `Alt + G`](/cam-nang/tim-anh#buoc-1-chuan-bi-tep-anh-mau-bmp) | — | Help, bài Trình soạn thảo chỉ nói ảnh `100×100` được lưu dạng `.bmp`, không nói rõ lưu ở thư mục nào. | **Help không nói rõ**<br>Cần nhấn `Alt + G` để xem thư mục lưu. |
-| [Kéo chuột vẽ trong Paint](/cam-nang/tu-ve) | — | Ví dụ kéo thả trong help, mục Chuột chỉ có `ldown`, `waitms`, `lup` (không có `MOVE`). | **Suy luận cần thử**<br>Kiểm tra `LDOWN` -> `MOVE` -> `LUP` trong Paint. |
-| [Các kịch bản cẩm nang](/cam-nang/click-theo-lich) | — | 5 trang trong `cam-nang/*` được biên soạn theo cú pháp help nhưng chưa chạy trên máy Windows. | **Cần thử thực tế** |
+| [Khung chế độ chạy](/bat-dau/man-hinh-chinh#bang-thong-tin-va-che-do-chay) | — | Bài Màn hình chính nói có khung trên cửa sổ chính; Lịch sử phiên bản (v4.7.000) nói đã bỏ khỏi cửa sổ chính và (v4.7.000 SE) nói trở lại dạng cửa sổ riêng. | **Help tự mâu thuẫn**<br>Cần mở giao diện v4.13.014 để kiểm tra. |
+| [Chỉ thị `#define`](/khai-niem/ngon-ngu#chi-thi-tien-xu-ly-preprocessor-directives) | — | Phần Giới thiệu ngôn ngữ chỉ ghi mẫu `#define <tìm>:<thay>`, không có ví dụ cụ thể. | **Cần thử**<br>Kiểm tra ví dụ `#define @pause:WAITMS(100)`. |
+| [Nơi lưu ảnh `Alt + G`](/cam-nang/tim-anh#buoc-1-chuan-bi-tep-anh-mau-bmp) | — | Bài Trình soạn thảo chỉ nói ảnh `100×100` được lưu dạng `.bmp`, không nói rõ lưu ở thư mục nào. | **Help không nói rõ**<br>Cần nhấn `Alt + G` để xem thư mục lưu. |
+| [Kéo chuột vẽ trong Paint](/cam-nang/tu-ve) | — | Ví dụ kéo thả ở mục Chuột chỉ có `ldown(10, 10)`, `waitms(300)`, `lup(20, 20)` (không có `MOVE`). | **Suy luận cần thử**<br>Kiểm tra `LDOWN` -> `MOVE` -> `LUP` trong Paint. |
+| [Hành vi thực tế cho người mới](#gia-tri-bien-sau-khi-bam-dung-bam-ap-dung-hoac-doi-script) | — | Giá trị biến sau khi Dừng/Áp dụng, đường dẫn khi chưa `Ctrl + S`, tệp chưa tồn tại (`TFCOUNT`/`TFWRITE`/`INIREAD`), mảng gọi lặp (`SCANPXL`/`SCANPICTURE`/`TFREADARR`), `Alt + Q`, ngoặc rỗng & chữ thường, giao diện & UTF-8, thu phóng màn hình Windows. | **Cần thử thực tế** |
+| [Các tình huống cẩm nang](/cam-nang/click-theo-lich) | — | 5 trang trong `cam-nang/*` được biên soạn theo cú pháp help nhưng chưa chạy trên máy Windows. | **Cần thử thực tế** |
 
 ---
 
@@ -36,12 +42,12 @@ Trang này tổng hợp các điểm có trạng thái `🟠 Chưa thống nhấ
 
 ### Hai cách hiểu hiện tại
 
-1. **Theo ví dụ trong help:** Trong help, mục Cấu trúc lệnh, phần `THREAD ... END_THREAD` đưa ra ví dụ khai báo `thread(t1)` và `thread(t2)` mà không truyền `init_state`, kèm lời giải thích rằng cả 3 luồng (script chính và 2 luồng con) đều chạy đồng thời và in thông báo theo nhịp riêng. Sang mục `SETTHREAD`, để minh họa một luồng đang dừng sẵn, help mới viết rõ `thread(t1, 0)`. Từ đó suy ra khi bỏ trống `init_state`, giá trị mặc định là `1` (chạy ngay).
+1. **Theo ví dụ trong help:** Ở mục Cấu trúc lệnh, phần `THREAD ... END_THREAD` đưa ra ví dụ khai báo `thread(t1)` và `thread(t2)` mà không truyền `init_state`, kèm lời giải thích rằng cả 3 luồng (script chính và 2 luồng con) đều chạy đồng thời và in thông báo theo nhịp riêng. Sang mục `SETTHREAD`, để minh họa một luồng đang dừng sẵn, help mới viết rõ `thread(t1, 0)`. Từ đó suy ra khi bỏ trống `init_state`, giá trị mặc định là `1` (chạy ngay).
 2. **Theo sách của Chô tô (tr. 82):** Sách ghi rằng nếu không truyền `init_state` thì chương trình hiểu là luồng đang tắt (`0`), chưa chạy và cần gọi `SETTHREAD(ten_luong, 1)` mới bắt đầu chạy.
 
 ### Script kiểm tra trên Windows
 
-Lưu ý khi viết script kiểm tra: không gán `$da_chay = 0` ở script chính vì nếu luồng chạy ngay và đặt `$da_chay = 1` trước, dòng gán ở script chính có thể ghi đè lại thành `0` dẫn tới kết luận ngược (theo help, phần Giới thiệu ngôn ngữ, biến chưa từng được gán sẽ tự động đọc ra `0`). Trong thân luồng cũng dùng vòng chờ ngắn đặt lại cờ thay vì `WAIT(10)`:
+Lưu ý khi viết script kiểm tra: không gán `$da_chay = 0` ở script chính vì nếu luồng chạy ngay và đặt `$da_chay = 1` trước, dòng gán ở script chính có thể ghi đè lại thành `0` dẫn tới kết luận ngược (biến chưa từng được gán sẽ tự động đọc ra `0`). Trong thân luồng cũng dùng vòng chờ ngắn đặt lại cờ thay vì `WAIT(10)`:
 
 ```cms
 // Kiểm tra trạng thái mặc định của THREAD khi không truyền init_state
@@ -133,7 +139,7 @@ HALT
 
 ## Gốc thời gian của biến hệ thống $_ms
 
-**Trạng thái:** 🟠 Chưa thống nhất · **Trang khái niệm:** [Ngôn ngữ script](/khai-niem/ngon-ngu#bang-bien-he-thong)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang khái niệm:** [Ngôn ngữ script](/khai-niem/ngon-ngu#bang-bien-he-thong-day-du)
 
 ### Hai cách hiểu hiện tại
 
@@ -142,10 +148,16 @@ HALT
 
 ### Script kiểm tra trên Windows
 
-Cách kiểm chứng chắc chắn nhất: chạy script dưới đây lần 1 để ghi giá trị `$_ms` vào tệp `kiemtra_ms.ini`, sau đó **đóng hẳn chương trình Clickermann rồi mở lại ngay** và chạy lại script lần 2 để so sánh hai giá trị:
+Để kết quả không bị nhập nhằng do thời gian mở lại chương trình, bạn hãy thực hiện đúng các bước sau:
+
+1. Lưu tệp script vào một thư mục dự án riêng.
+2. **Để cửa sổ Clickermann mở sẵn ít nhất 5 phút** (`300 000` ms) trước khi bấm chạy **Lần 1** (để giá trị `$_ms` ở Lần 1 chắc chắn lớn hơn `300 000`).
+3. Ngay sau khi Lần 1 chạy xong, **đóng hẳn chương trình Clickermann, mở lại ngay và bấm chạy Lần 2 trong vòng 30 giây** (`30 000` ms). *(Lưu ý: tham số giá trị của `INIWRITE` là kiểu chuỗi nên script dùng `STRCONCAT("", $ms_hien_tai)` và `"0"`).*
 
 ```cms
 // Kiểm tra gốc thời gian của $_ms bằng cách đóng và mở lại Clickermann
+// Chuẩn bị: để Clickermann mở ít nhất 5 phút trước khi chạy Lần 1;
+// sau đó đóng hẳn, mở lại và chạy Lần 2 trong vòng 30 giây.
 LOGCLEAR
 LOGSHOW(1)
 
@@ -153,18 +165,22 @@ $ms_hien_tai = $_ms
 $ms_lan_truoc = INT(INIREAD("kiemtra_ms.ini", "ms_lan_1", "TEST"))
 
 IF($ms_lan_truoc = 0)
-   INIWRITE("kiemtra_ms.ini", "ms_lan_1", $ms_hien_tai, "TEST")
+   INIWRITE("kiemtra_ms.ini", "ms_lan_1", STRCONCAT("", $ms_hien_tai), "TEST")
    LOGWRITE("Lan chay 1 -> Da luu $_ms = ", $ms_hien_tai, " ms.")
-   LOGWRITE("Bay gio hay DONG HAN Clickermann, mo lai chuong trinh va chay script nay lan 2!")
+   LOGWRITE("Neu Clickermann da mo du 5 phut (> 300000 ms), hay DONG HAN Clickermann, mo lai va chay lan 2 trong vong 30 giay!")
 ELSE
-   LOGWRITE("Lan chay 1 (truoc khi dong tool): ", $ms_lan_truoc, " ms")
-   LOGWRITE("Lan chay 2 (sau khi mo lai tool): ", $ms_hien_tai, " ms")
-   // Xóa giá trị cũ để có thể thử lại từ đầu nếu cần
-   INIWRITE("kiemtra_ms.ini", "ms_lan_1", 0, "TEST")
+   LOGWRITE("Lan chay 1 (truoc khi dong Clickermann): ", $ms_lan_truoc, " ms")
+   LOGWRITE("Lan chay 2 (sau khi mo lai Clickermann): ", $ms_hien_tai, " ms")
+   // Xóa giá trị cũ về "0" để có thể thử lại từ đầu nếu cần
+   INIWRITE("kiemtra_ms.ini", "ms_lan_1", "0", "TEST")
    IF($ms_hien_tai > $ms_lan_truoc)
-      LOGWRITE("KET LUAN: $_ms tiep tuc tang sau khi mo lai tool -> Tinh tu luc Windows khoi dong (khop voi help).")
+      LOGWRITE("KET LUAN: $_ms tiep tuc tang sau khi mo lai Clickermann -> Tinh tu luc Windows khoi dong (khop voi help).")
    ELSE
-      LOGWRITE("KET LUAN: $_ms quay ve so nho sau khi mo lai tool -> Tinh tu luc Clickermann chay (khop voi sach Cho to, tr. 26).")
+      IF($ms_hien_tai < 60000)
+         LOGWRITE("KET LUAN: $_ms quay ve so nho (< 60000 ms) sau khi mo lai -> Tinh tu luc Clickermann chay (khop voi sach Cho to, tr. 26).")
+      ELSE
+         LOGWRITE("Chua du dieu kien ket luan: hay dam bao Clickermann mo it nhat 5 phut truoc Lan 1 va chay Lan 2 trong vong 30 giay sau khi mo lai.")
+      END_IF
    END_IF
 END_IF
 
@@ -179,12 +195,14 @@ HALT
 
 ### Hai cách hiểu hiện tại
 
-1. **Theo help chính thức (mục Làm việc với số):** `GETVAR($var)` là một **hàm** nhận tham số là **chuỗi chứa tên biến** (ví dụ `"$goc"`) và trả về giá trị của biến đó.
+1. **Theo help chính thức (mục Làm việc với số):** `GETVAR($var)` là một **hàm** nhận tham số là **chuỗi chứa tên biến** (ví dụ `"$goc"`) và trả về giá trị của biến đó. Biến được đọc phải tồn tại tại thời điểm gọi hàm.
 2. **Theo sách của Chô tô (tr. 42):** Sách ghi tên biến không cần dấu ngoặc kép và viết ví dụ `define($var, 5)`, `getvar($x)`, `print($x)` (vừa khai báo lệch tên biến, vừa không hứng giá trị trả về của hàm).
 
 ### Script kiểm tra trên Windows
 
-Đoạn script dưới đây thử cả hai cách (truyền chuỗi tên biến `"$goc"` theo help và truyền trực tiếp biến `$goc` không ngoặc kép theo sách) rồi in kết luận:
+Đoạn script dưới đây thử cả hai cách (truyền chuỗi tên biến `"$goc"` theo help và truyền trực tiếp biến `$goc` không ngoặc kép theo sách).
+
+*(Lưu ý: khi gọi `GETVAR($goc)` ở Cách 2, giá trị của `$goc` là `42` nên nếu Clickermann tìm biến tên `"42"` không tồn tại và **báo lỗi dừng script ngay tại dòng đó**, thì việc báo lỗi dừng script đó cũng chính là kết quả kiểm chứng cho thấy Cách 2 không hợp lệ).*
 
 ```cms
 // Kiểm tra GETVAR theo cách của help (chuỗi tên biến) và cách của sách (biến không ngoặc kép)
@@ -199,14 +217,18 @@ $ket_qua = GETVAR($ten_bien)
 LOGWRITE("Cach 1 - GETVAR truyen chuoi ten bien: ", $ket_qua)
 
 // Cách 2 (theo sách tr. 42): truyền trực tiếp biến $goc không ngoặc kép
+// (Nếu dòng dưới báo lỗi dừng script thì chứng tỏ Cách 2 sai cú pháp)
 $r2 = GETVAR($goc)
 LOGWRITE("Cach 2 - GETVAR($goc) khong ngoac kep: ", $r2)
 
 IF(($ket_qua = 42) & ($r2 != 42))
    LOGWRITE("KET LUAN: GETVAR nhan chuoi chua ten bien (khop voi help).")
-END_IF
-IF($r2 = 42)
-   LOGWRITE("KET LUAN: GETVAR($goc) khong ngoac kep cung tra ve 42 (khop voi sach).")
+ELSE
+   IF($r2 = 42)
+      LOGWRITE("KET LUAN: GETVAR($goc) khong ngoac kep cung tra ve 42 (khop voi sach).")
+   ELSE
+      LOGWRITE("KET LUAN KHAC: ket_qua=", $ket_qua, ", r2=", $r2)
+   END_IF
 END_IF
 
 HALT
@@ -224,6 +246,8 @@ HALT
 2. **Theo sách của Chô tô (tr. 42):** Ví dụ của sách lại viết `define($var)` rồi gọi `setvar("$x", 5)` (tức biến `$x` chưa từng được khai báo trước khi gọi `SETVAR`).
 
 ### Script kiểm tra trên Windows
+
+*(Lưu ý: nếu dòng `SETVAR("$chua_co", 55)` làm Clickermann hiện thông báo lỗi và dừng script ngay vì biến `$chua_co` chưa tồn tại, thì việc dừng báo lỗi đó cũng chính là kết quả xác nhận ghi chú trong help).*
 
 ```cms
 // Kiểm tra SETVAR với biến đã tồn tại và biến chưa tồn tại
@@ -256,7 +280,7 @@ HALT
 
 ### Hai cách hiểu hiện tại
 
-1. **Theo help chính thức (mục Màn hình):** Cả `SCREENSHOT` và `SCREENSHOTEX` đều lưu ảnh vào thư mục con `screens` (có chữ `s` ở cuối) bên trong thư mục của script hiện tại. `SCREENSHOT` lưu ảnh dạng `.bmp`. Với `SCREENSHOTEX`, tham số `format` bằng `0` là BMP, bằng `1` là JPEG; tuy nhiên ở phần ghi chú, help chỉ ghi tên file dạng `pref0000.bmp`, không nói rõ đuôi file khi `format = 1`.
+1. **Theo help chính thức (mục Màn hình):** Cả `SCREENSHOT` và `SCREENSHOTEX` đều lưu ảnh vào thư mục con `screens` (có chữ `s` ở cuối) bên trong thư mục của script hiện tại. `SCREENSHOT` lưu ảnh dạng `.bmp`. Với `SCREENSHOTEX`, tham số `format` bằng `0` là BMP, bằng `1` là JPEG; tuy nhiên ở phần ghi chú, help chỉ ghi tên tệp dạng `pref0000.bmp`, không nói rõ đuôi tệp khi `format = 1`.
 2. **Theo sách của Chô tô (tr. 94):** Ghi tên thư mục lưu ảnh của cả `SCREENSHOT` và `SCREENSHOTEX` là `screen` (không có chữ `s`); ở `SCREENSHOT` sách ghi ảnh lưu định dạng `jpeg`, còn ở `SCREENSHOTEX` phần lời mô tả nói ảnh lưu dạng `.bmp` dù vẫn liệt kê `format = 1` là JPEG.
 
 ### Script kiểm tra trên Windows
@@ -303,16 +327,16 @@ HALT
 
 ## Giá trị của $_xmax và $_ymax khi khóa cửa sổ
 
-**Trạng thái:** 🟠 Chưa thống nhất · **Trang khái niệm:** [Hệ tọa độ màn hình và phần tử](/khai-niem/toa-do#hai-bien-he-thong-xmax-va-ymax), [Ngôn ngữ script](/khai-niem/ngon-ngu#bang-bien-he-thong)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang khái niệm:** [Hệ tọa độ màn hình và phần tử](/khai-niem/toa-do#cac-bien-he-thong-gioi-han-toa-do-xmax-ymax-xmin-ymin), [Ngôn ngữ script](/khai-niem/ngon-ngu#bang-bien-he-thong-day-du)
 
 ### Hai cách hiểu hiện tại
 
-1. **Theo help chính thức (phần Giới thiệu ngôn ngữ):** Bảng biến hệ thống mô tả `$_xmax`, `$_ymax`, `$_xmin`, `$_ymin` là giá trị tọa độ X, Y lớn nhất và nhỏ nhất cho phép, được **tính từ cấu hình màn hình desktop**.
-2. **Theo sách của Chô tô (tr. 26):** Ghi rằng `$_xmax` và `$_ymax` là **tọa độ lớn nhất của cửa sổ**.
+1. **Theo help chính thức (phần Giới thiệu ngôn ngữ):** Bảng biến hệ thống mô tả cả 4 biến `$_xmax`, `$_ymax`, `$_xmin`, `$_ymin` là giá trị tọa độ X, Y lớn nhất và nhỏ nhất cho phép, được **tính từ cấu hình màn hình desktop**.
+2. **Theo sách của Chô tô (tr. 26):** Ghi rằng `$_xmax` và `$_ymax` là **tọa độ lớn nhất của cửa sổ**, còn `$_xmin` và `$_ymin` là **tọa độ X, Y nhỏ nhất (ở góc trái trên) của cửa sổ**.
 
 ### Script kiểm tra trên Windows
 
-Mở một cửa sổ Notepad nhỏ (ví dụ kích thước `400×300`), sau đó chạy script dưới đây để so sánh cả 4 biến `$_xmin`, `$_ymin`, `$_xmax`, `$_ymax` trước và sau khi bật chế độ khóa cửa sổ bằng `HSET`:
+Mở một cửa sổ Notepad nhỏ, đặt ở vị trí lệch khỏi góc trái trên màn hình (ví dụ đặt tại `(120, 120)` với kích thước `400×300`), sau đó chạy script dưới đây để so sánh cả 4 biến `$_xmin`, `$_ymin`, `$_xmax`, `$_ymax` trước và sau khi bật chế độ khóa cửa sổ bằng `HSET`:
 
 ```cms
 // Kiểm tra $_xmin, $_ymin, $_xmax, $_ymax khi tắt và khi bật chế độ khóa cửa sổ
@@ -320,24 +344,26 @@ LOGCLEAR
 LOGSHOW(1)
 
 // 1. Khi chưa khóa cửa sổ (chế độ thường)
-HSET(0, 0)
+$xmin_thuong = $_xmin
+$ymin_thuong = $_ymin
 $xmax_thuong = $_xmax
 $ymax_thuong = $_ymax
 LOGWRITE("Che do thuong -> $_xmin=", $_xmin, ", $_ymin=", $_ymin, ", $_xmax=", $_xmax, ", $_ymax=", $_ymax)
 
-// 2. Tìm cửa sổ Notepad, đặt kích thước 400x300 và khóa vào cửa sổ đó
+// 2. Tìm cửa sổ Notepad, đặt vị trí (120, 120), kích thước 400x300 và khóa vào cửa sổ đó
 $h = WNDFIND("Notepad")
 IF($h > 0)
+   WNDPOS($h, 120, 120)
    WNDSIZE($h, 400, 300)
    WAITMS(300)
    HSET($h, 1)
-   LOGWRITE("Khi khoa cua so Notepad (400x300) -> $_xmin=", $_xmin, ", $_ymin=", $_ymin, ", $_xmax=", $_xmax, ", $_ymax=", $_ymax)
-   IF(($_xmax = $xmax_thuong) & ($_ymax = $ymax_thuong))
-      LOGWRITE("KET LUAN: $_xmax, $_ymax giu nguyen theo man hinh desktop (khop voi help).")
+   LOGWRITE("Khi khoa cua so Notepad (tai 120,120 - 400x300) -> $_xmin=", $_xmin, ", $_ymin=", $_ymin, ", $_xmax=", $_xmax, ", $_ymax=", $_ymax)
+   IF(($_xmin = $xmin_thuong) & ($_ymin = $ymin_thuong) & ($_xmax = $xmax_thuong) & ($_ymax = $ymax_thuong))
+      LOGWRITE("KET LUAN: $_xmin, $_ymin, $_xmax, $_ymax giu nguyen theo man hinh desktop (khop voi help).")
    ELSE
-      LOGWRITE("KET LUAN: $_xmax, $_ymax thay doi theo kich thuoc cua so dang khoa (khop voi sach tr. 26).")
+      LOGWRITE("KET LUAN: Cac bien gioi han toa do thay doi theo cua so dang khoa (khop voi sach tr. 26).")
    END_IF
-   HSET(0, 0)
+   HSET($h, 0)
 ELSE
    LOGWRITE("Hay mo cua so Notepad truoc khi chay script nay.")
 END_IF
@@ -353,19 +379,23 @@ HALT
 
 ### Ba nguồn thông tin hiện tại
 
-1. **Theo trang lệnh `CALL` (help, mục Script và plugin):** Đường dẫn tệp `filename` trong `CALL("filename", ...)` được tính tương đối từ thư mục `%Clickermann%/plugins`.
-2. **Theo bài viết Plugin (help, bài Plugin):** Tệp DLL của plugin đặt trong thư mục dự án (nằm cạnh tệp script đang chạy hoặc trong thư mục con của dự án); nếu không tìm thấy tệp theo tên đã cho ở đó thì lệnh `CALL` âm thầm kết thúc.
-3. **Theo sách của Chô tô (tr. 104):** Chỉ ghi rằng tệp DLL đặt cùng thư mục với file script.
+1. **Theo trang lệnh `CALL` (mục Script và plugin):** Đường dẫn tệp `filename` trong `CALL("filename", ...)` được tính tương đối từ thư mục `%Clickermann%/plugins`.
+2. **Theo bài viết Plugin (bài Plugin):** Tệp DLL của plugin đặt trong thư mục dự án (nằm cạnh tệp script đang chạy hoặc trong thư mục con của dự án); nếu không tìm thấy tệp theo tên đã cho ở đó thì lệnh `CALL` âm thầm kết thúc.
+3. **Theo sách của Chô tô (tr. 104):** Chỉ ghi rằng tệp DLL đặt cùng thư mục với tệp script.
 
 ### Script kiểm tra trên Windows
 
-Lưu ý: người kiểm tra cần tự chuẩn bị trước một tệp plugin `plugin_test.dll` xuất hàm `int execute(int* _arr, int _size)` trả về `$_arr[0] * 2` (tức nhân đôi tham số đầu tiên truyền vào). Không gán giá trị trực tiếp vào biến hệ thống `$_return1` vì help (phần Giới thiệu ngôn ngữ) khuyến cáo rất không nên gán vào biến hệ thống.
+Lưu ý: người kiểm tra cần tự chuẩn bị trước một tệp plugin `plugin_test.dll` xuất hàm `int execute(int* _arr, int _size)` trả về `_arr[0] * 2` (tức nhân đôi phần tử đầu tiên của mảng tham số `_arr`). Không gán giá trị trực tiếp vào biến hệ thống `$_return1` vì help khuyến cáo rất không nên gán vào biến hệ thống.
 
-Đặt tệp `plugin_test.dll` lần lượt ở thư mục `%Clickermann%/plugins` (Lần 1) và ở cùng thư mục với file script `.cms` (Lần 2), mỗi lần chạy đoạn script dưới đây:
+Hãy thử lần lượt **3 vị trí** dưới đây. **Quan trọng: trước khi thử vị trí tiếp theo, hãy xóa bản sao `plugin_test.dll` ở vị trí vừa thử trước đó** để tránh nhận nhầm kết quả từ vị trí cũ:
+
+- **Lần 1:** Chỉ đặt `plugin_test.dll` trong thư mục `%Clickermann%/plugins/` rồi chạy script (gọi `CALL("plugin_test.dll", ...)`).
+- **Lần 2:** Xóa tệp ở `%Clickermann%/plugins/`, đặt `plugin_test.dll` ngay trong **thư mục dự án** (cùng chỗ với tệp `.cms`) rồi chạy lại script.
+- **Lần 3:** Xóa tệp ở thư mục dự án, tạo một **thư mục con** bên trong thư mục dự án (ví dụ ` plugins_con\plugin_test.dll`) rồi thử cả `CALL("plugin_test.dll", ...)` lẫn `CALL("plugins_con\plugin_test.dll", ...)`. *(Nếu khi không tìm thấy tệp DLL mà Clickermann hiện hộp thoại báo lỗi dừng script thay vì âm thầm kết thúc, hãy ghi nhận luôn hành vi đó).*
 
 ```cms
 // Kiểm tra vị trí nạp tệp DLL của lệnh CALL
-// Yêu cầu: cần tự chuẩn bị tệp plugin_test.dll trả về (tham số đầu * 2)
+// Yêu cầu: chuẩn bị plugin_test.dll trả về (_arr[0] * 2) và xóa bản sao ở vị trí cũ trước mỗi lần thử
 LOGCLEAR
 LOGSHOW(1)
 
@@ -377,7 +407,7 @@ LOGWRITE("Tham so truyen vao: ", $so_ngau_nhien, " | Ky vong $_return1 = ", $ky_
 LOGWRITE("Gia tri $_return1 thuc te: ", $_return1)
 
 IF($_return1 = $ky_vong)
-   LOGWRITE("KET LUAN: CALL da nap va chay thanh cong plugin_test.dll tai vi tri dat file hien tai!")
+   LOGWRITE("KET LUAN: CALL da nap va chay thanh cong plugin_test.dll tai vi tri dat tep hien tai!")
 ELSE
    LOGWRITE("KET LUAN: CALL khong tim thay plugin_test.dll o vi tri hien tai (am tham ket thuc).")
 END_IF
@@ -398,7 +428,7 @@ HALT
 
 ### Script kiểm tra trên Windows
 
-Mở sẵn một cửa sổ Notepad trên Windows rồi chạy script dưới đây để xem `WNDSETINFO` có chấp nhận số trực tiếp hay bắt buộc phải truyền biến:
+Mở sẵn một cửa sổ Notepad trên Windows rồi chạy script dưới đây. Để tránh trường hợp cửa sổ Notepad tình cờ đang nằm sẵn ở đúng tọa độ `(50, 50)` với kích thước `400×300`, script sẽ chuyển Notepad sang vị trí `(120, 120)` và kích thước `500×350` trước bằng `WNDPOS` / `WNDSIZE`, sau đó mới gọi `WNDSETINFO` với các số trực tiếp:
 
 ```cms
 // Kiểm tra truyền số trực tiếp vào WNDSETINFO trên cửa sổ Notepad
@@ -407,11 +437,16 @@ LOGSHOW(1)
 
 $hwnd = WNDFIND("Notepad")
 IF($hwnd > 0)
-   // Thử truyền trực tiếp các số: X=50, Y=50, Rộng=400, Cao=300
+   // Bước 1: Đưa cửa sổ về vị trí và kích thước khác trước (120, 120, 500, 350)
+   WNDPOS($hwnd, 120, 120)
+   WNDSIZE($hwnd, 500, 350)
+   WAITMS(300)
+
+   // Bước 2: Thử truyền trực tiếp các số: X=50, Y=50, Rộng=400, Cao=300 vào WNDSETINFO
    WNDSETINFO($hwnd, 50, 50, 400, 300)
    WAITMS(500)
 
-   // Đọc lại thông tin cửa sổ để kiểm chứng
+   // Bước 3: Đọc lại thông tin cửa sổ để kiểm chứng
    WNDGETINFO($hwnd, $x, $y, $w, $h)
    LOGWRITE("Sau khi goi WNDSETINFO voi so truc tiep -> X=", $x, " Y=", $y, " W=", $w, " H=", $h)
    IF(($x = 50) & ($y = 50) & ($w = 400) & ($h = 300))
@@ -434,37 +469,60 @@ HALT
 
 ### Hai cách hiểu hiện tại
 
-1. **Theo sách của Chô tô (tr. 19):** Sách liệt kê chung trình duyệt web và máy ảo vào nhóm cửa sổ không nhận tool khi dùng chế độ khóa cửa sổ.
+1. **Theo sách của Chô tô (tr. 19):** Sách liệt kê chung trình duyệt web và máy ảo vào nhóm cửa sổ không nhận Clickermann khi dùng chế độ khóa cửa sổ.
 2. **Theo help chính thức (bài Khóa cửa sổ và phần FAQ):**
-   - **Với trình duyệt:** Help giải thích mỗi thành phần bên trong trình duyệt (như khung Flash trong cửa sổ trình duyệt) là một phần tử con riêng có `HWND` riêng; việc chế độ khóa cửa sổ có hoạt động hay không **tùy cách ứng dụng được viết** (ví dụ trong help, phần FAQ: có trường hợp chạy được trên Firefox nhưng không chạy trên Google Chrome).
+   - **Với trình duyệt:** Help giải thích mỗi thành phần bên trong trình duyệt (như khung Flash trong cửa sổ trình duyệt) là một phần tử con riêng có `HWND` riêng; việc chế độ khóa cửa sổ có hoạt động hay không **tùy cách ứng dụng được viết** (ví dụ: có trường hợp chạy được trên Firefox nhưng không chạy trên Google Chrome).
    - **Với máy ảo (MS Virtual PC, VMware...):** Help gợi ý cài hệ điều hành, ứng dụng và Clickermann **vào bên trong máy ảo**, rồi chạy Clickermann ở chế độ thường bên trong máy ảo đó và thu nhỏ cửa sổ máy ảo xuống trên máy thật để vừa tự động hóa vừa làm việc khác.
 
 ### Script kiểm tra trên Windows
 
-Để kiểm tra xem một phần tử trong trình duyệt có đọc được màu và nhận thao tác bấm chuột ở chế độ khóa cửa sổ khi bị cửa sổ khác che khuất hay không:
+Để kiểm tra đầy đủ xem phần tử nội dung trong trình duyệt có đọc được màu khi bị cửa sổ khác che khuất và có cập nhật màu mới khi nội dung bên trong trình duyệt thay đổi như help mô tả hay không:
 
-1. Mở trình duyệt tới một trang có nút bấm hoặc ô nhập liệu tại tọa độ tương đối `(100, 100)` của phần tử nội dung.
+1. Mở trình duyệt tới một trang có nút bấm đổi màu hoặc cuộn trang tại tọa độ tương đối `(100, 100)` của phần tử nội dung.
 2. Đưa trỏ chuột vào phần tử nội dung của trình duyệt và nhấn `Alt + W` để khóa.
-3. Mở một cửa sổ khác (ví dụ Notepad) **đặt đè lên che khuất vị trí `(100, 100)`** của trình duyệt (nhưng không thu nhỏ trình duyệt xuống Taskbar).
-4. Chạy đoạn script dưới đây và kiểm tra cả màu sắc đọc được lẫn việc nút/ô tại `(100, 100)` trong trình duyệt có thực sự nhận được cú bấm `LCLICK` hay không:
+3. Chạy script dưới đây:
+   - **Bước A:** Khi trình duyệt **chưa bị che**, script chụp `GETSCREEN` và lưu mã màu `$mau_truoc = PXL(100, 100)`.
+   - **Bước B:** Trong 5 giây chờ của script, bạn kéo một cửa sổ khác (như Notepad) **đè lên che khuất vị trí `(100, 100)`** của trình duyệt (không thu nhỏ trình duyệt xuống thanh tác vụ). Script sẽ chụp lại `GETSCREEN` và đọc `$mau_sau_che = PXL(100, 100)` để so sánh với `$mau_truoc`.
+   - **Bước C:** Trong khi trình duyệt **vẫn đang bị Notepad che khuất**, script gửi lệnh `LCLICK(100, 100)` và `WHEELDOWN(3)` để làm thay đổi nội dung tại `(100, 100)` của trình duyệt, sau đó gọi lại `GETSCREEN` và đọc `$mau_sau_doi = PXL(100, 100)` xem màu có đổi theo nội dung mới của trình duyệt hay không:
 
 ```cms
-// Kiểm tra đọc màu và bấm chuột trên phần tử trình duyệt đang khóa ($_hwnd) khi bị cửa sổ khác che
+// Kiểm tra đọc màu trước khi che, sau khi bị che và sau khi nội dung trình duyệt thay đổi
 LOGCLEAR
 LOGSHOW(1)
 
 IF($_hwnd > 0)
    LOGWRITE("Dang khoa vao phan tu HWND = ", $_hwnd)
-   LOGWRITE("Hay dam bao da dat mot cua so khac che len trinh duyet (khong thu nho trinh duyet)...")
-   WAIT(2)
+
+   // Bước A: Đọc màu khi phần tử trình duyệt CHƯA bị cửa sổ khác che
    GETSCREEN
-   $mau = PXL(100, 100)
-   LOGWRITE("Ma mau doc duoc tai (100, 100) cua phan tu: ", $mau)
-   LOGWRITE("-> Hay doi chieu voi kinh lup trong Trinh soan thao xem mau va hinh anh co hien dung khong.")
+   $mau_truoc = PXL(100, 100)
+   LOGWRITE("[Buoc A] Ma mau tai (100, 100) khi CHUA bi che: ", $mau_truoc)
+
+   LOGWRITE("-> Bay gio hay keo cua so Notepad DE LEN che khuat diem (100, 100) cua trinh duyet trong 5 giay...")
+   WAIT(5)
+
+   // Bước B: Đọc lại màu sau khi đã bị Notepad đè lên che khuất
+   GETSCREEN
+   $mau_sau_che = PXL(100, 100)
+   LOGWRITE("[Buoc B] Ma mau tai (100, 100) SAU KHI bi Notepad che: ", $mau_sau_che)
+
+   // Bước C: Tác động làm đổi nội dung trình duyệt tại (100, 100) trong khi vẫn bị Notepad che
    LCLICK(100, 100)
-   LOGWRITE("Da goi LCLICK(100, 100). Hay kiem tra xem nut/o tai (100, 100) trong trinh duyet co nhan thao tac bam khong.")
+   WAITMS(300)
+   WHEELDOWN(3)
+   WAIT(1)
+
+   GETSCREEN
+   $mau_sau_doi = PXL(100, 100)
+   LOGWRITE("[Buoc C] Ma mau tai (100, 100) SAU KHI bam chuot & cuon trang (van bi che): ", $mau_sau_doi)
+
+   IF(($mau_sau_che = $mau_truoc) & ($mau_sau_doi != $mau_sau_che))
+      LOGWRITE("KET LUAN: Doc duoc dung mau cua trinh duyet khi bi che va cap nhat duoc mau moi khi noi dung doi!")
+   ELSE
+      LOGWRITE("Hay doi chieu 3 ma mau tren va kiem tra them bang kinh lup trong Trinh soan thao.")
+   END_IF
 ELSE
-   LOGWRITE("Chua bat che do khoa cua so! Hay tro chuot vao phan tu va nhan Alt + W truoc.")
+   LOGWRITE("Chua bat che do khoa cua so! Hay tro chuot vao phan tu noi dung trinh duyet va nhan Alt + W truoc.")
 END_IF
 
 HALT
@@ -472,48 +530,97 @@ HALT
 
 ---
 
-## Tên file nhật ký của LOGWRITE và chỉ thị #logfile
+## Đặt SUB trong tệp #include
+
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang lệnh:** [`SUB ... END_SUB`](/lenh/cau-truc#sub-end-sub)
+
+### Hai cách hiểu hiện tại
+
+1. **Theo help chính thức (mục Cấu trúc lệnh):** Ghi rằng việc tách phần thân các chương trình con (`SUB ... END_SUB`) ra một tệp riêng bên ngoài rồi nạp vào qua chỉ thị `#include` được coi là thói quen tốt.
+2. **Theo sách của Chô tô (tr. 81):** Lại khuyên không nên đặt `SUB` ở tệp ngoài rồi `#include` vào vì đôi lúc bị lỗi.
+
+### Script kiểm tra trên Windows
+
+Trong một thư mục dự án, trước tiên bạn chạy đoạn script tạo tệp thư viện `thu_vien_sub.cms` chứa chương trình con `SUB(cong_hai_so, $a, $b)` như bên dưới:
+
+```cms
+// Bước 1: Chạy một lần để tạo tệp thu_vien_sub.cms chứa SUB(cong_hai_so, $a, $b)
+STRWRITELN("thu_vien_sub.cms", "SUB(cong_hai_so, $a, $b)", 1)
+TFWRITE("thu_vien_sub.cms", "   $tong_sub = $a + $b")
+TFWRITE("thu_vien_sub.cms", "   PRINT($tong_sub)")
+TFWRITE("thu_vien_sub.cms", "END_SUB")
+
+PRINT("Da tao xong tep thu_vien_sub.cms. Hay chay tiep doan code #include ben duoi.")
+HALT
+```
+
+Sau khi tệp `thu_vien_sub.cms` đã được tạo trong thư mục dự án, bạn thay nội dung trong Trình soạn thảo bằng đoạn mã dưới đây để nạp `thu_vien_sub.cms` qua `#include` và gọi `cong_hai_so(15, 27)`:
+
+```text
+#include "thu_vien_sub.cms"
+
+LOGCLEAR
+LOGSHOW(1)
+
+cong_hai_so(15, 27)
+
+IF($tong_sub = 42)
+   PRINT("KET LUAN: Goi SUB dat trong tep #include hoat dong binh thuong (khop voi help).")
+ELSE
+   PRINT("KET LUAN: Goi SUB trong tep #include gap loi hoac khong cap nhat dung ket qua.")
+END_IF
+
+HALT
+```
+
+---
+
+## Tên tệp nhật ký của LOGWRITE và chỉ thị #logfile
 
 **Trạng thái:** 🟠 Chưa thống nhất · **Trang lệnh:** [`LOGWRITE (PRINT)`](/lenh/nhat-ky#logwrite-print) · **Trang khái niệm:** [Ngôn ngữ script](/khai-niem/ngon-ngu#chi-thi-tien-xu-ly-preprocessor-directives)
 
 ### Hai chỗ ghi trong help
 
-1. **Theo bảng chỉ thị tiền xử lý (help, phần Giới thiệu ngôn ngữ) và Lịch sử phiên bản (v4.13.014):** Bản v4.13.014 nâng cấp `#logfile` cho phép đặt tên tệp nhật ký tùy ý (ví dụ `#logfile "debug.txt"`).
-2. **Theo mục `LOGWRITE` (help, mục Xuất thông tin):** Ghi rằng khi có chỉ thị `#logfile` thì thông báo được ghi thêm vào file `log.txt` trong thư mục dự án (`%thu_muc_du_an%/log.txt`). Câu hỏi cần kiểm tra là khi viết `#logfile` **không kèm tên file** thì chương trình có tự ghi vào `log.txt` hay không.
+1. **Theo bảng chỉ thị tiền xử lý (phần Giới thiệu ngôn ngữ) và Lịch sử phiên bản (v4.13.014):** Bản v4.13.014 nâng cấp `#logfile` cho phép đặt tên tệp nhật ký tùy ý (ví dụ `#logfile "debug.txt"`).
+2. **Theo mục `LOGWRITE` (mục Xuất thông tin):** Ghi rằng khi có chỉ thị `#logfile` thì thông báo được ghi thêm vào tệp `log.txt` trong thư mục dự án (`%thu_muc_du_an%/log.txt`). Câu hỏi cần kiểm tra là khi viết `#logfile` **không kèm tên tệp** thì chương trình có tự ghi vào `log.txt` hay không.
 
 ### Script kiểm tra trên Windows
 
-Lưu lần lượt hai đoạn script dưới đây vào thư mục dự án và chạy thử:
+Hãy lưu tệp script vào một **thư mục dự án trống không có sẵn bất kỳ tệp `.txt` nào** (và nhớ xóa mọi tệp `.txt` vừa sinh ra trước khi chạy biến thể tiếp theo):
 
-**Biến thể A — `#logfile` không kèm tên file:**
+**Biến thể A — `#logfile` không kèm tên tệp:**
+- *Kỳ vọng:* Nếu theo mô tả ở mục `LOGWRITE`, chương trình sẽ tự tạo tệp **`log.txt`** trong thư mục dự án; nếu bắt buộc phải có tên tệp, thư mục sẽ không có tệp `.txt` nào (hoặc báo lỗi).
 
 ```cms
 #logfile
 
 LOGCLEAR
 LOGSHOW(1)
-LOGWRITE("Thu nghiem #logfile khong kem ten file")
+LOGWRITE("Thu nghiem #logfile khong kem ten tep")
 
 GETFILELIST($ds_txt, "*.txt")
+LOGWRITE("So tep .txt tim thay trong thu muc du an: ", ARRSIZE($ds_txt))
 FOR($i=0, $i < ARRSIZE($ds_txt))
-   LOGWRITE("Tim thay file .txt: ", $ds_txt[$i])
+   LOGWRITE(" - Tim thay tep .txt: ", $ds_txt[$i])
 END_CYC
 
 HALT
 ```
 
-**Biến thể B — `#logfile "debug.txt"` có đặt tên file riêng:**
+**Biến thể B — `#logfile "debug.txt"` có đặt tên tệp riêng (nhớ xóa `log.txt` nếu có trước khi chạy):**
+- *Kỳ vọng:* Chương trình tạo ra đúng tệp **`debug.txt`** trong thư mục dự án.
 
 ```cms
 #logfile "debug.txt"
 
 LOGCLEAR
 LOGSHOW(1)
-LOGWRITE("Thu nghiem #logfile co ten file debug.txt")
+LOGWRITE("Thu nghiem #logfile co ten tep debug.txt")
 
 GETFILELIST($ds_txt, "*.txt")
+LOGWRITE("So tep .txt tim thay trong thu muc du an: ", ARRSIZE($ds_txt))
 FOR($i=0, $i < ARRSIZE($ds_txt))
-   LOGWRITE("Tim thay file .txt: ", $ds_txt[$i])
+   LOGWRITE(" - Tim thay tep .txt: ", $ds_txt[$i])
 END_CYC
 
 HALT
@@ -523,11 +630,11 @@ HALT
 
 ## Cách làm tròn số âm của ROUND
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang lệnh:** [`ROUND`](/lenh/so#round)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang lệnh:** [`ROUND`](/lenh/so#round)
 
 ### Mô tả trong help
 
-Trong help, mục Làm việc với số (lệnh `ROUND`), help ghi: "Việc làm tròn diễn ra theo hướng ra xa số 0. Tức là `prec = 2` sẽ làm tròn số đến hàng trăm, còn `prec = -2` đến hàng phần trăm (hai chữ số sau dấu chấm). Việc làm tròn diễn ra theo quy tắc chuẩn `0.5`."
+Ở mục Làm việc với số (lệnh `ROUND`), help ghi: "Việc làm tròn diễn ra theo hướng ra xa số 0. Tức là `prec = 2` sẽ làm tròn số đến hàng trăm, còn `prec = -2` đến hàng phần trăm (hai chữ số sau dấu chấm). Việc làm tròn diễn ra theo quy tắc chuẩn `0.5`."
 
 Cần kiểm tra xem với số âm ở chính giữa (`.5`) như `ROUND(-1.5, 0)`, Clickermann làm tròn ra xa số `0` thành `-2` hay làm tròn về phía dương thành `-1`.
 
@@ -555,10 +662,10 @@ HALT
 
 ### Điểm tự mâu thuẫn trong help
 
-- Trong help, mục Script và plugin (phần liệt kê tham số của `READMEM`), help ghi `addr` là "chuỗi, địa chỉ bộ nhớ".
+- Ở mục Script và plugin (phần liệt kê tham số của `READMEM`), help ghi `addr` là "chuỗi, địa chỉ bộ nhớ".
 - Tuy nhiên, ngay ở phần ghi chú bên dưới của cả `READMEM` và `WRITEMEM` cũng như trong ví dụ của help (`0x0006F2B7`), help lại ghi rõ địa chỉ là "số nguyên thông thường ở dạng thập phân hoặc thập lục phân" (không đặt trong dấu ngoặc kép).
 
-*(Theo quy tắc của tài liệu, mục này chỉ ghi nhận điểm tự mâu thuẫn trong help, không viết script kiểm tra cho `READMEM` và `WRITEMEM`).*
+*(Mục này chỉ ghi nhận điểm tự mâu thuẫn trong help, không viết script kiểm tra cho `READMEM` và `WRITEMEM`).*
 
 ---
 
@@ -568,16 +675,17 @@ HALT
 
 ### Câu hỏi cần kiểm tra
 
-Ví dụ trong help, mục WinAPI gọi `POSTMESSAGE($h, 1024, 123, 321)` rồi gọi `GETMESSAGE($var1, $var2)` ngay ở dòng tiếp theo và không có lệnh `HALT` ở cuối. Cần kiểm tra xem `POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng một lượt chạy (vòng đầu tiên) có nhận được thông điệp `123, 321` ngay lập tức không, hay cần chờ ngắn / sang lượt lặp tiếp theo mới nhận được.
+Ví dụ ở mục WinAPI gọi `POSTMESSAGE($h, 1024, 123, 321)` rồi gọi `GETMESSAGE($var1, $var2)` ngay ở dòng tiếp theo và không có lệnh `HALT` ở cuối. Cần kiểm tra xem `POSTMESSAGE` rồi `GETMESSAGE` ngay trong cùng một lượt chạy (vòng đầu tiên) có nhận được thông điệp `123, 321` ngay lập tức không, hay cần chờ ngắn (`WAITMS`) hoặc sang lượt lặp tiếp theo mới nhận được.
 
 ### Script kiểm tra trên Windows
+
+Script 1 dưới đây dùng biến hệ thống `$_hwnd_self` (mã `hwnd` của chính cửa sổ Clickermann) để kiểm tra ngay trong cùng lượt và sau khi chờ `WAITMS(100)`:
 
 ```cms
 LOGCLEAR
 LOGSHOW(1)
 
-$h = WNDFIND("Clickermann")
-POSTMESSAGE($h, 1024, 123, 321)
+POSTMESSAGE($_hwnd_self, 1024, 123, 321)
 GETMESSAGE($var1, $var2, $isnew)
 PRINT("Ngay trong cung luot -> isnew:", $isnew, " wParam:", $var1, " lParam:", $var2)
 
@@ -587,22 +695,49 @@ ELSE
    WAITMS(100)
    GETMESSAGE($var1, $var2, $isnew)
    PRINT("Sau WAITMS(100) -> isnew:", $isnew, " wParam:", $var1, " lParam:", $var2)
-   PRINT("KET LUAN: Can co do tre hoac sang luot sau GETMESSAGE moi nhan duoc thong diep.")
+   IF($isnew = 1)
+      PRINT("KET LUAN: Can co do tre WAITMS(100) thi GETMESSAGE moi nhan duoc thong diep.")
+   ELSE
+      PRINT("Chua nhan duoc thong diep sau WAITMS(100) (isnew = 0), hay thu tiep Script 2 ben duoi.")
+   END_IF
 END_IF
 HALT
+```
+
+**Script 2 — Kiểm tra trường hợp không có `HALT` để xem thông điệp có nhận ở lượt lặp tiếp theo của script không:**
+
+```cms
+DEFINE($luot, 0)
+INC($luot)
+
+IF($luot = 1)
+   LOGCLEAR
+   LOGSHOW(1)
+   POSTMESSAGE($_hwnd_self, 1024, 123, 321)
+END_IF
+
+GETMESSAGE($var1, $var2, $isnew)
+PRINT("Luot ", $luot, " -> isnew:", $isnew, " wParam:", $var1, " lParam:", $var2)
+
+IF(($isnew = 1) | ($luot >= 5))
+   HALT
+END_IF
+WAITMS(50)
 ```
 
 ---
 
 ## Vòng lặp FOR lồng nhau không gán giá trị đầu
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang lệnh:** [`FOR ... END_CYC`](/lenh/cau-truc#for-end-cyc)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang lệnh:** [`FOR ... END_CYC`](/lenh/cau-truc#for-end-cyc), [`SUB ... END_SUB`](/lenh/cau-truc#sub-end-sub)
 
 ### Câu hỏi cần kiểm tra
 
-Trong help, mục Cấu trúc lệnh (và Lịch sử phiên bản v4.11.000), help mô tả rằng nếu biến đếm `$var` đã được khởi tạo trước khi vào vòng lặp `FOR` và câu lệnh `FOR` không ghi `=value`, vòng lặp sẽ không tự đưa biến về `0` mà bắt đầu từ giá trị hiện tại của biến đó (trong khi trước đó ở bản v4.2.000, Lịch sử phiên bản từng ghi tham số `FOR` được đưa về `0` sau khi kết thúc vòng lặp). Ngay ở ví dụ vòng lặp lồng nhau trong help, mục Cấu trúc lệnh, help lại viết `FOR($x, $x < 3)` bên ngoài và `FOR($y, $y < 3)` bên trong mà không viết `$y=0`.
+Ở mục Cấu trúc lệnh (và Lịch sử phiên bản v4.11.000), help mô tả rằng nếu biến đếm `$var` đã được khởi tạo trước khi vào vòng lặp `FOR` và câu lệnh `FOR` không ghi `=value`, vòng lặp sẽ không tự đưa biến về `0` mà bắt đầu từ giá trị hiện tại của biến đó (trong khi trước đó ở bản v4.2.000, Lịch sử phiên bản từng ghi tham số `FOR` được đưa về `0` sau khi kết thúc vòng lặp).
 
-Cần chạy thử để xem đoạn code nguyên bản trong help in ra đủ `9` dòng hay chỉ `3` dòng:
+Tuy nhiên, ngay trong các ví dụ của help ở mục `FOR` và `SUB`, tác giả lại viết:
+- Vòng lặp lồng nhau: `FOR($x, $x < 3)` bên ngoài và `FOR($y, $y < 3)` bên trong mà không viết `$y=0`.
+- Dùng lại cùng biến `$i` ở hai vòng `FOR($i, $i < 3)` liên tiếp trong ví dụ của `SUB`.
 
 ### Script kiểm tra trên Windows
 
@@ -610,8 +745,9 @@ Cần chạy thử để xem đoạn code nguyên bản trong help in ra đủ `
 LOGCLEAR
 LOGSHOW(1)
 
+// Phần 1: Kiểm tra FOR lồng nhau không gán =0
 $so_dong = 0
-LOGWRITE("=== Chay thu vi du FOR long nhau nguyen ban trong help ===")
+LOGWRITE("=== Phan 1: FOR long nhau nguyen ban trong help ===")
 FOR($x, $x < 3)
    FOR($y, $y < 3)
       PRINT($x, ":", $y)
@@ -619,12 +755,97 @@ FOR($x, $x < 3)
    END_CYC
 END_CYC
 
-LOGWRITE("Tong so dong da in: ", $so_dong)
+LOGWRITE("Tong so dong da in o Phan 1: ", $so_dong)
 IF($so_dong = 9)
-   LOGWRITE("KET LUAN: In du 9 dong (vong FOR ben trong van chay lai tu 0 o moi luot ngoai).")
+   LOGWRITE("-> Phan 1 in du 9 dong (vong FOR ben trong tu chay lai tu 0).")
 END_IF
 IF($so_dong = 3)
-   LOGWRITE("KET LUAN: Chi in 3 dong (bien $y giu gia tri 3 sau luot dau, can viet FOR($y=0, $y < 3)).")
+   LOGWRITE("-> Phan 1 chi in 3 dong (bien $y giu gia tri 3 sau luot dau, can viet FOR($y=0, $y < 3)).")
+END_IF
+
+// Phần 2: Kiểm tra dùng lại biến $i ở hai vòng FOR($i, $i < 3) liên tiếp như ví dụ mục SUB
+$dem_vong_2 = 0
+FOR($i, $i < 3)
+   INC($dem_vong_2)
+END_CYC
+FOR($i, $i < 3)
+   INC($dem_vong_2)
+END_CYC
+
+LOGWRITE("Tong so luot chay cua 2 vong FOR($i, $i < 3) lien tiep (ky vong 6 neu tu ve 0, hoac 3 neu giu gia tri): ", $dem_vong_2)
+HALT
+```
+
+---
+
+## Mã phím PrintScreen (154 và 44)
+
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang phụ lục:** [Bảng mã phím và hằng số](/phu-luc/ma-phim#bang-ma-phim-chuot-va-phim-dieu-khien)
+
+### Điểm cần kiểm tra
+
+Trong cả bảng mã phím của help lẫn tệp `data/const.txt` đi kèm chương trình, hằng số `#PRINTSCREEN` đều được ghi giá trị là **`154`** (`0x9A`). Trong khi đó, theo chuẩn mã phím ảo của Windows (`VK_SNAPSHOT`), phím `PrintScreen` thường có mã là **`44`** (`0x2C`).
+
+### Script kiểm tra trên Windows
+
+Chạy đoạn script dưới đây, sau đó nhấn phím **PrintScreen** (`PrtScn`) trên bàn phím vài lần trong vòng 10 giây để xem Clickermann bắt được phím này ở mã `154` hay `44`:
+
+```cms
+LOGCLEAR
+LOGSHOW(1)
+PRINT("Hay nhan phim PrintScreen (PrtScn) tren ban phim trong vong 10 giay...")
+
+FOR($i=0, $i < 200)
+   IF(ISKEYDOWN(154) = 1)
+      PRINT("Phat hien nhan PrintScreen voi ma 154 (#PRINTSCREEN trong help)!")
+   END_IF
+   IF(ISKEYDOWN(44) = 1)
+      PRINT("Phat hien nhan PrintScreen voi ma 44 (VK_SNAPSHOT chuan Windows)!")
+   END_IF
+   WAITMS(50)
+END_CYC
+
+PRINT("Ket thuc 10 giay kiem tra PrintScreen.")
+HALT
+```
+
+---
+
+## Cách tắt chế độ khóa cửa sổ
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang khái niệm:** [Chế độ khóa cửa sổ](/khai-niem/khoa-cua-so#tat-khoa-cua-so) · **Trang lệnh:** [`HSET`](/lenh/winapi#hset)
+
+### Điểm cần kiểm tra
+
+Ở mục `HSET`, help ghi cú pháp `HSET(hwnd, state)` với `state = 1` là bật và `state = 0` là tắt chế độ khóa cửa sổ, nhưng không có ví dụ minh họa dòng lệnh tắt khóa cửa sổ và không nói rõ:
+1. Gọi `HSET($_hwnd, 0)` (truyền đúng `hwnd` đang khóa) và gọi `HSET(0, 0)` (truyền `hwnd = 0`) có cùng đưa biến hệ thống `$_hwnd` về `0` (tắt khóa cửa sổ) hay không?
+2. Khi đang ở chế độ khóa cửa sổ, nhấn lại phím tắt **`Alt + W`** trên giao diện có tắt khóa cửa sổ hay chỉ đổi sang khóa phần tử mới dưới trỏ chuột?
+
+### Script kiểm tra trên Windows
+
+Mở sẵn cửa sổ Notepad rồi chạy script dưới đây:
+
+```cms
+LOGCLEAR
+LOGSHOW(1)
+
+$h = WNDFIND("Notepad")
+IF($h > 0)
+   // 1. Bật khóa vào Notepad và thử tắt bằng HSET(0, 0)
+   HSET($h, 1)
+   PRINT("Sau HSET($h, 1) -> $_hwnd = ", $_hwnd)
+
+   HSET(0, 0)
+   PRINT("Sau HSET(0, 0) -> $_hwnd = ", $_hwnd, " (neu bang 0 la HSET(0, 0) tat duoc khoa cua so)")
+
+   // 2. Bật khóa lại vào Notepad và thử tắt bằng HSET($_hwnd, 0)
+   HSET($h, 1)
+   PRINT("Bat lai HSET($h, 1) -> $_hwnd = ", $_hwnd)
+
+   HSET($_hwnd, 0)
+   PRINT("Sau HSET($_hwnd, 0) -> $_hwnd = ", $_hwnd, " (neu bang 0 la HSET($_hwnd, 0) tat duoc khoa cua so)")
+ELSE
+   PRINT("Hay mo cua so Notepad truoc khi chay script nay.")
 END_IF
 
 HALT
@@ -638,7 +859,7 @@ HALT
 
 ### Điểm help không nói rõ
 
-Trong help, phần Giới thiệu ngôn ngữ, help chỉ quy định tên biến bắt đầu bằng `$` nối với chữ cái Latin `a..z`, chữ số `0..9` và `_`, không nói rõ tên biến có phân biệt chữ hoa và chữ thường hay không. (Suy luận: trong help, Lịch sử phiên bản ghi tên biến hệ thống là `$_DATE_Y`, còn trong phần Giới thiệu ngôn ngữ lại ghi là `$_date_y`, nên nhiều khả năng không phân biệt chữ hoa và chữ thường).
+Ở phần Giới thiệu ngôn ngữ, help chỉ quy định tên biến bắt đầu bằng `$` nối với chữ cái Latin `a..z`, chữ số `0..9` và `_`, không nói rõ tên biến có phân biệt chữ hoa và chữ thường hay không. (Suy luận: trong Lịch sử phiên bản ghi tên biến hệ thống là `$_DATE_Y`, còn trong phần Giới thiệu ngôn ngữ lại ghi là `$_date_y`, nên nhiều khả năng không phân biệt chữ hoa và chữ thường).
 
 ### Script kiểm tra trên Windows
 
@@ -667,8 +888,8 @@ HALT
 
 ### Điểm chưa thống nhất trong help
 
-- Trong help, bài Màn hình chính, help ghi ngoài các nút bấm, cửa sổ chính còn có khung thông tin chế độ khóa cửa sổ và **khung thiết lập chế độ thực thi script**.
-- Tuy nhiên trong help, Lịch sử phiên bản (bản v4.7.000), lịch sử ghi đã bỏ các chế độ hoạt động khỏi cửa sổ chính; và đến bản v4.7.000 SE lại ghi các chế độ thực thi trở lại dưới dạng **một cửa sổ riêng**.
+- Ở bài Màn hình chính, help ghi ngoài các nút bấm, cửa sổ chính còn có khung thông tin chế độ khóa cửa sổ và **khung thiết lập chế độ thực thi script**.
+- Tuy nhiên ở Lịch sử phiên bản (bản v4.7.000), lịch sử ghi đã bỏ các chế độ hoạt động khỏi cửa sổ chính; và đến bản v4.7.000 SE lại ghi các chế độ thực thi trở lại dưới dạng **một cửa sổ riêng**.
 
 ### Cách kiểm tra trên Windows
 
@@ -685,7 +906,7 @@ Mở chương trình Clickermann v4.13.014 trên máy Windows và quan sát tr�
 
 ### Điểm cần kiểm tra
 
-Trong help, phần Giới thiệu ngôn ngữ, bảng chỉ thị tiền xử lý chỉ ghi ngắn gọn cú pháp `#define <tìm>:<thay>` ("Thay thế một văn bản bằng văn bản khác") mà không có đoạn code ví dụ hoàn chỉnh. Cần chạy thử ví dụ suy luận `#define @pause:WAITMS(100)` trên Windows để xác nhận cách hoạt động:
+Ở phần Giới thiệu ngôn ngữ, bảng chỉ thị tiền xử lý chỉ ghi ngắn gọn cú pháp `#define <tìm>:<thay>` ("Thay thế một văn bản bằng văn bản khác") mà không có đoạn code ví dụ hoàn chỉnh. Cần chạy thử ví dụ suy luận `#define @pause:WAITMS(100)` trên Windows để xác nhận cách hoạt động:
 
 ```cms
 #define @pause:WAITMS(100)
@@ -697,8 +918,13 @@ $t1 = $_ms
 @pause
 $t2 = $_ms
 
-LOGWRITE("Thoi gian truoc va sau @pause: ", $t2 - $t1, " ms")
-LOGWRITE("KET LUAN: Neu script chay khong bao loi va co do tre ~100ms thi #define @pause:WAITMS(100) hoat dong dung.")
+$do_tre = $t2 - $t1
+LOGWRITE("Thoi gian truoc va sau @pause: ", $do_tre, " ms")
+IF($do_tre >= 80)
+   LOGWRITE("KET LUAN: #define @pause:WAITMS(100) da thay the va chay dung (do tre >= 80 ms).")
+ELSE
+   LOGWRITE("KET LUAN: Do tre qua nho (", $do_tre, " ms), can kiem tra lai cu phap #define.")
+END_IF
 HALT
 ```
 
@@ -710,13 +936,13 @@ HALT
 
 ### Điểm help không nói rõ
 
-Trong help, bài Trình soạn thảo, help mô tả tổ hợp phím `Alt + G` giúp chụp nhanh vùng `100×100` pixel mà kính lúp đang nhìn thấy và lưu ở định dạng `.bmp`, nhưng không nói rõ tệp `.bmp` này được lưu ở thư mục nào (thư mục dự án, thư mục con `screens\` hay thư mục gốc của Clickermann) và tên tệp đặt theo mẫu nào.
+Ở bài Trình soạn thảo, help mô tả tổ hợp phím `Alt + G` giúp chụp nhanh vùng `100×100` điểm ảnh mà kính lúp đang nhìn thấy và lưu ở định dạng `.bmp`, nhưng không nói rõ tệp `.bmp` này được lưu ở thư mục nào (thư mục dự án, thư mục con `screens\` hay thư mục chương trình Clickermann) và tên tệp đặt theo mẫu nào.
 
 ### Cách kiểm tra trên Windows
 
-1. Mở một script trong một thư mục dự án, bật [Trình soạn thảo](/bat-dau/trinh-soan-thao) và bật **Kính lúp**.
+1. Tạo một **thư mục dự án trống** (chưa có tệp `.bmp` nào), lưu script dưới đây vào đó, mở [Trình soạn thảo](/bat-dau/trinh-soan-thao) và bật **Kính lúp**.
 2. Nhấn tổ hợp phím `Alt + G`.
-3. Chạy đoạn script dưới đây để kiểm tra xem tệp `.bmp` mới xuất hiện ở thư mục dự án hay thư mục `screens\`:
+3. Chạy đoạn script dưới đây để kiểm tra cả 3 nơi (thư mục dự án, thư mục con `screens\` và thư mục làm việc `$_pdir`), đồng thời mở thư mục chương trình Clickermann trong File Explorer xem tệp `.bmp` mới xuất hiện ở đâu:
 
 ```cms
 LOGCLEAR
@@ -724,16 +950,21 @@ LOGSHOW(1)
 
 GETFILELIST($bmp_du_an, "*.bmp")
 GETFILELIST($bmp_screens, "screens\*.bmp")
+GETFILELIST($bmp_pdir, STRCONCAT($_pdir, "*.bmp"))
 
-LOGWRITE("Cac tep .bmp trong thu muc du an: ", ARRSIZE($bmp_du_an))
+LOGWRITE("Thu muc hien tai ($_pdir): ", $_pdir)
+LOGWRITE("1. Cac tep .bmp trong thu muc du an: ", ARRSIZE($bmp_du_an))
 FOR($i=0, $i < ARRSIZE($bmp_du_an))
    LOGWRITE(" - Thu muc du an: ", $bmp_du_an[$i])
 END_CYC
 
-LOGWRITE("Cac tep .bmp trong thu muc screens\: ", ARRSIZE($bmp_screens))
+LOGWRITE("2. Cac tep .bmp trong thu muc screens\: ", ARRSIZE($bmp_screens))
 FOR($j=0, $j < ARRSIZE($bmp_screens))
    LOGWRITE(" - screens\: ", $bmp_screens[$j])
 END_CYC
+
+LOGWRITE("3. Cac tep .bmp theo $_pdir: ", ARRSIZE($bmp_pdir))
+LOGWRITE("-> Neu ca 3 muc tren deu bang 0, hay kiem tra thu muc chuong trinh Clickermann (noi chua tep .exe).")
 
 HALT
 ```
@@ -746,35 +977,191 @@ HALT
 
 ### Điểm cần kiểm tra
 
-Trong help, mục Chuột, ví dụ kéo thả chuột của help chỉ viết `ldown(100, 100)`, `waitms(50)`, `lup(200, 200)` mà không có lệnh `MOVE` ở giữa. Trong trang [Tự động vẽ hình trong Paint](/cam-nang/tu-ve), tài liệu suy luận rằng việc giữ `LDOWN` rồi gọi liên tiếp các lệnh `MOVE(x, y)` kèm `WAITMS` trước khi `LUP` sẽ làm Paint vẽ các đoạn thẳng nối tiếp nhau.
+Ở mục Chuột, ví dụ kéo thả chuột của help chỉ viết `ldown(10, 10)`, `waitms(300)`, `lup(20, 20)` mà không có lệnh `MOVE` ở giữa. Trong trang [Tự động vẽ hình trong Paint](/cam-nang/tu-ve), tài liệu suy luận rằng việc giữ `LDOWN` rồi gọi liên tiếp các lệnh `MOVE(x, y)` kèm `WAITMS` trước khi `LUP` sẽ làm Paint vẽ các đoạn thẳng nối tiếp nhau.
 
 ### Cách kiểm tra trên Windows
 
-1. Mở chương trình **Paint**, chọn công cụ **Cọ vẽ (Brushes)** màu đen, đặt cửa sổ Paint sao cho vùng giấy trắng bao phủ tọa độ `(200, 200)` đến `(400, 350)`.
-2. Chạy thử cả hai cách trong đoạn script dưới đây:
+1. Mở chương trình **Paint**, chọn công cụ **Cọ vẽ (Brushes)** màu đen, đặt cửa sổ Paint sao cho vùng giấy trắng bao phủ tọa độ `(200, 220)` đến `(400, 360)`.
+2. Chạy đoạn script dưới đây và quan sát kết quả trên trang giấy vẽ của Paint:
+   - **Nét 1 (ở dòng trên `Y = 230`, không có `MOVE`, chỉ `LDOWN` -> `WAITMS(300)` -> `LUP` tại điểm mới):** Kiểm tra xem trên giấy vẽ xuất hiện một đoạn thẳng ngang nối từ `(200, 230)` sang `(350, 230)` hay chỉ có chấm rời ở điểm đầu/cuối.
+   - **Nét 2 (ở dòng dưới `Y = 280..330`, có các lệnh `MOVE` ở giữa trước khi `LUP`):** Kiểm tra xem trên giấy vẽ có xuất hiện đường gấp khúc hình chữ V nối liền qua cả 3 điểm `(200, 280)` -> `(275, 330)` -> `(350, 280)` hay không.
 
 ```cms
-// Kiểm tra vẽ nét kéo chuột trong Paint: có MOVE và không có MOVE
+// Kiểm tra vẽ nét kéo chuột trong Paint: không có MOVE (Nét 1) và có MOVE (Nét 2)
 WAIT(2)
 
-// 1. Cách viết trong ví dụ của help (LDOWN -> WAITMS -> LUP tại tọa độ mới, không có MOVE)
-LDOWN(200, 200)
-WAITMS(50)
-LUP(350, 200)
+// Nét 1: Cách viết trong ví dụ của help (LDOWN -> WAITMS(300) -> LUP tại tọa độ mới, không có MOVE)
+LDOWN(200, 230)
+WAITMS(300)
+LUP(350, 230)
 
 WAIT(1)
 
-// 2. Cách viết có MOVE ở giữa (LDOWN -> MOVE -> LUP) tại dòng bên dưới (Y = 260)
-LDOWN(200, 260)
+// Nét 2: Cách viết có MOVE ở giữa (LDOWN -> MOVE -> MOVE -> LUP) tạo hình chữ V
+LDOWN(200, 280)
 WAITMS(50)
-MOVE(275, 310)
+MOVE(275, 330)
 WAITMS(50)
-MOVE(350, 260)
+MOVE(350, 280)
 WAITMS(50)
-LUP(350, 260)
+LUP(350, 280)
 
 HALT
 ```
+
+---
+
+## Giá trị biến sau khi bấm Dừng, bấm Áp dụng hoặc đổi script
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang khái niệm:** [Ngôn ngữ script](/khai-niem/ngon-ngu#bien-khi-script-tu-lap-lai)
+
+### Câu hỏi cần kiểm tra
+
+Khi script tự quay lại đầu vòng lặp, biến vẫn giữ giá trị cũ. Tuy nhiên, cần kiểm tra trên Windows xem giá trị biến (`$dem`) được tự động xóa về `0` hay vẫn giữ giá trị cũ trong 3 tình huống sau:
+1. Người dùng bấm nút **Dừng** (`Alt + S`) rồi bấm **Chạy** (`Alt + A`) lại.
+2. Người dùng bấm nút **Áp dụng** trong Trình soạn thảo rồi bấm **Chạy**.
+3. Người dùng mở nạp một tệp `.cms` khác có biến trùng tên `$dem`.
+
+```cms
+// Chạy vài giây rồi bấm Dừng (Alt + S), sau đó bấm Chạy lại (Alt + A)
+// để xem $dem bắt đầu lại từ 1 hay đếm tiếp từ số cũ
+INC($dem)
+PRINT("Gia tri $dem = ", $dem)
+WAIT(1)
+```
+
+---
+
+## Đường dẫn tương đối khi script mới chưa lưu và nút Áp dụng
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang bắt đầu:** [Viết script đầu tiên](/bat-dau/script-dau-tien#chay-mot-script)
+
+### Câu hỏi cần kiểm tra
+
+1. Khi vừa mở Clickermann, tạo script mới tinh trong Trình soạn thảo mà **chưa nhấn `Ctrl + S` để lưu thành tệp `.cms`**, nếu bấm **Áp dụng** và chạy ngay thì biến `$_pdir` và các đường dẫn tệp tương đối (như `TFWRITE("thu.txt", "abc")`) sẽ trỏ về đâu (thư mục chương trình `%Clickermann%` hay thư mục mở gần nhất)?
+2. Khi đang sửa một tệp `.cms` đã lưu:
+   - Nhấn `Ctrl + S` trong Trình soạn thảo có tự động cập nhật kịch bản chạy (thay cho nút **Áp dụng**) không?
+   - Ngược lại, bấm nút **Áp dụng** có tự động ghi đè nội dung mới vào tệp `.cms` đang mở trên đĩa (ngoài việc lưu vào `backup.cms` theo Lịch sử phiên bản v4.1.000) không?
+
+```cms
+LOGCLEAR
+LOGSHOW(1)
+PRINT("Thu muc lam viec hien tai ($_pdir): ", $_pdir)
+HALT
+```
+
+---
+
+## Hành vi của TFCOUNT, TFWRITE, INIREAD khi tệp chưa tồn tại
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang lệnh:** [Chuỗi, tệp tin, bộ nhớ tạm và HTTP](/lenh/chuoi-file)
+
+### Câu hỏi cần kiểm tra
+
+Trong một thư mục dự án trống (chưa có tệp `chua_co.txt` và `chua_co.ini`), cần chạy thử để xác nhận:
+1. `TFCOUNT("chua_co.txt")` trả về `0` hay báo lỗi dừng script?
+2. `TFWRITE("chua_co.txt", "Dong 1")` có tự động tạo tệp mới giống như `STRWRITELN` không?
+3. `INIREAD("chua_co.ini", "KhoaKhongCo", "MUC")` khi tệp hoặc khóa chưa tồn tại sẽ trả về chuỗi rỗng `""` hay `"0"`?
+
+```cms
+LOGCLEAR
+LOGSHOW(1)
+
+$so_dong = TFCOUNT("chua_co.txt")
+PRINT("1. TFCOUNT tren tep chua ton tai: ", $so_dong)
+
+TFWRITE("chua_co.txt", "Dong thu nghiem")
+PRINT("2. TFCOUNT sau khi goi TFWRITE: ", TFCOUNT("chua_co.txt"))
+
+$gia_tri_ini = INIREAD("chua_co.ini", "KhoaKhongCo", "MUC")
+PRINT("3. INIREAD khi tep/khoa chua ton tai -> do dai chuoi: ", STRLEN($gia_tri_ini), " | gia tri: '", $gia_tri_ini, "'")
+
+HALT
+```
+
+---
+
+## Hành vi của SCANPXL, SCANPICTURE, TFREADARR khi gọi lặp trên cùng một mảng
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang lệnh:** [`SCANPXL`](/lenh/man-hinh#scanpxl), [`SCANPICTURE`](/lenh/man-hinh#scanpicture), [`TFREADARR`](/lenh/chuoi-file#tfreadarr)
+
+### Câu hỏi cần kiểm tra
+
+Ở mục [`GETKEYSDOWN`](/lenh/ban-phim#getkeysdown), help ghi rõ mảng kết quả sẽ tự động được làm rỗng trước mỗi lần gọi. Còn ở `SCANPXL`, `SCANPICTURE` và `TFREADARR`, help không ghi rõ: nếu gọi lệnh lần thứ hai trên cùng một biến mảng `$arr` (mà chưa rút hết bằng `ARRPOP` hoặc chưa xóa bằng `UNDEFINE($arr)`), chương trình sẽ tự xóa mảng cũ trước khi ghi mới hay nối thêm vào cuối mảng cũ?
+
+```cms
+LOGCLEAR
+LOGSHOW(1)
+
+STRWRITELN("thu_mang.txt", "Dong 1", 1)
+TFWRITE("thu_mang.txt", "Dong 2")
+
+TFREADARR("thu_mang.txt", $arr_dong)
+$lan_1 = ARRSIZE($arr_dong)
+
+// Gọi lại lần 2 trên cùng mảng $arr_dong mà không UNDEFINE
+TFREADARR("thu_mang.txt", $arr_dong)
+$lan_2 = ARRSIZE($arr_dong)
+
+PRINT("Kich thuoc mang sau lan 1: ", $lan_1, " | sau lan 2: ", $lan_2)
+IF($lan_2 = $lan_1)
+   PRINT("KET LUAN: Mang cu tu dong duoc xoa truoc khi ghi moi.")
+ELSE
+   PRINT("KET LUAN: Du lieu moi bi noi them vao cuoi mang cu (can goi UNDEFINE($arr) truoc).")
+END_IF
+
+HALT
+```
+
+---
+
+## Nội dung chèn nhanh của phím tắt Alt + Q
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang bắt đầu:** [Trình soạn thảo và kính lúp](/bat-dau/trinh-soan-thao#khung-thong-tin-thoi-gian-thuc-va-phim-tat-alt-q)
+
+### Cách kiểm tra trên Windows
+
+1. Mở [Trình soạn thảo](/bat-dau/trinh-soan-thao), đặt con trỏ soạn thảo vào một dòng trống.
+2. Đưa chuột tới một điểm bất kỳ và nhấn **`Alt + Q`** để ghi nhận chính xác định dạng chuỗi lệnh được chèn vào (ví dụ `LCLICK(100, 200) // 16777215` hay định dạng nào).
+3. Bấm nút có biểu tượng **Clipboard** ở cột bên trái rồi nhấn lại **`Alt + Q`**, sau đó dán (`Ctrl + V`) ra để xem nội dung được chép vào bộ nhớ tạm.
+
+---
+
+## Cú pháp ngoặc rỗng của thủ tục và tên lệnh viết chữ thường
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang lệnh:** [Tra cứu lệnh](/lenh/)
+
+### Điểm cần kiểm tra
+
+Trong các ví dụ của help, tên lệnh và cặp ngoặc rỗng của thủ tục không tham số được viết theo nhiều kiểu (ví dụ `GETSCREEN` không ngoặc hoặc `GETSCREEN()`, `LOGCLEAR` hoặc `LOGCLEAR()`, `HALT`, và tên lệnh viết thường như `lclick`, `waitms`, `print`). Chạy đoạn script dưới đây để xác nhận bộ thông dịch v4.13.014 chấp nhận tất cả các cách viết này:
+
+```cms
+// Kiểm tra tên lệnh chữ thường và cặp ngoặc rỗng trên thủ tục không tham số
+getscreen()
+logclear()
+logshow(1)
+print("Thu nghiem ten lenh chu thuong va ngoac rong GETSCREEN(), LOGCLEAR()")
+waitms(100)
+halt()
+```
+
+---
+
+## Giao diện thực tế, mã màu, tiếng Việt có dấu và thu phóng màn hình Windows
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử
+
+Khi có máy Windows chạy Clickermann v4.13.014, cần kiểm tra và ghi nhận thêm các chi tiết thực tế sau:
+
+1. **Đóng gói, tên tệp `.exe` và ngôn ngữ giao diện:**
+   - Bộ tải về từ trang chủ có dạng tệp nén `.zip` hay bộ cài `.exe`? Tên tệp chạy 32-bit và 64-bit được đặt như thế nào?
+   - Khi mở lần đầu, ngôn ngữ giao diện mặc định là tiếng Nga hay tiếng Anh? Cách chuyển ngôn ngữ giao diện trong phần cài đặt và nhãn thực tế của các nút trên cửa sổ chính, Trình soạn thảo, Quản lý cửa sổ.
+   - Mã màu hiển thị ở cột bên trái của Trình soạn thảo mặc định là hệ thập phân (ví dụ `255`) hay hệ thập lục phân?
+2. **Tiếng Việt có dấu (UTF-8) trong chuỗi và chú thích:**
+   - Bản v4.13.014 ghi đã chuyển sang UTF-8. Cần thử viết chú thích tiếng Việt có dấu và chạy `PRINT("Thử nghiệm tiếng Việt có dấu")` xem cửa sổ nhật ký và trình soạn thảo có hiển thị đúng dấu tiếng Việt không.
+3. **Tỷ lệ thu phóng màn hình Windows (Display Scaling 125%, 150%) và trạng thái nút chuột khi dừng giữa `LDOWN` / `LUP`:**
+   - **Thu phóng màn hình (DPI Scaling):** Kiểm tra khi Windows đặt tỷ lệ hiển thị 125% hoặc 150% thì tọa độ chuột trong Trình soạn thảo, `LCLICK` và vùng chụp `GETSCREEN` có bị lệch so với mức 100% không *(Tham khảo: sách của Chô tô, tr. 25 khuyên đặt tỷ lệ hiển thị màn hình ở mức 100%)*.
+   - **Trạng thái chuột khi dừng khẩn cấp:** Kiểm tra nếu script vừa chạy lệnh `LDOWN(x, y)` (đang nhấn giữ chuột trái) mà người dùng nhấn `Alt + S` để dừng hẳn script trước khi tới lệnh `LUP`, thì nút chuột trái của Windows có bị giữ kẹt cho tới khi bấm chuột tay một lần hay Clickermann tự động nhả chuột ra.
 
 ---
 
@@ -782,10 +1169,10 @@ HALT
 
 **Trạng thái:** 🟡 Theo help, chưa chạy thử · **Các trang:** [`cam-nang/*`](/cam-nang/click-theo-lich)
 
-Toàn bộ các kịch bản mẫu trong 5 trang cẩm nang đều được biên soạn từ các lệnh chuẩn của help nhưng chưa chạy thử thực tế trên máy Windows:
+Toàn bộ các tình huống mẫu trong 5 trang cẩm nang đều được biên soạn từ các lệnh chuẩn của help nhưng chưa chạy thử thực tế trên máy Windows:
 
-1. [Bấm chuột theo lịch và chu kỳ](/cam-nang/click-theo-lich): Kịch bản lặp cố định, lặp `FOR` `N` lần và chờ đúng giờ/phút bằng `$_time_h`, `$_time_m`.
-2. [Tìm màu trên màn hình rồi bấm chuột](/cam-nang/tim-mau): Kịch bản `GETSCREEN` + `IF_PIXEL_IN`, vòng lặp `WHILE` chờ màu xuất hiện rồi bấm nút Đóng, và quét nhiều điểm bằng `SCANPXL` + `ARRPOP`.
-3. [Tìm hình ảnh mẫu trên màn hình](/cam-nang/tim-anh): Kịch bản chụp mẫu bằng `Alt + G`, tìm bằng `IF_PICTURE_IN` với `bgcolor`, `currency` và `COLORMODE`.
-4. [Đọc và ghi tệp `.txt` và `.ini`](/cam-nang/doc-ghi-file): Kịch bản `INIWRITE`/`INIREAD`, tách chuỗi bằng `TFREAD` + `STRPOS` + `STRCUT2`, và đọc mảng bằng `TFREADARR` + `STRSEPARATE`.
-5. [Tự động vẽ hình trong Paint](/cam-nang/tu-ve): Kịch bản vẽ đoạn thẳng, hình vuông, đường tròn (`SIN`, `COS`) và vẽ đa giác từ tệp `diem_ve.txt`.
+1. [Bấm chuột theo lịch và chu kỳ](/cam-nang/click-theo-lich): Tình huống lặp cố định, lặp `FOR` `N` lần và chờ đúng giờ/phút bằng `$_time_h`, `$_time_m`.
+2. [Tìm màu trên màn hình rồi bấm chuột](/cam-nang/tim-mau): Tình huống `GETSCREEN` + `IF_PIXEL_IN`, vòng lặp `WHILE` chờ màu xuất hiện rồi bấm nút Đóng, và quét nhiều điểm bằng `SCANPXL` + `ARRPOP`.
+3. [Tìm hình ảnh mẫu trên màn hình](/cam-nang/tim-anh): Tình huống cắt mẫu bằng `SCREENSHOTFIX` hoặc chụp qua `Alt + G`, tìm bằng `IF_PICTURE_IN` và bấm vào tâm ảnh, kết hợp `bgcolor`, `currency` và `COLORMODE`.
+4. [Đọc và ghi tệp `.txt` và `.ini`](/cam-nang/doc-ghi-file): Tình huống tách riêng script ghi và đọc `INIWRITE`/`INIREAD`, tạo tệp mẫu bằng `STRWRITELN(..., 1)` + `TFWRITE`, đọc từng dòng bằng `TFREAD` + `STRPOS` + `STRCUT2`, và đọc mảng bằng `TFREADARR` + `STRSEPARATE`.
+5. [Tự động vẽ hình trong Paint](/cam-nang/tu-ve): Tình huống vẽ đoạn thẳng, hình vuông, đường tròn (`SIN`, `COS`) và vẽ đa giác từ tệp `diem_ve.txt` ở vùng tọa độ `Y >= 220`.
