@@ -68,6 +68,7 @@ Các lệnh phân tích màn hình (như [`GETSCREEN`](/lenh/man-hinh#getscreen)
   - **Theo help (bài Khóa cửa sổ và phần FAQ):** Giải thích rằng khả năng hoạt động ở chế độ khóa cửa sổ **tùy cách ứng dụng được viết** (ví dụ khung Flash trong trình duyệt là một phần tử con riêng, hoặc có trường hợp chạy được trên Firefox nhưng không chạy trên Google Chrome).
   - **Giải pháp dùng máy ảo (theo help, bài Khóa cửa sổ):** Với máy ảo (như MS Virtual PC, VMware), help gợi ý đây là **giải pháp thay thế** khi chế độ khóa cửa sổ không dùng được: bạn cài hệ điều hành, ứng dụng và Clickermann **vào bên trong máy ảo**, cho chạy ở chế độ thường bên trong máy ảo rồi thu nhỏ cửa sổ máy ảo xuống để làm việc khác trên máy thật. Tuy nhiên, help lưu ý cách này đòi hỏi máy tính đủ mạnh để gánh hai hệ điều hành cùng ứng dụng, và một số ứng dụng chạy khá kém hoặc từ chối chạy trên máy ảo. Xem thêm tại [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#che-do-khoa-cua-so-voi-trinh-duyet-va-may-ao).
   :::
+- **Điều khiển nhiều cửa sổ cùng lúc bằng thư viện cộng đồng:** Khi một script cần gửi thao tác chuột và phím tới nhiều cửa sổ khác nhau mà không muốn gọi `HSET` chuyển đổi mục tiêu liên tục, bạn có thể tham khảo thêm [Thư viện alt_winmode](/nang-cao/alt-winmode) trong nhóm Nâng cao.
 
 ---
 

@@ -103,7 +103,8 @@ export default defineConfig({
           { text: 'Tìm màu trên màn hình', link: '/cam-nang/tim-mau' },
           { text: 'Tìm hình ảnh mẫu', link: '/cam-nang/tim-anh' },
           { text: 'Đọc và ghi tệp tin', link: '/cam-nang/doc-ghi-file' },
-          { text: 'Tự động vẽ trong Paint', link: '/cam-nang/tu-ve' }
+          { text: 'Tự động vẽ trong Paint', link: '/cam-nang/tu-ve' },
+          { text: 'Thực chiến: kỹ thuật viết script', link: '/cam-nang/thuc-chien' }
         ]
       },
       {
@@ -132,7 +133,8 @@ export default defineConfig({
         items: [
           { text: 'Quản lý cửa sổ', link: '/bat-dau/quan-ly-cua-so' },
           { text: 'Luồng (THREAD)', link: '/khai-niem/luong' },
-          { text: 'Plugin mở rộng (DLL)', link: '/khai-niem/plugin' }
+          { text: 'Plugin mở rộng (DLL)', link: '/khai-niem/plugin' },
+          { text: 'Thư viện alt_winmode', link: '/nang-cao/alt-winmode' }
         ]
       },
       {

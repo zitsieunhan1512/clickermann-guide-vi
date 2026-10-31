@@ -32,7 +32,8 @@ Trang này tổng hợp các điểm có trạng thái `🟠 Chưa thống nhấ
 | [Nơi lưu ảnh `Alt + G`](/cam-nang/tim-anh#buoc-1-chuan-bi-tep-anh-mau-bmp) | — | Bài Trình soạn thảo chỉ nói ảnh `100×100` được lưu dạng `.bmp`, không nói rõ lưu ở thư mục nào. | **Help không nói rõ**<br>Cần nhấn `Alt + G` để xem thư mục lưu. |
 | [Kéo chuột vẽ trong Paint](/cam-nang/tu-ve) | — | Ví dụ kéo thả ở mục Chuột chỉ có `ldown(10, 10)`, `waitms(300)`, `lup(20, 20)` (không có `MOVE`). | **Suy luận cần thử**<br>Kiểm tra `LDOWN` -> `MOVE` -> `LUP` trong Paint. |
 | [Hành vi thực tế cho người mới](#gia-tri-bien-sau-khi-bam-dung-bam-ap-dung-hoac-doi-script) | — | Giá trị biến sau khi Dừng/Áp dụng, đường dẫn khi chưa `Ctrl + S`, tệp chưa tồn tại (`TFCOUNT`/`TFWRITE`/`INIREAD`), mảng gọi lặp (`SCANPXL`/`SCANPICTURE`/`TFREADARR`), `Alt + Q`, ngoặc rỗng & chữ thường, giao diện & UTF-8, thu phóng màn hình Windows. | **Cần thử thực tế** |
-| [Các tình huống cẩm nang](/cam-nang/click-theo-lich) | — | 5 trang trong `cam-nang/*` được biên soạn theo cú pháp help nhưng chưa chạy trên máy Windows. | **Cần thử thực tế** |
+| [Các tình huống cẩm nang](/cam-nang/click-theo-lich) | — | Các trang trong `cam-nang/*` được biên soạn theo cú pháp help nhưng chưa chạy trên máy Windows. | **Cần thử thực tế** |
+| [Thư viện cộng đồng `alt_winmode`](/nang-cao/alt-winmode) | — | Kiểm tra `A_DRAG` và `A_MOVE` khi kéo vẽ trong Paint; `A_IFPIXELIN` khi màu nằm ở cột `0`; `A_SCANPXL` gọi hai lần liên tiếp; `A_PXL` khi cửa sổ bị che khuất. | **Cần thử thực tế** |
 
 ---
 
@@ -426,6 +427,8 @@ HALT
 1. **Theo help chính thức (mục WinAPI):** Cú pháp ghi `WNDSETINFO(hwnd, $var1, $var2, $var3, $var4)` và ví dụ trong help chỉ truyền 4 biến vào lệnh.
 2. **Theo sách của Chô tô (tr. 117):** Có thể truyền trực tiếp các con số hằng vào 4 tham số vị trí và kích thước của `WNDSETINFO`.
 
+Gợi ý: script thực tế của người biên soạn có dùng cách này (dạng `WNDSETINFO($h, 0, 0, $w, $h2)`) và báo chạy tốt, chưa kiểm chứng lại. Vẫn cần chạy script dưới đây.
+
 ### Script kiểm tra trên Windows
 
 Mở sẵn một cửa sổ Notepad trên Windows rồi chạy script dưới đây. Để tránh trường hợp cửa sổ Notepad tình cờ đang nằm sẵn ở đúng tọa độ `(50, 50)` với kích thước `400×300`, script sẽ chuyển Notepad sang vị trí `(120, 120)` và kích thước `500×350` trước bằng `WNDPOS` / `WNDSIZE`, sau đó mới gọi `WNDSETINFO` với các số trực tiếp:
@@ -539,6 +542,8 @@ HALT
 1. **Theo help chính thức (mục Cấu trúc lệnh):** Ghi rằng việc tách phần thân các chương trình con (`SUB ... END_SUB`) ra một tệp riêng bên ngoài rồi nạp vào qua chỉ thị `#include` được coi là thói quen tốt.
 2. **Theo sách của Chô tô (tr. 81):** Lại khuyên không nên đặt `SUB` ở tệp ngoài rồi `#include` vào vì đôi lúc bị lỗi.
 
+Gợi ý: script thực tế của người biên soạn có dùng cách này (đặt `SUB` ở tệp ngoài qua `#include` và đặt cả `#include`, `SUB` bên trong thân `THREAD`) và báo chạy tốt, chưa kiểm chứng lại. Vẫn cần chạy script dưới đây.
+
 ### Script kiểm tra trên Windows
 
 Trong một thư mục dự án, trước tiên bạn chạy đoạn script tạo tệp thư viện `thu_vien_sub.cms` chứa chương trình con `SUB(cong_hai_so, $a, $b)` như bên dưới:
@@ -570,6 +575,22 @@ ELSE
    PRINT("KET LUAN: Goi SUB trong tep #include gap loi hoac khong cap nhat dung ket qua.")
 END_IF
 
+HALT
+```
+
+Ngoài ra, bạn có thể thử thêm trường hợp đặt `#include "thu_vien_sub.cms"` và `SUB` ngay bên trong thân một khối `THREAD` (theo quy tắc của help là `SUB` dùng trong luồng nào thì khai báo trong thân luồng đó):
+
+```text
+THREAD(luong_include, 1)
+   #include "thu_vien_sub.cms"
+   cong_hai_so(10, 20)
+   SETTHREAD(luong_include, 0)
+END_THREAD
+
+WAIT(1)
+IF($tong_sub = 30)
+   PRINT("KET LUAN: #include va SUB ben trong than THREAD chay binh thuong.")
+END_IF
 HALT
 ```
 
@@ -1013,11 +1034,15 @@ HALT
 
 ## Giá trị biến sau khi bấm Dừng, bấm Áp dụng hoặc đổi script
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang khái niệm:** [Ngôn ngữ script](/khai-niem/ngon-ngu#bien-khi-script-tu-lap-lai)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang khái niệm:** [Ngôn ngữ script](/khai-niem/ngon-ngu#bien-khi-script-tu-lap-lai) · **Trang cẩm nang:** [Thực chiến: kỹ thuật viết script](/cam-nang/thuc-chien#khoi-tao-mot-lan-o-dau-vong-lap-bang-define-init-0)
 
 ### Câu hỏi cần kiểm tra
 
-Khi script tự quay lại đầu vòng lặp, biến vẫn giữ giá trị cũ. Tuy nhiên, cần kiểm tra trên Windows xem giá trị biến (`$dem`) được tự động xóa về `0` hay vẫn giữ giá trị cũ trong 3 tình huống sau:
+Khi script tự quay lại đầu vòng lặp, biến vẫn giữ giá trị cũ (thường dùng kết hợp `DEFINE($init, 0)` và `IF($init == 0) ... $init = 1 END_IF` để chỉ khởi tạo ở lượt đầu).
+
+Gợi ý: script thực tế của người biên soạn có dùng cách này (biến giữ giá trị qua các lượt lặp với `DEFINE` và `$init`) và báo chạy tốt, chưa kiểm chứng lại. Vẫn cần chạy script dưới đây.
+
+Ngoài ra, cần kiểm tra thêm trên Windows xem giá trị biến (`$dem`, `$init`) được tự động xóa về `0` hay vẫn giữ giá trị cũ trong 3 tình huống sau:
 1. Người dùng bấm nút **Dừng** (`Alt + S`) rồi bấm **Chạy** (`Alt + A`) lại.
 2. Người dùng bấm nút **Áp dụng** trong Trình soạn thảo rồi bấm **Chạy**.
 3. Người dùng mở nạp một tệp `.cms` khác có biến trùng tên `$dem`.
@@ -1117,23 +1142,29 @@ HALT
 
 ## Nội dung chèn nhanh của phím tắt Alt + Q
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang bắt đầu:** [Trình soạn thảo và kính lúp](/bat-dau/trinh-soan-thao#khung-thong-tin-thoi-gian-thuc-va-phim-tat-alt-q)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang bắt đầu:** [Trình soạn thảo và kính lúp](/bat-dau/trinh-soan-thao#khung-thong-tin-thoi-gian-thuc-va-phim-tat-alt-q)
 
 ### Cách kiểm tra trên Windows
 
+Gợi ý: script thực tế của người biên soạn có dùng cách này (có dòng dạng `LCLICK(x, y)  // màu`) và báo chạy tốt, chưa kiểm chứng lại. Vẫn cần chạy script dưới đây. Suy luận: đây có thể là định dạng do `Alt + Q` chèn.
+
 1. Mở [Trình soạn thảo](/bat-dau/trinh-soan-thao), đặt con trỏ soạn thảo vào một dòng trống.
-2. Đưa chuột tới một điểm bất kỳ và nhấn **`Alt + Q`** để ghi nhận chính xác định dạng chuỗi lệnh được chèn vào (ví dụ `LCLICK(100, 200) // 16777215` hay định dạng nào).
+2. Đưa chuột tới một điểm bất kỳ và nhấn **`Alt + Q`** để ghi nhận chính xác định dạng chuỗi lệnh được chèn vào (ví dụ `LCLICK(100, 200)  // 16777215` hay định dạng nào).
 3. Bấm nút có biểu tượng **Clipboard** ở cột bên trái rồi nhấn lại **`Alt + Q`**, sau đó dán (`Ctrl + V`) ra để xem nội dung được chép vào bộ nhớ tạm.
 
 ---
 
 ## Cú pháp ngoặc rỗng của thủ tục và tên lệnh viết chữ thường
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang lệnh:** [Tra cứu lệnh](/lenh/)
+**Trạng thái:** 🟠 Chưa thống nhất · **Trang lệnh:** [Tra cứu lệnh](/lenh/)
 
 ### Điểm cần kiểm tra
 
-Trong các ví dụ của help, tên lệnh và cặp ngoặc rỗng của thủ tục không tham số được viết theo nhiều kiểu (ví dụ `GETSCREEN` không ngoặc hoặc `GETSCREEN()`, `LOGCLEAR` hoặc `LOGCLEAR()`, `HALT`, và tên lệnh viết thường như `lclick`, `waitms`, `print`). Chạy đoạn script dưới đây để xác nhận bộ thông dịch v4.13.014 chấp nhận tất cả các cách viết này:
+Trong các ví dụ của help, tên lệnh và cặp ngoặc rỗng của thủ tục không tham số được viết theo nhiều kiểu (ví dụ `GETSCREEN` không ngoặc hoặc `GETSCREEN()`, `LOGCLEAR` hoặc `LOGCLEAR()`, `HALT`, và tên lệnh viết thường hoặc viết lẫn hoa thường như `lclick`, `waitms`, `print`).
+
+Gợi ý: script thực tế của người biên soạn có dùng cách này (tên lệnh chữ thường, viết lẫn hoa thường) và báo chạy tốt, chưa kiểm chứng lại. Vẫn cần chạy script dưới đây.
+
+Chạy đoạn script dưới đây để xác nhận bộ thông dịch v4.13.014 chấp nhận tất cả các cách viết này:
 
 ```cms
 // Kiểm tra tên lệnh chữ thường và cặp ngoặc rỗng trên thủ tục không tham số
@@ -1176,3 +1207,179 @@ Toàn bộ các tình huống mẫu trong 5 trang cẩm nang đều được bi�
 3. [Tìm hình ảnh mẫu trên màn hình](/cam-nang/tim-anh): Tình huống cắt mẫu bằng `SCREENSHOTFIX` hoặc chụp qua `Alt + G`, tìm bằng `IF_PICTURE_IN` và bấm vào tâm ảnh, kết hợp `bgcolor`, `currency` và `COLORMODE`.
 4. [Đọc và ghi tệp `.txt` và `.ini`](/cam-nang/doc-ghi-file): Tình huống tách riêng script ghi và đọc `INIWRITE`/`INIREAD`, tạo tệp mẫu bằng `STRWRITELN(..., 1)` + `TFWRITE`, đọc từng dòng bằng `TFREAD` + `STRPOS` + `STRCUT2`, và đọc mảng bằng `TFREADARR` + `STRSEPARATE`.
 5. [Tự động vẽ hình trong Paint](/cam-nang/tu-ve): Tình huống vẽ đoạn thẳng, hình vuông, đường tròn (`SIN`, `COS`) và vẽ đa giác từ tệp `diem_ve.txt` ở vùng tọa độ `Y >= 220`.
+6. [Thực chiến: kỹ thuật viết script](/cam-nang/thuc-chien): Các ví dụ kiểm tra 1 điểm ảnh, vòng lặp theo trạng thái màn hình, khởi tạo 1 lần bằng `DEFINE($init, 0)`, xếp 2 cửa sổ Notepad và lấy `HGET`, luồng giám sát `THREAD`, tách 3 tệp `#include`.
+
+---
+
+## Kiểm tra các điểm cần lưu ý của thư viện alt_winmode
+
+**Trạng thái:** 🟡 Theo help, chưa chạy thử · **Trang nâng cao:** [Thư viện alt_winmode](/nang-cao/alt-winmode)
+
+Khi chạy thử thư viện cộng đồng `alt_winmode.cms` trên máy Windows, cần kiểm chứng 5 hành vi thực tế dưới đây:
+
+### Kéo vẽ trong Paint bằng `A_DRAG` và `A_MOVE`
+
+- **Câu hỏi cần kiểm tra:** Trong Paint (đã chọn công cụ Cọ vẽ hoặc Bút chì màu đen), khi gửi thông điệp tới `hwnd` của trang giấy vẽ:
+  1. Gọi `A_LDOWN` -> `A_MOVE` (`wParam = 0`) -> `A_LUP` có vẽ được nét trên trang giấy không?
+  2. Gọi `A_LDOWN` -> `A_DRAG` (`wParam = 0x0001` / `MK_LBUTTON`) -> `A_LUP` có vẽ được nét liền trên trang giấy không?
+
+```cms
+#include "alt_winmode.cms"
+
+SUB(A_DRAG, $A_x, $A_y, $A_hwnd)
+   postmessage($A_hwnd, 0x0200, 0x0001, $A_x + ($A_y * 65536))
+END_SUB
+
+LOGCLEAR
+LOGSHOW(1)
+
+$w_paint = WNDFIND("Paint")
+IF($w_paint > 0)
+   WNDPOS($w_paint, 50, 50)
+   WNDSIZE($w_paint, 700, 550)
+   WAITMS(500)
+   $h_canvas = HGET(300, 350)
+
+   // Thử 1: Dùng A_MOVE (wParam = 0) ở dòng Y = 60
+   A_LDOWN(50, 60, $h_canvas)
+   WAITMS(50)
+   A_MOVE(200, 60, $h_canvas)
+   WAITMS(50)
+   A_LUP(200, 60, $h_canvas)
+
+   WAITMS(300)
+
+   // Thử 2: Dùng A_DRAG (wParam = 0x0001) ở dòng Y = 120
+   A_LDOWN(50, 120, $h_canvas)
+   WAITMS(50)
+   A_DRAG(200, 120, $h_canvas)
+   WAITMS(50)
+   A_LUP(200, 120, $h_canvas)
+
+   PRINT("Da thu A_MOVE (Y=60) va A_DRAG (Y=120). Hay quan sat trang giay Paint!")
+ELSE
+   PRINT("Hay mo cua so Paint va chon cong cu Co ve truoc khi chay.")
+END_IF
+
+HALT
+```
+
+### Kết quả của `A_IFPIXELIN` khi điểm màu khớp nằm ở cột `x = 0`
+
+- **Câu hỏi cần kiểm tra:** Trong `A_IFPIXELIN`, khi tìm thấy điểm ảnh tại đúng mép trái của cửa sổ/phần tử (tức `$_return1 = $A_x0`, làm `$A_return1 = $_return1 - $A_x0 = 0`), giá trị `$A_return1` bằng `0` có trùng với giá trị trả về khi không tìm thấy màu (`$A_return1 = 0`) hay không.
+
+```cms
+#include "alt_winmode.cms"
+
+LOGCLEAR
+LOGSHOW(1)
+
+$w = WNDFIND("Notepad")
+IF($w > 0)
+   WNDPOS($w, 100, 100)
+   WNDSIZE($w, 400, 300)
+   WAITMS(300)
+   $h_edit = HGET(250, 250)
+
+   // Chụp vùng phần tử soạn thảo và lấy mã màu thực tế tại cột tương đối x = 0, y = 10
+   A_GETSCREEN(0, 0, 100, 100, $h_edit)
+   A_PXL(0, 10, $h_edit)
+   $mau_cot_0 = $A_return1
+
+   // Tìm chính mã màu đó tại vùng bắt đầu từ cột 0: (0, 10) -> (50, 20)
+   A_IFPIXELIN(0, 10, 50, 20, $mau_cot_0, $h_edit)
+   PRINT("Tim mau co that o cot x = 0 -> $A_return1 = ", $A_return1, ", $A_return2 = ", $A_return2)
+   IF($A_return1 = 0)
+      PRINT("KET LUAN: Khi mau nam o cot x = 0, $A_return1 bang 0 (giong het truong hop khong tim thay).")
+   END_IF
+ELSE
+   PRINT("Hay mo Notepad truoc khi chay.")
+END_IF
+
+HALT
+```
+
+### Gọi `A_SCANPXL` hai lần liên tiếp mà không `UNDEFINE($A_var)`
+
+- **Câu hỏi cần kiểm tra:** Nếu gọi `A_SCANPXL` hai lần liên tiếp mà không gọi `UNDEFINE($A_var)` ở giữa, mảng `$A_var` có bị nối thêm phần tử và các phần tử của lần 1 có bị trừ `$A_x0, $A_y0` lần thứ hai hay không.
+
+```cms
+#include "alt_winmode.cms"
+
+LOGCLEAR
+LOGSHOW(1)
+
+$w = WNDFIND("Notepad")
+IF($w > 0)
+   WNDPOS($w, 100, 100)
+   WNDSIZE($w, 400, 300)
+   WAITMS(300)
+   $h_edit = HGET(250, 250)
+
+   A_GETSCREEN(0, 0, 50, 50, $h_edit)
+   A_PXL(10, 10, $h_edit)
+   $mau = $A_return1
+
+   UNDEFINE($A_var)
+   A_SCANPXL(10, 10, 12, 10, $mau, $h_edit)
+   $size_lan_1 = ARRSIZE($A_var)
+   $x_lan_1 = $A_var[0]
+
+   // Gọi lần 2 liên tiếp KHÔNG có UNDEFINE($A_var)
+   A_SCANPXL(10, 10, 12, 10, $mau, $h_edit)
+   $size_lan_2 = ARRSIZE($A_var)
+   $x_lan_2 = $A_var[0]
+
+   PRINT("Lan 1: ARRSIZE = ", $size_lan_1, ", $A_var[0] = ", $x_lan_1)
+   PRINT("Lan 2 (khong UNDEFINE): ARRSIZE = ", $size_lan_2, ", $A_var[0] = ", $x_lan_2)
+   IF($x_lan_2 != $x_lan_1)
+      PRINT("KET LUAN: Goi A_SCANPXL lan 2 khong UNDEFINE lam toa do cu bi tru $A_x0 hai lan!")
+   END_IF
+ELSE
+   PRINT("Hay mo Notepad truoc khi chay.")
+END_IF
+
+HALT
+```
+
+### Đọc màu bằng `A_GETSCREEN` và `A_PXL` khi cửa sổ bị cửa sổ khác che khuất
+
+- **Câu hỏi cần kiểm tra:** Vì `A_GETSCREEN` và `A_PXL` chỉ quy đổi tọa độ bằng `WNDGETINFO` rồi gọi `GETSCREEN` ở chế độ màn hình thường, hãy kiểm tra khi kéo một cửa sổ khác đè lên che khuất cửa sổ đích thì `A_PXL` đọc ra màu của cửa sổ đích hay màu của cửa sổ đang nằm đè ở phía trên.
+
+```cms
+#include "alt_winmode.cms"
+
+LOGCLEAR
+LOGSHOW(1)
+
+$w = WNDFIND("Notepad")
+IF($w > 0)
+   WNDPOS($w, 100, 100)
+   WNDSIZE($w, 400, 300)
+   WAITMS(300)
+   $h_edit = HGET(250, 250)
+
+   // Bước 1: Đọc màu khi Notepad chưa bị che
+   A_GETSCREEN(0, 0, 200, 200, $h_edit)
+   A_PXL(50, 50, $h_edit)
+   $mau_truoc = $A_return1
+   PRINT("Ma mau A_PXL(50, 50) khi Notepad CHUA bi che: ", $mau_truoc)
+
+   PRINT("-> Trong 5 giay toi, hay keo mot cua so khac co mau khac DE LEN che khuat Notepad...")
+   WAIT(5)
+
+   // Bước 2: Đọc lại màu sau khi Notepad đã bị cửa sổ khác đè lên
+   A_GETSCREEN(0, 0, 200, 200, $h_edit)
+   A_PXL(50, 50, $h_edit)
+   $mau_sau = $A_return1
+   PRINT("Ma mau A_PXL(50, 50) SAU KHI Notepad bi che: ", $mau_sau)
+
+   IF($mau_sau != $mau_truoc)
+      PRINT("KET LUAN: Khi cua so bi che, A_GETSCREEN / A_PXL doc mau cua cua so nam de phia tren (cua so dich phai hien tren man hinh).")
+   END_IF
+ELSE
+   PRINT("Hay mo Notepad truoc khi chay.")
+END_IF
+
+HALT
+```

@@ -13,6 +13,10 @@ Bộ tài liệu hướng dẫn Clickermann v4.13 bằng tiếng Việt này đ�
 2. **Nguồn tham khảo đối chiếu:** Sách hướng dẫn cộng đồng ***The Basic Clickermann Guidebook*** (2nd Edition, 160 trang) của tác giả **Chô tô**, được chia sẻ công khai cho cộng đồng người Việt tham khảo.
    - Liên kết blog cá nhân của tác giả Chô tô (ghi ở trang 160 của sách): [https://chotodeptrai.blogspot.com/](https://chotodeptrai.blogspot.com/)
    - Bộ tài liệu này không sao chép câu chữ hay ví dụ của sách mà dịch trực tiếp từ `help.chm` gốc của tác giả J.Challenger, đồng thời đối chiếu với sách của Chô tô để ghi chú rõ những điểm khác biệt hoặc chưa thống nhất tại trang [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows).
+3. **Thư viện cộng đồng `alt_winmode.cms` (`alternative windowed mode v1.1`):**
+   - Được chia sẻ công khai trên diễn đàn chính thức của Clickermann ([http://crapware.aidf.org/forum/](http://crapware.aidf.org/forum/)), hiện chưa rõ tên tác giả cụ thể (bộ tài liệu sẵn sàng mở đường liên hệ để bổ sung thông tin ghi công ngay khi xác nhận được tác giả của thư viện). Xem chi tiết tại trang [Thư viện alt_winmode](/nang-cao/alt-winmode).
+4. **Kỹ thuật thực chiến từ script thực tế của người biên soạn:**
+   - Các mẫu kỹ thuật tại trang [Thực chiến: kỹ thuật viết script](/cam-nang/thuc-chien) được rút ra từ script thực tế do chính người biên soạn bộ tài liệu này tự viết và sử dụng; bản script gốc không công bố nguyên bản mà được viết lại toàn bộ ví dụ minh họa trên Notepad và Paint.
 
 ## Bảng đối chiếu mục lục với tệp `help.chm` gốc
 

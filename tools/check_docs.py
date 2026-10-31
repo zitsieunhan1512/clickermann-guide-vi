@@ -109,7 +109,8 @@ for path in glob.glob(f'{DOCS}/**/*.md', recursive=True):
             m = re.match(r'(\w+)\s*\(', x)
             if m and not is_syntax:
                 name = m.group(1).upper()
-                if name not in known and name not in subs:
+                # A_* là các SUB của thư viện alt_winmode, nạp bằng #include
+                if name not in known and name not in subs and not name.startswith('A_'):
                     err(rel, f'ví dụ gọi lệnh không có trong help: {m.group(1)}')
                 if name in ('READMEM', 'WRITEMEM'):
                     err(rel, f'không được có ví dụ {name}')

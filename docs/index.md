@@ -72,6 +72,7 @@ Mỗi lệnh và mục có điểm cần lưu ý trong tài liệu này được
   - [Tìm hình ảnh mẫu trên màn hình](/cam-nang/tim-anh)
   - [Đọc và ghi tệp `.txt` và `.ini`](/cam-nang/doc-ghi-file)
   - [Tự động vẽ hình trong Paint](/cam-nang/tu-ve)
+  - [Thực chiến: kỹ thuật viết script](/cam-nang/thuc-chien)
 - **Xử lý lỗi:**
   - [Xử lý lỗi và câu hỏi thường gặp (FAQ)](/xu-ly-loi)
 - **Tra cứu lệnh:**
@@ -89,6 +90,7 @@ Mỗi lệnh và mục có điểm cần lưu ý trong tài liệu này được
   - [Quản lý cửa sổ](/bat-dau/quan-ly-cua-so)
   - [Luồng (`THREAD`)](/khai-niem/luong)
   - [Plugin mở rộng (DLL)](/khai-niem/plugin)
+  - [Thư viện alt_winmode](/nang-cao/alt-winmode)
 - **Phụ lục:**
   - [Bảng mã phím và hằng số](/phu-luc/ma-phim)
   - [Lịch sử phát triển phiên bản](/phu-luc/lich-su)

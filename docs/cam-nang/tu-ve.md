@@ -181,6 +181,10 @@ LUP($x, $y)
 HALT
 ```
 
+::: tip Vẽ nền bằng thư viện cộng đồng alt_winmode
+Nếu bạn muốn tìm hiểu cách gửi thông điệp kéo vẽ qua `POSTMESSAGE` (`A_LDOWN`, `A_DRAG`, `A_LUP`) tới phần tử trang giấy vẽ của Paint theo mã `hwnd`, hãy xem trang [Thư viện alt_winmode](/nang-cao/alt-winmode#vi-du-keo-chuot-ve-net-trong-paint-bang-a-ldown-a-drag-a-lup).
+:::
+
 ---
 
 *Nguồn: Tài liệu trợ giúp `help.chm` (mục Chuột, mục Làm việc với số và mục Chuỗi và tệp).*

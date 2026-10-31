@@ -158,3 +158,4 @@ Trong các trang tra cứu lệnh chi tiết, mỗi mục lệnh đều được
 | Đọc / đặt văn bản trên phần tử điều khiển | [`HGETTEXT`](/lenh/winapi#hgettext), [`HSETTEXT`](/lenh/winapi#hsettext) | `HGETTEXT` trả về văn bản trên phần tử theo `hwnd`; `HSETTEXT` đặt văn bản mới |
 | Lấy mã tiến trình (`pid`) từ `hwnd` | [`HGETPID`](/lenh/winapi#hgetpid) | Tìm `pid` của tiến trình sở hữu cửa sổ |
 | Gửi / nhận thông điệp hệ thống Windows | [`SENDMESSAGE, POSTMESSAGE`](/lenh/winapi#sendmessage-postmessage), [`GETMESSAGE`](/lenh/winapi#getmessage) | Giao tiếp qua thông điệp WinAPI (như `1024` / `WM_USER`) |
+| Điều khiển nhiều cửa sổ qua `hwnd` (thư viện cộng đồng) | [`A_LCLICK`, `A_KEYPRESS`, `A_GETSCREEN`... (`alt_winmode`)](/nang-cao/alt-winmode) | Thư viện `SUB` cộng đồng gửi `POSTMESSAGE` theo từng `hwnd` riêng mà không cần `HSET` |
