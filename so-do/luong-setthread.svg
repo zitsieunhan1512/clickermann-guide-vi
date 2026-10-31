@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 350" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title>Dòng thời gian điều khiển luồng bằng SETTHREAD với state 0, 1 và 2</title>
+  <rect width="760" height="350" fill="#ffffff" rx="8"/>
+  <defs>
+    <marker id="ar-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1d4ed8"/>
+    </marker>
+  </defs>
+
+  <text x="380" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Khác biệt giữa SETTHREAD state = 0, state = 1 và state = 2</text>
+
+  <!-- Case A: state 0 then 1 -->
+  <rect x="25" y="55" width="710" height="125" rx="8" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="45" y="84" font-size="16" font-weight="700" fill="#1e3a8a">Trường hợp A: Tạm dừng bằng state = 0 rồi bật lại bằng state = 1</text>
+
+  <rect x="45" y="102" width="175" height="54" rx="6" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="132" y="125" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">Đang chạy Bước 1, 2</text>
+  <text x="132" y="145" text-anchor="middle" font-size="14" fill="#334155">(dừng ở dòng giữa)</text>
+
+  <line x1="220" y1="129" x2="265" y2="129" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
+
+  <rect x="270" y="102" width="195" height="54" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="367" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#78350f">SETTHREAD(luong_2, 0)</text>
+  <text x="367" y="145" text-anchor="middle" font-size="14" fill="#92400e">Tạm dừng, nhớ vị trí</text>
+
+  <line x1="465" y1="129" x2="510" y2="129" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
+
+  <rect x="515" y="102" width="200" height="54" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+  <text x="615" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">SETTHREAD(luong_2, 1)</text>
+  <text x="615" y="145" text-anchor="middle" font-size="14" fill="#166534">Chạy tiếp từ Bước 3</text>
+
+  <!-- Case B: state 2 then 1 -->
+  <rect x="25" y="200" width="710" height="125" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="45" y="229" font-size="16" font-weight="700" fill="#9a3412">Trường hợp B: Tạm dừng bằng state = 2 rồi bật lại bằng state = 1</text>
+
+  <rect x="45" y="247" width="175" height="54" rx="6" fill="#ffffff" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="132" y="270" text-anchor="middle" font-size="14" font-weight="600" fill="#7c2d12">Đang chạy Bước 1, 2</text>
+  <text x="132" y="290" text-anchor="middle" font-size="14" fill="#334155">(dừng ở dòng giữa)</text>
+
+  <line x1="220" y1="274" x2="265" y2="274" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
+
+  <rect x="270" y="247" width="195" height="54" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="367" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">SETTHREAD(luong_2, 2)</text>
+  <text x="367" y="290" text-anchor="middle" font-size="14" fill="#7f1d1d">Tạm dừng &amp; đưa về đầu</text>
+
+  <line x1="465" y1="274" x2="510" y2="274" stroke="#1d4ed8" stroke-width="2.5" marker-end="url(#ar-t)"/>
+
+  <rect x="515" y="247" width="200" height="54" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+  <text x="615" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">SETTHREAD(luong_2, 1)</text>
+  <text x="615" y="290" text-anchor="middle" font-size="14" fill="#166534">Chạy lại từ Bước 1 (đầu)</text>
+</svg>

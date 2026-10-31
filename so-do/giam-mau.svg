@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title>Bảng mức giảm màu COLORMODE từ 0 đến 8 và số lượng màu tối đa</title>
+  <rect width="760" height="400" fill="#ffffff" rx="8"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Số lượng màu tối đa theo từng mức COLORMODE(mode)</text>
+
+  <!-- Bars and labels -->
+  <g font-size="14" fill="#0f172a">
+    <text x="40" y="72" font-weight="700">mode = 0</text>
+    <rect x="135" y="54" width="380" height="24" rx="4" fill="#1d4ed8"/>
+    <text x="527" y="72" font-weight="600">16 777 216 màu</text>
+
+    <text x="40" y="106" font-weight="700">mode = 1</text>
+    <rect x="135" y="88" width="335" height="24" rx="4" fill="#2563eb"/>
+    <text x="482" y="106">2 097 152 màu</text>
+
+    <text x="40" y="140" font-weight="700">mode = 2</text>
+    <rect x="135" y="122" width="290" height="24" rx="4" fill="#3b82f6"/>
+    <text x="437" y="140">262 144 màu</text>
+
+    <text x="40" y="174" font-weight="700">mode = 3</text>
+    <rect x="135" y="156" width="245" height="24" rx="4" fill="#0284c7"/>
+    <text x="392" y="174">32 768 màu</text>
+
+    <text x="40" y="208" font-weight="700">mode = 4</text>
+    <rect x="135" y="190" width="200" height="24" rx="4" fill="#0d9488"/>
+    <text x="347" y="208">4 096 màu</text>
+
+    <text x="40" y="242" font-weight="700">mode = 5</text>
+    <rect x="135" y="224" width="155" height="24" rx="4" fill="#16a34a"/>
+    <text x="302" y="242">512 màu</text>
+
+    <text x="40" y="276" font-weight="700">mode = 6</text>
+    <rect x="135" y="258" width="110" height="24" rx="4" fill="#ca8a04"/>
+    <text x="257" y="276">64 màu</text>
+
+    <text x="40" y="310" font-weight="700">mode = 7</text>
+    <rect x="135" y="292" width="65" height="24" rx="4" fill="#ea580c"/>
+    <text x="212" y="310">8 màu</text>
+
+    <text x="40" y="344" font-weight="700">mode = 8</text>
+    <rect x="135" y="326" width="25" height="24" rx="4" fill="#dc2626"/>
+    <text x="172" y="344">2 màu</text>
+  </g>
+
+  <text x="380" y="380" text-anchor="middle" font-size="13" fill="#475569">Ghi chú: độ dài thanh chỉ minh họa thứ tự giảm dần (theo bảng trong help).</text>
+</svg>
