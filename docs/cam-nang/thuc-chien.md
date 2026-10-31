@@ -4,7 +4,7 @@ Trang này tổng hợp 8 kỹ thuật tổ chức và viết script thực tế
 
 ::: info Nguồn gốc kỹ thuật và trạng thái kiểm chứng
 - Các kỹ thuật lấy từ script thực tế do người biên soạn tự viết và báo là chạy tốt. Ví dụ ở đây được viết lại cho Notepad và Paint, chưa chạy thử.
-- **Trạng thái chung của toàn bộ ví dụ trên trang:** `🟡 Theo help, chưa chạy thử` (riêng những chỗ có điểm chưa thống nhất giữa các nguồn tài liệu được gắn nhãn `🟠 Chưa thống nhất` kèm liên kết tới mục kiểm tra).
+- **Trạng thái chung của toàn bộ ví dụ trên trang:** `🟡 Chưa chạy thử` (riêng những chỗ có điểm chưa thống nhất giữa các nguồn tài liệu được gắn nhãn `🟠 Chưa thống nhất` kèm liên kết tới mục kiểm tra).
 :::
 
 ---
@@ -19,7 +19,7 @@ So với việc quét cả một vùng hình chữ nhật rộng lớn, việc c
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 Đoạn script dưới đây chỉ cập nhật và kiểm tra đúng 1 điểm ảnh tại tọa độ `(250, 180)` xem có mang màu trắng (`16777215`) hay màu xám (`15790320`) của nút bấm trong hộp thoại hay không:
 
@@ -62,7 +62,7 @@ Thay vì viết theo thứ tự bước cố định, kỹ thuật **vòng lặp
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 Ví dụ dưới đây kiểm tra hai trạng thái trong một vòng lặp: nếu thấy hộp thoại xác nhận của Notepad hiện lên (nhận diện qua màu đặc trưng tại `(420, 310)`) thì bấm nút đóng hộp thoại; nếu đang ở màn hình soạn thảo bình thường (màu trắng `16777215` tại `(300, 250)`) thì bấm vào vùng soạn thảo:
 
@@ -107,14 +107,14 @@ Vì script Clickermann tự động quay lại dòng đầu tiên sau khi chạy
 4. Khi nào phát hiện cửa sổ bị đóng hoặc cần thiết lập lại từ đầu, script chỉ cần gán lại **`$init = 0`** để lượt lặp kế tiếp tự động chạy lại khối khởi tạo.
 
 ::: warning Giả định về biến giữ giá trị qua các lượt lặp
-**Trạng thái:** 🟡 Theo help, chưa chạy thử (cần kiểm tra thêm hành vi khi bấm Dừng / Áp dụng).
+**Trạng thái:** 🟡 Chưa chạy thử (cần kiểm tra thêm hành vi khi bấm Dừng / Áp dụng).
 
 Kỹ thuật này dựa trên quy tắc trong help (phần Giới thiệu ngôn ngữ) rằng biến giữ nguyên giá trị khi script tự lặp lại sang lượt mới. Tuy nhiên, việc biến `$init` có giữ giá trị cũ sau khi người dùng bấm nút **Dừng** rồi bấm **Chạy** lại hay không cần được kiểm tra thực tế tại trang [Cần kiểm tra trên Windows](/phu-luc/can-kiem-tra-tren-windows#gia-tri-bien-sau-khi-bam-dung-bam-ap-dung-hoac-doi-script).
 :::
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 ```cms
 // Chỉ tạo biến $init = 0 nếu biến này chưa tồn tại
@@ -171,7 +171,7 @@ Theo help (bài [Chế độ khóa cửa sổ](/khai-niem/khoa-cua-so) và mục
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 Chuẩn bị: mở hai cửa sổ Notepad đang mở hai tệp có tên `ghi-chu-1` và `ghi-chu-2` trên thanh tiêu đề:
 
@@ -237,7 +237,7 @@ Khi script chính chạy trong thời gian dài, đôi khi script chính có th�
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 ```cms
 // Luồng giám sát chạy song song (truyền rõ init_state = 1)
@@ -353,7 +353,7 @@ Cách ghi chú này rất hữu ích: về sau khi đọc lại code hoặc khi 
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 ```cms
 // Công cụ dò tọa độ màn hình và mã màu dưới trỏ chuột mỗi 500ms
@@ -395,7 +395,7 @@ Hai thói quen nhỏ nhưng quyết định việc bạn có dễ dàng chỉnh 
 
 ### Ví dụ
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 ```cms
 LOGSHOW(1)

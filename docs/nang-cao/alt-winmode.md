@@ -3,7 +3,7 @@
 Trang này giới thiệu thư viện cộng đồng `alt_winmode` (`alt_winmode.cms`), giúp một script Clickermann gửi thao tác chuột, bàn phím và đọc màu/ảnh trên nhiều cửa sổ khác nhau thông qua mã `hwnd` của từng phần tử mà không cần bật chế độ khóa cửa sổ bằng `HSET`.
 
 ::: warning Tính năng cộng đồng, chưa chạy thử
-- **Trạng thái:** `🟡 Theo help, chưa chạy thử` (mọi đoạn mã và ví dụ trên trang này đều chưa chạy thử thực tế trên máy Windows).
+- **Trạng thái:** `🟡 Chưa chạy thử` (mọi đoạn mã và ví dụ trên trang này đều chưa chạy thử thực tế trên máy Windows).
 - `alt_winmode` **không phải là tính năng chính thức** của Clickermann và tài liệu `help.chm` không nhắc tới thư viện này. Đây là bộ chương trình con (`SUB`) được chia sẻ công khai trên diễn đàn Clickermann (ghi ở đầu tệp là `alternative windowed mode v1.1`, chưa rõ tác giả).
 - Cũng giống như [chế độ khóa cửa sổ](/khai-niem/khoa-cua-so) trong help, khả năng nhận thao tác qua `alt_winmode` **tùy thuộc vào cách từng ứng dụng đích được viết** (không phải ứng dụng nào cũng nhận).
 :::
@@ -372,7 +372,7 @@ Khi dùng `alt_winmode`, có 7 điểm kỹ thuật rất dễ gây lỗi ngầm
 
 ### Ví dụ: Gõ phím vào cửa sổ Notepad bằng `HGET` và `A_KEYPRESS`
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 Trong Notepad, khung trắng nơi gõ chữ là một phần tử con nằm bên trong cửa sổ chính. Ví dụ dưới đây tìm cửa sổ Notepad bằng `WNDFIND`, đặt cửa sổ về vị trí cố định `(100, 100)` với kích thước `500×400`, sau đó dùng `HGET(250, 250)` để lấy `hwnd` của khung soạn thảo bên trong rồi gửi các phím `A`, `B`, `C` tới phần tử đó qua `A_KEYPRESS`:
 
@@ -408,7 +408,7 @@ HALT
 
 ### Ví dụ: Kéo chuột vẽ nét trong Paint bằng `A_LDOWN`, `A_DRAG`, `A_LUP`
 
-**Trạng thái:** 🟡 Theo help, chưa chạy thử
+**Trạng thái:** 🟡 Chưa chạy thử
 
 Như đã phân tích ở mục bẫy phía trên, để kéo chuột vẽ nét trong vùng giấy vẽ của Paint qua `POSTMESSAGE`, bạn cần định nghĩa thêm chương trình con `A_DRAG` gửi `wParam = 0x0001` (cờ giữ nút chuột trái).
 
