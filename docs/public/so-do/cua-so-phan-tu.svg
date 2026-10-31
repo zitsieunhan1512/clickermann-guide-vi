@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title>Một cửa sổ ứng dụng chứa nhiều phần tử con, mỗi phần tử có mã HWND riêng</title>
+  <rect width="740" height="375" fill="#ffffff" rx="8"/>
+
+  <text x="370" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Cửa sổ ứng dụng và các phần tử con (mỗi phần tử có HWND riêng)</text>
+
+  <!-- Main Window -->
+  <rect x="50" y="55" width="640" height="260" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2.5"/>
+  <rect x="50" y="55" width="640" height="42" rx="8" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+  <text x="70" y="82" font-size="15" font-weight="700" fill="#0f172a">Cửa sổ chính của ứng dụng — HWND: 131072</text>
+
+  <!-- Toolbar child -->
+  <rect x="75" y="115" width="590" height="50" rx="6" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="95" y="145" font-size="14" font-weight="600" fill="#1e3a8a">Phần tử con: Thanh công cụ — HWND riêng: 196608</text>
+
+  <!-- Text area child -->
+  <rect x="75" y="180" width="380" height="115" rx="6" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+  <text x="95" y="212" font-size="15" font-weight="700" fill="#14532d">Phần tử con: Ô nhập văn bản / Khung nội dung</text>
+  <text x="95" y="238" font-size="14" font-weight="600" fill="#166534">HWND riêng: 262144</text>
+  <text x="95" y="265" font-size="14" fill="#15803d">Có gốc tọa độ (0, 0) riêng ở góc trái trên của khung</text>
+
+  <!-- Button children -->
+  <rect x="475" y="180" width="190" height="50" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+  <text x="570" y="203" text-anchor="middle" font-size="14" font-weight="700" fill="#78350f">Nút bấm "Lưu"</text>
+  <text x="570" y="222" text-anchor="middle" font-size="14" fill="#92400e">HWND: 327680</text>
+
+  <rect x="475" y="245" width="190" height="50" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+  <text x="570" y="268" text-anchor="middle" font-size="14" font-weight="700" fill="#78350f">Nút bấm "Hủy"</text>
+  <text x="570" y="287" text-anchor="middle" font-size="14" fill="#92400e">HWND: 393216</text>
+
+  <text x="370" y="338" text-anchor="middle" font-size="12.5" fill="#475569">Ghi chú: các số HWND trên hình chỉ để minh họa;</text>
+  <text x="370" y="357" text-anchor="middle" font-size="12.5" fill="#475569">theo kiến thức Windows, mỗi lần mở ứng dụng hệ thống sẽ cấp số HWND khác.</text>
+</svg>

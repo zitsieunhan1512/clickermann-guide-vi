@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title>Cơ chế hoạt động của GETSCREEN và bộ đệm ảnh trong Clickermann</title>
+  <rect width="780" height="360" fill="#ffffff" rx="8"/>
+  <defs>
+    <marker id="arr-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0369a1"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#15803d"/>
+    </marker>
+  </defs>
+
+  <text x="390" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Màn hình thật, lệnh GETSCREEN và Bộ đệm ảnh</text>
+
+  <!-- Live Screen -->
+  <rect x="25" y="65" width="185" height="140" rx="8" fill="#f0f9ff" stroke="#0369a1" stroke-width="2"/>
+  <text x="117" y="95" text-anchor="middle" font-size="16" font-weight="700" fill="#0c4a6e">Màn hình hiển thị</text>
+  <text x="117" y="125" text-anchor="middle" font-size="14" fill="#0369a1">Hình ảnh thay đổi</text>
+  <text x="117" y="147" text-anchor="middle" font-size="14" fill="#0369a1">liên tục theo thời gian</text>
+
+  <!-- GETSCREEN arrow -->
+  <line x1="210" y1="135" x2="320" y2="135" stroke="#0369a1" stroke-width="3" marker-end="url(#arr-b)"/>
+  <text x="267" y="120" text-anchor="middle" font-size="14" font-weight="700" fill="#0369a1">GETSCREEN</text>
+  <text x="267" y="158" text-anchor="middle" font-size="14" fill="#334155">chụp 1 ảnh</text>
+
+  <!-- Analysis Buffer -->
+  <rect x="325" y="65" width="220" height="140" rx="8" fill="#fefce8" stroke="#ca8a04" stroke-width="2.5"/>
+  <text x="435" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#713f12">Bộ đệm ảnh</text>
+  <text x="435" y="116" text-anchor="middle" font-size="14" fill="#854d0e">(Lưu 1 ảnh chụp tĩnh)</text>
+  <text x="435" y="142" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3412">Không tự cập nhật</text>
+  <text x="435" y="162" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3412">theo màn hình tới</text>
+  <text x="435" y="182" text-anchor="middle" font-size="13.5" fill="#9a3412">lần gọi GETSCREEN sau</text>
+
+  <!-- Graphic commands -->
+  <line x1="545" y1="135" x2="590" y2="135" stroke="#15803d" stroke-width="2.5" marker-end="url(#arr-g)"/>
+  <rect x="595" y="65" width="160" height="140" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+  <text x="675" y="93" text-anchor="middle" font-size="15" font-weight="700" fill="#14532d">Lệnh đọc từ đệm:</text>
+  <text x="675" y="120" text-anchor="middle" font-size="14" fill="#166534">PXL, PXLCOUNT</text>
+  <text x="675" y="144" text-anchor="middle" font-size="14" fill="#166534">IF_PIXEL_IN</text>
+  <text x="675" y="168" text-anchor="middle" font-size="14" fill="#166534">IF_PICTURE_IN</text>
+  <text x="675" y="192" text-anchor="middle" font-size="14" fill="#166534">SCREENSHOT...</text>
+
+  <!-- Bottom note box -->
+  <rect x="25" y="235" width="730" height="95" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="45" y="265" font-size="15" font-weight="700" fill="#9a3412">Lưu ý quan trọng:</text>
+  <text x="45" y="290" font-size="14" fill="#431407">• Dù màn hình thật đã đổi màu, bộ đệm ảnh vẫn giữ bức ảnh cũ cho tới khi gọi lại GETSCREEN.</text>
+  <text x="45" y="313" font-size="14" fill="#431407">• Có thể gọi GETSCREEN(x1, y1, x2, y2) để chỉ cập nhật riêng một vùng hình chữ nhật.</text>
+</svg>

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "cms",
+  "scopeName": "source.cms",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#string" },
+    { "include": "#directive-and-constant" },
+    { "include": "#variable" },
+    { "include": "#number" },
+    { "include": "#keyword" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.double-slash.cms",
+      "match": "//.*$"
+    },
+    "string": {
+      "name": "string.quoted.double.cms",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.cms",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "directive-and-constant": {
+      "patterns": [
+        {
+          "name": "keyword.control.directive.cms",
+          "match": "(?i)#(?:name|include|logfile|autorun|ps2_keyboard|ps2_mouse|define)\\b"
+        },
+        {
+          "name": "constant.other.cms",
+          "match": "#[A-Za-z0-9_]+\\b"
+        }
+      ]
+    },
+    "variable": {
+      "patterns": [
+        {
+          "name": "variable.language.system.cms",
+          "match": "(?i)\\$_[A-Za-z0-9_]+\\b"
+        },
+        {
+          "name": "variable.parameter.cms",
+          "match": "\\$[A-Za-z0-9_]+\\b"
+        }
+      ]
+    },
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.cms",
+          "match": "\\b0x[0-9A-Fa-f]+\\b"
+        },
+        {
+          "name": "constant.numeric.cms",
+          "match": "\\b\\d+(?:\\.\\d+)?\\b"
+        }
+      ]
+    },
+    "keyword": {
+      "patterns": [
+        {
+          "name": "keyword.control.cms",
+          "match": "(?i)\\b(?:IF_PICTURE_IN|IF_PIXEL_IN|IF_KEYDOWN|IF_TIME|IF|ELSE|END_IF|SWITCH|CASE|DEFAULT|END_SWITCH|FOR|WHILE|END_CYC|SUB|END_SUB|THREAD|END_THREAD|GOSUB|GOTO|BREAK|HALT)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.cms",
+          "match": "(?i)\\b(?:AND|OR|XOR)\\b"
+        },
+        {
+          "name": "support.function.cms",
+          "match": "(?i)\\b(?:ABS|ARCCOS|ARCSIN|ARRPOP|ARRPUSH|ARRSIZE|ARRSORT|BEEP|CALL|CHAR|COLORB|COLORG|COLORGEN|COLORMODE|COLORR|COS|DBLCLICK|DEFINE|DIALOGBOX|DIST|EXECUTE|FROMCLIP|GETDIRLIST|GETFILELIST|GETKBLAYOUT|GETKEYSDOWN|GETMESSAGE|GETSCREEN|GETVAR|HGET|HGETPID|HGETTEXT|HINTPOPUP|HSET|HSETTEXT|HTTPGET|HTTPPOST|INC|INIREAD|INIWRITE|INPUTBOX|INT|ISKEYDOWN|KEYDOWN|KEYPRESS|KEYSTRING|KEYUP|LCLICK|LDOWN|LOAD|LOGCLEAR|LOGSHOW|LOGWRITE|LUP|MCLICK|MDOWN|MOVE|MOVER|MUP|POSTMESSAGE|POW|PRINT|PXL|PXLCOUNT|PXLCRC|PXLREPLACE|PXLXOR|RADIOBOX|RCLICK|RDOWN|READMEM|RND|RNDFROM|ROUND|RUP|SCANPICTURE|SCANPXL|SCREENSHOT|SCREENSHOTEX|SCREENSHOTFIX|SENDMESSAGE|SETKBLAYOUT|SETTHREAD|SETVAR|SIN|SOUND|SQRT|STRCONCAT|STRCUT2|STRCUT|STRFILTER|STRLEN|STRMD5|STRPOS|STRREADLN|STRREPLACE|STRSEPARATE|STRWRITELN|TFCLEAR|TFCOUNT|TFDELETE|TFREADARR|TFREAD|TFWRITEARR|TFWRITE|TOCLIP|TRAYSAY|UNDEFINE|WAITMS|WAIT|WHEELDOWN|WHEELUP|WNDBUMP|WNDFIND|WNDGETINFO|WNDPOS|WNDSETINFO|WNDSIZE|WNDSTATE|WRITEMEM)\\b"
+        }
+      ]
+    }
+  }
+}
